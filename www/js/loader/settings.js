@@ -6,6 +6,7 @@ define(function () {
         rg: 'https://localhost:8001',
         cdn: 'https://localhost:8000',
         ptbs: '/json-block/',
-        etbs: '.json'
+        etbs: '.json',
+        move_shake_sequence: [7, 4, 6, 10, 4, 3, 2, 7, 10, 5, 3, 5, 4, 10, 3, 4, 3, 2]
     };
 });

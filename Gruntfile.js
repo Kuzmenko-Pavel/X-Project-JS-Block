@@ -1,17 +1,6 @@
 module.exports = function (grunt) {
-
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        requirejs_obfuscate: {
-            options: {
-                dir: 'www/js/loader/',
-                salt: 'salt',
-                root: 'com',
-                length: 6,
-                quotes: 'any',
-                output: false
-            }
-          },
         jshint: {
             files: ["www/block/**/*.js", "www/loader/**/*.js"],
             options: {
@@ -29,15 +18,82 @@ module.exports = function (grunt) {
                     protocol: 'https',
                     key: grunt.file.read('./livereload.key').toString(),
                     cert: grunt.file.read('./livereload.crt').toString(),
-                    base: ['www', 'bower_components', 'node_modules']
+                    base: ['www', 'www/loader', 'bower_components', 'node_modules'],
+                    middleware: function (connect, options, middlewares) {
+                        middlewares.unshift(function (req, res, next) {
+                            res.setHeader('Access-Control-Allow-Origin', '*');
+                            res.setHeader('Access-Control-Allow-Credentials', true);
+                            res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+                            res.setHeader('Allow', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+                            var support = ['POST', 'PUT', 'DELETE'];
+                            if (support.indexOf(req.method.toUpperCase()) != -1) {
+                                var endpoints = {
+                                    "/block": "www/block/block"
+                                };
+                                var match = false;
+                                var fileToRead = "";
+
+                                Object.keys(endpoints).forEach(function (url) {
+                                    if (req.url.indexOf(url) == 0) {
+                                        match = true;
+                                        fileToRead = endpoints[url];
+                                    }
+                                });
+                                if (match == false) {
+                                    return next();
+                                }
+
+                                return res.end(grunt.file.read(fileToRead));
+                            }
+
+                            return next();
+                        });
+
+                        return middlewares;
+                    }
                 }
             },
             block: {
                 options: {
-                    index: 'block.html',
+                    index: 'index.html',
                     port: 8001,
-                    protocol: 'http2',
-                    base: ['www', 'bower_components', 'node_modules']
+                    protocol: 'https',
+                    key: grunt.file.read('./livereload.key').toString(),
+                    cert: grunt.file.read('./livereload.crt').toString(),
+                    base: ['www', 'www/block', 'bower_components', 'node_modules'],
+                    middleware: function (connect, options, middlewares) {
+                        middlewares.unshift(function (req, res, next) {
+                            res.setHeader('Access-Control-Allow-Origin', '*');
+                            res.setHeader('Access-Control-Allow-Credentials', true);
+                            res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+                            res.setHeader('Allow', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+                            var support = ['POST', 'PUT', 'DELETE'];
+                            if (support.indexOf(req.method.toUpperCase()) != -1) {
+                                var endpoints = {
+                                    "/block": "www/block/block"
+                                };
+                                var match = false;
+                                var fileToRead = "";
+
+                                Object.keys(endpoints).forEach(function (url) {
+                                    if (req.url.indexOf(url) == 0) {
+                                        match = true;
+                                        fileToRead = endpoints[url];
+                                    }
+                                });
+                                if (match == false) {
+                                    return next();
+                                }
+
+                                return res.end(grunt.file.read(fileToRead));
+                            }
+
+                            return next();
+                        });
+
+                        return middlewares;
+                    }
+
                 }
             }
         },
@@ -96,15 +152,14 @@ module.exports = function (grunt) {
                             unused: true,
                             if_return: true,
                             join_vars: true,
-                            drop_console: true
+                            drop_console: false
                         },
                         warnings: true,
                         mangle: {
                             toplevel: true,
                             sort: true,
                             eval: true,
-                            props: true,
-                            except: ["define", "require"]
+                            props: true
 
                         }
                     },
@@ -116,7 +171,6 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-requirejs-obfuscate');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');

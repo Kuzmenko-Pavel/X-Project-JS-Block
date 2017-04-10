@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "connect-livereload": "^0.6.0",
+    "grunt-connect-apimock": "^1.1.0",
     "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-requirejs": "^1.0.0",
