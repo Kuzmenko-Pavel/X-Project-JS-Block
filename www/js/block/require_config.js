@@ -3,10 +3,17 @@
  */
 require.config({
         paths: {
-            'jquery': '../../../bower_components/jquery/dist/jquery'
+            'jquery': './jquery',
+            'underscore': './../../../bower_components/underscore/underscore',
+            'mobile_detect': './../../../bower_components/mobile-detect/mobile-detect',
+            'json': './../../../bower_components/json3/lib/json3'
         },
         shim: {
-
-        },
-    deps: ['jquery']
+            underscore: {
+              exports: '_'
+            },
+            json: {
+                exports: 'JSON'
+            }
+        }
 });

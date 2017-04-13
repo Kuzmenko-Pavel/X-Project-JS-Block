@@ -25,27 +25,6 @@ module.exports = function (grunt) {
                             res.setHeader('Access-Control-Allow-Credentials', true);
                             res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
                             res.setHeader('Allow', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-                            var support = ['POST', 'PUT', 'DELETE'];
-                            if (support.indexOf(req.method.toUpperCase()) != -1) {
-                                var endpoints = {
-                                    "/block": "www/block/block"
-                                };
-                                var match = false;
-                                var fileToRead = "";
-
-                                Object.keys(endpoints).forEach(function (url) {
-                                    if (req.url.indexOf(url) == 0) {
-                                        match = true;
-                                        fileToRead = endpoints[url];
-                                    }
-                                });
-                                if (match == false) {
-                                    return next();
-                                }
-
-                                return res.end(grunt.file.read(fileToRead));
-                            }
-
                             return next();
                         });
 
@@ -55,7 +34,6 @@ module.exports = function (grunt) {
             },
             block: {
                 options: {
-                    index: 'index.html',
                     port: 8001,
                     protocol: 'https',
                     key: grunt.file.read('./livereload.key').toString(),
@@ -68,23 +46,22 @@ module.exports = function (grunt) {
                             res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
                             res.setHeader('Allow', 'GET,HEAD,PUT,PATCH,POST,DELETE');
                             var support = ['POST', 'PUT', 'DELETE'];
-                            if (support.indexOf(req.method.toUpperCase()) != -1) {
+                            if (support.indexOf(req.method.toUpperCase()) !== -1) {
                                 var endpoints = {
-                                    "/block": "www/block/block"
+                                    "/block": "www/block/block.html"
                                 };
                                 var match = false;
                                 var fileToRead = "";
 
                                 Object.keys(endpoints).forEach(function (url) {
-                                    if (req.url.indexOf(url) == 0) {
+                                    if (req.url.indexOf(url) === 0) {
                                         match = true;
                                         fileToRead = endpoints[url];
                                     }
                                 });
-                                if (match == false) {
+                                if (match === false) {
                                     return next();
                                 }
-
                                 return res.end(grunt.file.read(fileToRead));
                             }
 
@@ -124,9 +101,33 @@ module.exports = function (grunt) {
                     out: 'www/js/block.js',
                     removeCombined: false,
                     findNestedDependencies: true,
+                    preserveLicenseComments: false,
                     wrap: true,
                     optimize: 'uglify2',
-                    //generateSourceMaps: true
+                    uglify2: {
+                        output: {
+                            beautify: false
+                        },
+                        compress: {
+                            sequences: true,
+                            dead_code: true,
+                            conditionals: true,
+                            booleans: true,
+                            unused: true,
+                            if_return: true,
+                            join_vars: true,
+                            drop_console: false
+                        },
+                        warnings: true,
+                        mangle: {
+                            toplevel: true,
+                            sort: true,
+                            eval: true,
+                            props: true
+
+                        }
+                    },
+                    generateSourceMaps: true
                 }
             },
             compileLoader: {

@@ -3,12 +3,13 @@
  */
 define('block_logging', ['jquery', './settings'], function (jQuery, settings) {
     return function () {
-        this.post(this.block_setting.logging);
-        var jqxhr = jQuery.get();
+
+        if (this.block_setting.logging === false) {
+            this.block_setting.logging = 'initial';
+        }
+        var jqxhr = jQuery.get(settings.rg + 'bl.js?guid=' + this.client + '&request=' + this.block_setting.logging);
         jqxhr.done(_.bind(function (data) {
-            if (this.block_setting.logging === false)
-            {
-                this.block_setting.logging='initial';
+            if (this.block_setting.logging !== 'complite') {
                 this.logging();
             }
         }, this));

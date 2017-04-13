@@ -3,31 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Block</title>
-    <style type="text/css" media="all">
-        * {
-	vertical-align: baseline;
-	border: 0 none;
-	outline: 0;
-	padding: 0;
-	margin: 0;
-	}
-    </style>
 </head>
 <body>
-    <script>
-        function listener(event) {
-            var el = document.getElementById('msg');
-            el.innerText = event.data;
 
-}
-
-if (window.addEventListener) {
-  window.addEventListener("message", listener);
-} else {
-  // IE8
-  window.attachEvent("onmessage", listener);
-}
-    </script>
-<div id="msg"></div>
 </body>
 </html>

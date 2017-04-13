@@ -1,0 +1,15 @@
+<div data-id='${id}' class='adv${c}Block reset'>
+    <div data-name='Header' class='adv${c}Header reset'>${title}</div>
+    <div data-name='Description' class='adv${c}Description reset'>${description}</div>
+    <div data-name='Cost' class='adv${c}Cost reset'>${price}</div>
+    <div data-name='Image' data-image-id='${id}' data-image-index='${index}' class='adv${c}ImageConS reset'>
+        <div class='control_next reset'>>></div>
+        <div class='control_prev reset'><<</div>
+        <ul class="reset">
+            {{each image}}
+            <li class="reset"><img data-name='Image' class='adv${c}ImageS reset' src='${$value}' alt=""/></li>
+            {{/each}}
+        </ul>
+    </div>
+    <div data-name='Button' class="adv${c}Button reset"><span class="reset">Купить</span></div>
+</div>

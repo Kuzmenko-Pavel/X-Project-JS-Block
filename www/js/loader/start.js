@@ -3,11 +3,9 @@
  */
 define([
     'jquery',
-    'underscore',
-    './block_settings'
-], function (jQuery, _, block_settings) {
+    'underscore'
+], function (jQuery, _) {
     return function () {
-        console.log('start');
         var self = this;
         jQuery('ins.adsbyyottos:not([data-ad-status])').each(jQuery.proxy(function () {
                 var $el = jQuery(this);

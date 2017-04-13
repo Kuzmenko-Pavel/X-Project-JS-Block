@@ -12,8 +12,7 @@ define('move_shake', ['./settings'], function (settings) {
         }
         if ((timeStamp / 1000 - this.timeStamp / 1000) > step) {
             this.timeStamp = timeStamp;
-            console.log("this.blocks.send('mouse_move');");
-            //this.blocks.send('mouse_move');
+            this.blocks.send('mouse_move');
         }
         else {
             this.sequence = old_sequence.slice();

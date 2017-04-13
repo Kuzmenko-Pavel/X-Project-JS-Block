@@ -40,15 +40,19 @@ define([
         this.move_shake(e);
     };
     Loader.prototype.scroll_handler = function (e) {
+        //console.log('scroll_handler');
         this.blocks.logging();
     };
     Loader.prototype.resize_handler = function (e) {
+        //console.log('resize_handler');
         this.blocks.logging();
     };
     Loader.prototype.load_handler = function (e) {
+        //console.log('load_handler');
         this.start();
     };
     Loader.prototype.ready_handler = function (e) {
+        //console.log('ready_handler');
         this.start();
         var html_obj = jQuery(window);
         html_obj.scroll(_.bind(this.scroll_handler, this));

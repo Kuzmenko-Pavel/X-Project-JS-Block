@@ -13,15 +13,15 @@ define('block_settings', ['jquery', 'underscore', './settings'], function (jQuer
                 var jqxhr = jQuery.getJSON(src);
                 jqxhr.done(_.bind(function (data) {
                     this.cache[client] = data;
-                    callback($el, this.cache[client])
+                    callback($el, this.cache[client]);
                 } ,this));
                 jqxhr.fail(_.bind(function () {
-                    this.cache[client] = {};
-                    callback(this.cache[client])
+                    this.cache[client] = {h:'auto', w:'auto', mod:'1'};
+                    callback($el, this.cache[client]);
                 } ,this));
             }
             else {
-                callback($el, this.cache[client])
+                callback($el, this.cache[client]);
             }
         };
     };
