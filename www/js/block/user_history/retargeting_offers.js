@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 13.04.17.
  */
-define([], function () {
+define(['underscore'], function (_) {
     var RetargetingOffers = function() {
     };
 
@@ -10,8 +10,8 @@ define([], function () {
     };
 
     RetargetingOffers.prototype.load = function (guid, arg1) {
-        if (Object.prototype.toString.call(arg1) === '[object Array]') {
-            if (typeof arg1[3] == 'undefined') {
+        if (_.isArray(arg1)) {
+            if (_.isUndefined(arg1[3])) {
                 arg1[3] = arg1[0]
             }
             this[guid] = [arg1[0], arg1[1], arg1[2], arg1[3]];

@@ -6,22 +6,27 @@ define([
     'underscore',
     './start',
     './detect_device',
+    './detect_browser',
     './check_image_format',
     './user_history/main',
-    './settings'
+    './settings',
+    './animated/shake',
+    './animated/blinking'
 ], function (jQuery,
              _,
              start,
              detect_device,
+             DetectBrowser,
              check_image_format,
              user_history,
-             settings) {
+             settings,
+             shake,
+             blinking) {
     var Loader = function () {
         this.uh = user_history;
+        this.adsparams = window.adsparams;
         this.image_format = 'png';
         this.image_cheker = check_image_format();
-        this.device = detect_device();
-        this.page_load = false;
         this.image_cheker.then(
             _.bind(function () {
                 this.image_format = 'webp';
@@ -30,17 +35,37 @@ define([
                 this.image_format = 'png';
             }, this)
         );
+        this.settings = settings;
+        this.device = detect_device();
+        this.browser = new DetectBrowser();
+        this.page_load = false;
         this.uh.load();
-        this.uh.save();
+        this.informer = {};
+        this.campaigns = {};
+        this.offers = {"items":[],"skip":0,"show":0};
+        this.mouseInBlock = false;
     };
     Loader.prototype.start = start;
+    Loader.prototype.shake = shake;
+    Loader.prototype.blinking = blinking;
     Loader.prototype.mouse_move_handler = function (e) {
     };
     Loader.prototype.scroll_handler = function (e) {
     };
     Loader.prototype.resize_handler = function (e) {
     };
+    Loader.prototype.mouseenter_handler = function (e) {
+        this.mouseInBlock = true;
+    };
+    Loader.prototype.mouseleave_handler = function (e) {
+        this.mouseInBlock = false;
+        //this.blinking(jQuery('#basic1'));
+    };
+    Loader.prototype.onmessage = function (e) {
+        console.log(e.originalEvent.data);
+    };
     Loader.prototype.load_handler = function (e) {
+
     };
     Loader.prototype.ready_handler = function (e) {
         //this.start();
@@ -48,6 +73,9 @@ define([
         html_obj.scroll(_.bind(this.scroll_handler, this));
         html_obj.resize(_.bind(this.resize_handler, this));
         html_obj.mousemove(_.bind(this.mouse_move_handler, this));
+        html_obj.mouseenter(_.bind(this.mouseenter_handler, this));
+        html_obj.mouseleave(_.bind(this.mouseleave_handler, this));
+        html_obj.on("message onmessage", _.bind(this.onmessage, this));
     };
     return Loader;
 

@@ -116,3 +116,9 @@ typings/
 
 # dotenv environment variables file
 .env
+
+
+www/js/block.js
+www/js/block.js.map
+www/js/loader.js
+www/js/loader.js.map

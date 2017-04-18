@@ -31,7 +31,5 @@ define([
     "../../../bower_components/jquery/src/deprecated",
     "../../../bower_components/jquery/src/exports/amd"
 ], function (jQuery) {
-
     return jQuery;
-
 });

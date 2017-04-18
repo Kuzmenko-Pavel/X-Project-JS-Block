@@ -1,33 +1,39 @@
 /**
  * Created by kuzmenko-pavel on 13.04.17.
  */
-define([], function () {
-    var CostAccount = function () {};
-    CostAccount.add = function (guid, val) {
-        if (typeof this[guid] == 'undefined') {
-            var hit_log = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+define(['underscore'], function (_) {
+    var CostAccount = function () {
+    };
+
+    CostAccount.prototype.add = function (guid, val) {
+        var hit_log = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+        if (_.isUndefined(this[guid])) {
             hit_log[val] += 1;
-            this[guid] = [val, hit_log]
+            this[guid] = [val, hit_log];
         }
         else {
-            var hit_log = this[guid][1];
+            hit_log = this[guid][1];
             hit_log[val] += 1;
             hit_log[0] = 1;
-            this[guid] = [hit_log.indexOf(Math.max.apply(Math, hit_log)), hit_log];
+            this[guid] = [_.indexOf(hit_log, _.max(hit_log)), hit_log];
+        }
+        if (this[guid][0] <0 ){
+            this[guid][0] = 0;
         }
     };
-    CostAccount.get = function () {
-        res = [];
-        for (var key in this) {
-            if (typeof this[key][0] != 'undefined') {
-                var value = this[key][0];
-                res.push([key + "~" + value]);
-            }
-        }
+
+    CostAccount.prototype.get = function () {
+        var res = [];
+        _.each(this, function (element, name, uh) {
+                  if (!_.isEmpty(element)){
+                      res.push([name + "~" + element[0]]);
+                  }
+        });
         return res.join(";");
     };
-    CostAccount.load = function (guid, arg1) {
-        if (Object.prototype.toString.call(arg1) === '[object Array]') {
+
+    CostAccount.prototype.load = function (guid, arg1) {
+        if (_.isArray(arg1)) {
             this[guid] = [arg1[0], arg1[1]];
         }
     };

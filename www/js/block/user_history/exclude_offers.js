@@ -1,26 +1,21 @@
 /**
  * Created by kuzmenko-pavel on 13.04.17.
  */
-define([], function () {
+define(['underscore'], function (_) {
     var ExcludeOffers = function (invert, counter) {
-        this.invert = Boolean(invert || false);
-        this.counter = Boolean(counter || false);
-        // var initialValues = new Object({});
-        // initialValues.add = ExcludeOffers.prototype.add;
-        //initialValues.load = ExcludeOffers.load;
-        // initialValues.getString = ExcludeOffers.getString;
-        // initialValues.get = ExcludeOffers.get;
-        // initialValues.invert = function () {
-        //     return invert_;
-        // };
-        // initialValues.counter = function () {
-        //     return counter_;
-        // };
-        // return (initialValues);
+        var invert_ = Boolean(invert || false);
+        var counter_ = Boolean(counter || false);
+        this.invert = function () {
+            return invert_;
+        };
+        this.counter = function () {
+            return counter_;
+        };
+
     };
     ExcludeOffers.prototype.add = function (guid, countViews) {
         countViews = (countViews || 1);
-        if (typeof(this[guid]) == 'number') {
+        if (_.isNumber(this[guid])) {
             if (this.invert()) {
                 this[guid] = ++this[guid];
             }
@@ -47,74 +42,42 @@ define([], function () {
         this[guid] = countViews;
     };
 
-    ExcludeOffers.getString = function () {
-        var keys = [];
-        if (this.counter()) {
-            for (var key in this) {
-                var value = this[key];
-                if (this.invert()) {
-                    if (value > 0) {
-                        keys.push(key + "~" + value);
-                    }
-                }
-                else {
-                    if (value <= 0) {
-                        keys.push(key + "~" + value);
-                    }
-                }
-            }
-        }
-        else {
-            for (var key in this) {
-                var value = this[key];
-                if (this.invert()) {
-                    if (value > 0) {
-                        keys.push(key);
-                    }
-                }
-                else {
-                    if (value <= 0) {
-                        keys.push(key);
-                    }
-                }
-            }
-        }
-        return keys.join(";");
-    };
 
     ExcludeOffers.prototype.get = function () {
         var keys = [];
-        if (this.counter()) {
-            for (var key in this) {
-                var value = this[key];
-                if (this.invert()) {
+            _.each(this, function (value, key, uh) {
+                 if (uh.invert()) {
                     if (value > 0) {
-                        keys.push([key, value]);
+                        if (uh.counter()) {
+                            keys.push([key, value]);
+                        }
+                        else{
+                            keys.push(key);
+                        }
                     }
                 }
                 else {
                     if (value <= 0) {
-                        keys.push([key, value]);
+                        if (uh.counter()) {
+                            keys.push([key, value]);
+                        }
+                        else{
+                            keys.push(key);
+                        }
                     }
                 }
-            }
-        }
-        else {
-            for (var key in this) {
-                var value = this[key];
-                if (this.invert()) {
-                    if (value > 0) {
-                        keys.push(key);
-                    }
-                }
-                else {
-                    if (value <= 0) {
-                        keys.push(key);
-                    }
-                }
-            }
-        }
+            });
         return keys;
+    };
+
+    ExcludeOffers.prototype.getString = function () {
+        var keys = _.map(this.get(), function(el){
+            if (_.isArray(el)){
+                return el.join("~");
+            }
+            return el;
+        });
+        return keys.join(";");
     };
 
     return ExcludeOffers;

@@ -1,35 +1,38 @@
 /**
  * Created by kuzmenko-pavel on 13.04.17.
  */
-define([], function () {
+define(['underscore'], function (_) {
     var CostUser = function () {
     };
 
-    CostUser.add = function (val) {
-        if (typeof this['cost'] == 'undefined') {
+    CostUser.prototype.add = function (val) {
+        var hit_log = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+        if (_.isUndefined(this['cost'])) {
             this['cost'] = val;
-            var hit_log = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
             hit_log[val] += 1;
             this['hit_log'] = hit_log;
         }
         else {
-            if (Object.prototype.toString.call(this['hit_log']) === '[object Array]') {
-                var hit_log = this['hit_log'];
+            if (_.isArray(this['hit_log'])) {
+                hit_log = this['hit_log'];
                 hit_log[val] += 1;
                 hit_log[0] = 1;
                 this['hit_log'] = hit_log;
-                this['cost'] = hit_log.indexOf(Math.max.apply(Math, hit_log));
+                this['cost'] = _.indexOf(hit_log, _.max(hit_log));
             }
         }
+        if (this['cost'] < 0) {
+            this['cost'] = 0;
+        }
     };
-    CostUser.get = function () {
+    CostUser.prototype.get = function () {
         var res = '';
-        if (typeof this['cost'] != 'undefined') {
+        if (!_.isUndefined(this['cost'])) {
             res = this['cost'];
         }
         return res;
     };
-    CostUser.load = function (guid, arg1) {
+    CostUser.prototype.load = function (guid, arg1) {
         this[guid] = arg1;
     };
     return CostUser;

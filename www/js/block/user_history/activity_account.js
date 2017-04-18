@@ -1,19 +1,19 @@
 /**
  * Created by kuzmenko-pavel on 13.04.17.
  */
-define([], function () {
+define(['underscore'], function (_) {
     var ActivityAccount = function () {
     };
-    ActivityAccount.add = function (guid, timeFirst, timeLast) {
-        if (typeof this[guid] == 'undefined') {
+    ActivityAccount.prototype.add = function (guid, timeFirst, timeLast) {
+        if (_.isUndefined(this[guid])) {
             this[guid] = [timeFirst, timeLast];
         }
         else {
             this[guid][1] = timeLast;
         }
     };
-    ActivityAccount.load = function (guid, arg1) {
-        if (Object.prototype.toString.call(arg1) === '[object Array]') {
+    ActivityAccount.prototype.load = function (guid, arg1) {
+        if (_.isArray(arg1)) {
             this[guid] = [arg1[0], arg1[1]];
         }
     };

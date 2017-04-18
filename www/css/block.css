@@ -31,3 +31,21 @@ img {
     -ms-interpolation-mode: nearest-neighbor;
     image-rendering: -webkit-optimize-contrast;
 }
+
+.square {
+	width: 100px;
+	height: 100px;
+	margin: 0 75px;
+}
+
+.fright {
+	float: right;
+}
+.fleft {
+	float: left;
+}
+
+.color1 {
+	background: #bf0000;
+	color: #bf0000;
+}

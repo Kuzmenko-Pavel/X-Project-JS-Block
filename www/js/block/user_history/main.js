@@ -1,18 +1,8 @@
 /**
  * Created by kuzmenko-pavel on 13.04.17.
  */
-define(['./test', './fixed_queue', './exclude_offers', './retargeting_offers', './gender_account', './gender_user', './cost_account', './cost_user', './activity_account', './activity_user'],
-    function (test, FixedQueue, ExcludeOffers, RetargetingOffers, GenderAccount, GenderUser, CostAccount, CostUser, ActivityAccount, ActivityUser) {
-        Array.prototype.unique = function () {
-            var n = {}, r = [];
-            for (var i = 0; i < this.length; i++) {
-                if (!n[this[i]]) {
-                    n[this[i]] = true;
-                    r.push(this[i]);
-                }
-            }
-            return r;
-        };
+define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './retargeting_offers', './gender_account', './gender_user', './cost_account', './cost_user', './activity_account', './activity_user'],
+    function (_, JSON, test, FixedQueue, ExcludeOffers, RetargetingOffers, GenderAccount, GenderUser, CostAccount, CostUser, ActivityAccount, ActivityUser) {
         var UserHistory = function () {
             this.searchengines = new FixedQueue(3);
             this.context = new FixedQueue(3);
@@ -34,26 +24,21 @@ define(['./test', './fixed_queue', './exclude_offers', './retargeting_offers', '
         };
         UserHistory.prototype.load = function () {
             if (test()) {
-                for (key in this) {
-                    if (typeof(this[key]) != 'function') {
-                        var history_name = key;
-                        var retrievedObject = JSON.parse(localStorage.getItem(history_name));
-                        for (key in retrievedObject) {
-                            this[history_name].load(key, retrievedObject[key]);
-                        }
-                    }
-                }
+                _.each(this, function (uh_element, uh_name, uh) {
+                    var retrievedObject = JSON.parse(localStorage.getItem(uh_name));
+                    _.each(retrievedObject, function (element, index, list) {
+                        uh[uh_name].load(index, list[index]);
+                    });
+                });
                 return true;
             }
             return false;
         };
         UserHistory.prototype.save = function () {
             if (test()) {
-                for (key in this) {
-                    if (typeof(this[key]) != 'function') {
-                        localStorage.setItem(key, JSON.stringify(this[key]));
-                    }
-                }
+                _.each(this, function (uh_element, uh_name, uh) {
+                    localStorage.setItem(uh_name, JSON.stringify(uh[uh_name]));
+                });
                 return true;
             }
             return false;
@@ -75,7 +60,7 @@ define(['./test', './fixed_queue', './exclude_offers', './retargeting_offers', '
         };
         UserHistory.prototype.exclude_get = function () {
             var keys = this.exclude.get().concat(this.exclude_click.get());
-            keys = keys.unique();
+            keys = _.uniq(keys);
             return keys.join(';');
         };
         UserHistory.prototype.retargeting_clean = function (cl) {
@@ -102,12 +87,12 @@ define(['./test', './fixed_queue', './exclude_offers', './retargeting_offers', '
         };
         UserHistory.prototype.retargeting_exclude_get = function () {
             var keys = this.retargeting_exclude.get().concat(this.retargeting_exclude_click.get());
-            keys = keys.unique();
+            keys = _.uniq(keys);
             return keys.join(';');
         };
         UserHistory.prototype.retargeting_account_exclude_get = function () {
             var keys = this.retargeting_account_exclude.get().concat(this.retargeting_account_exclude_click.get());
-            keys = keys.unique();
+            keys = _.uniq(keys);
             return keys.join(';');
         };
         return new UserHistory();
