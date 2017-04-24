@@ -31,5 +31,16 @@ define([
     "../../../bower_components/jquery/src/deprecated",
     "../../../bower_components/jquery/src/exports/amd"
 ], function (jQuery) {
+    jQuery.ajaxSetup({
+        dataType: 'json',
+        type: "POST",
+        contentType: 'application/json; charset=utf-8',
+        cache: false,
+        beforeSend: function(xhr, settings) {
+                if (settings.params && settings.param){
+                    settings.data = settings.params.generateRequestData(settings.param);
+                }
+        }
+    });
     return jQuery;
 });

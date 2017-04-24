@@ -11,7 +11,14 @@ define([
     './user_history/main',
     './settings',
     './animated/shake',
-    './animated/blinking'
+    './animated/blinking',
+    './loader/main',
+    './loader/offers',
+    './style_calculator/size_capacity_calculator',
+    './models/informer',
+    './models/campaigns',
+    './models/offers',
+    './models/params'
 ], function (jQuery,
              _,
              start,
@@ -21,10 +28,18 @@ define([
              user_history,
              settings,
              shake,
-             blinking) {
+             blinking,
+             loader,
+             loader_offers,
+             size_capacity_calculator,
+             Informer,
+             Campaigns,
+             Offers,
+             Params) {
     var Loader = function () {
         this.uh = user_history;
         this.adsparams = window.adsparams;
+        this.params = new Params();
         this.image_format = 'png';
         this.image_cheker = check_image_format();
         this.image_cheker.then(
@@ -40,14 +55,17 @@ define([
         this.browser = new DetectBrowser();
         this.page_load = false;
         this.uh.load();
-        this.informer = {};
-        this.campaigns = {};
-        this.offers = {"items":[],"skip":0,"show":0};
+        this.informer = new Informer();
+        this.campaigns = new Campaigns();
+        this.offers = new Offers();
         this.mouseInBlock = false;
     };
-    Loader.prototype.start = start;
+    Loader.prototype.loader_offers = loader_offers;
+    Loader.prototype.size_capacity_calculator = size_capacity_calculator;
+    Loader.prototype.loader = loader;
     Loader.prototype.shake = shake;
     Loader.prototype.blinking = blinking;
+    Loader.prototype.start = start;
     Loader.prototype.mouse_move_handler = function (e) {
     };
     Loader.prototype.scroll_handler = function (e) {

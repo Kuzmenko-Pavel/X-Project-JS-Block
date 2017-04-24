@@ -48,7 +48,12 @@ module.exports = function (grunt) {
                             var support = ['POST', 'PUT', 'DELETE'];
                             if (support.indexOf(req.method.toUpperCase()) !== -1) {
                                 var endpoints = {
-                                    "/block": "www/block/block.html"
+                                    "/block": "www/block/block.html",
+                                    "/block.json": "www/block/json/block.json",
+                                    "/campaign.json": "www/block/json/campaign.json",
+                                    "/place.json": "www/block/json/place.json",
+                                    "/retargeting.json": "www/block/json/retargeting.json",
+                                    "/retargeting-account.json": "www/block/json/retargeting-account.json"
                                 };
                                 var match = false;
                                 var fileToRead = "";
@@ -87,6 +92,7 @@ module.exports = function (grunt) {
                     "www/js/block/**/*.js",
                     "www/js/loader/**/*.js",
                     "www/**/*.html",
+                    "www/**/*.css",
                     "bower_components/**/*.js"
                 ],
                 tasks: ['jshint', 'requirejs:compile', 'requirejs:compileLoader']
@@ -103,7 +109,7 @@ module.exports = function (grunt) {
                     findNestedDependencies: true,
                     preserveLicenseComments: false,
                     wrap: true,
-                    optimize: 'uglify2',
+                    optimize: 'none',
                     uglify2: {
                         output: {
                             beautify: false

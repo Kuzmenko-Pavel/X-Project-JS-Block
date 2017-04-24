@@ -1,9 +1,11 @@
 /**
  * Created by kuzmenko-pavel on 13.04.17.
  */
-define([], function () {
-
-    Array.prototype.add = function (arg1, arg2) {
+define(['underscore'], function (_) {
+    var FixedArray = function () {
+    };
+    FixedArray.prototype = Array.prototype;
+    FixedArray.prototype.add = function (arg1, arg2) {
         arg2 = (arg2 || false);
         if (arg2) {
             if (arg1 < this.fixedSize) {
@@ -26,7 +28,7 @@ define([], function () {
         );
 
     };
-    Array.prototype.load = function (arg1, arg2) {
+    FixedArray.prototype.load = function (arg1, arg2) {
         arg2 = (arg2 || false);
         if (arg2) {
             if (arg1 < this.fixedSize) {
@@ -49,12 +51,12 @@ define([], function () {
         );
 
     };
-    Array.prototype.get = function () {
+    FixedArray.prototype.get = function () {
         Array.prototype.splice.call(this, 0, (this.length - this.fixedSize));
         return this.join(";");
     };
     var FixedQueue = function (size) {
-        var queue = new Array();
+        var queue = new FixedArray();
         queue.fixedSize = size;
         return ( queue );
     };

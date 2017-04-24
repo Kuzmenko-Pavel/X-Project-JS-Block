@@ -1,0 +1,78 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    background-color: lightyellow;
+    height: 100%;
+}
+
+.reset {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    display: block;
+    background: transparent;
+    vertical-align: baseline;
+    text-decoration: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-size: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-family: arial, sans serif;
+    color: black;
+    line-height: normal;
+    overflow: hidden;
+}
+
+ul {
+    list-style: none;
+    list-style-image: none;
+}
+
+img {
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0 auto;
+}
+
+.inner {
+    float: left;
+}
+
+
+.text {
+    color: #3d3d45;
+    font-size: 12px;
+    font-family: "Lucida Console", Monaco, monospace;;
+    line-height: 1.1;
+    letter-spacing: 0px;
+}
+
+img {
+      height: 150px;
+    width: 150px;
+}
+
+div.test {
+    background-color: red;
+    border: solid 1px;
+}
+div.test:nth-child(odd) {
+    background-color: #777;
+}
+div.test:nth-child(even) {
+    background-color: blue;
+}

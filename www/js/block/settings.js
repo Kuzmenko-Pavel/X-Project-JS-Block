@@ -5,29 +5,29 @@ define(function () {
     return {
         requiredData: {
             block: {
+                param: 'block',
                 url: '/block.json'
             },
             campaign: {
+                param: 'campaign',
                 url: '/campaign.json'
             },
             offers: [
                 {
                     param: 'place',
-                    isDisable: "!(informer.social_branch || informer.place_branch),",
-                    url: '/place.json',
-                    always: true
+                    url: '/place.json'
+                },
+                {
+                    param: 'social',
+                    url: '/place.json'
                 },
                 {
                     param: 'retargetingAccount',
-                    isDisable: "!informer.retargeting_branch,",
-                    url: '/retargeting-account.json',
-                    always: false
+                    url: '/retargeting-account.json'
                 },
                 {
                     param: 'retargetingOffer',
-                    isDisable: "!informer.retargeting_branch",
-                    url: '/retargeting.json',
-                    always: false
+                    url: '/retargeting.json'
                 }
             ]
         }

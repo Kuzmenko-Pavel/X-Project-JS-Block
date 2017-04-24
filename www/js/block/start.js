@@ -6,7 +6,6 @@ define([
     'underscore'
 ], function (jQuery, _) {
     return function () {
-        console.log(this.device, this.image_format);
-        console.log(jQuery('body'));
+        this.loader();
     };
 });
