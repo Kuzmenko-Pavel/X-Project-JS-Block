@@ -2,7 +2,8 @@
  * Created by kuzmenko-pavel on 20.04.17.
  */
 define(['underscore'], function (_) {
-    var Informer = function () {
+    var Informer = function (app) {
+        this.app = app;
         this.account = "";
         this.auto_reload = 0;
         this.auto_reload = 0;

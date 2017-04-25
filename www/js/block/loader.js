@@ -18,7 +18,9 @@ define([
     './models/informer',
     './models/campaigns',
     './models/offers',
-    './models/params'
+    './models/params',
+    './render/main',
+    './Events'
 ], function (jQuery,
              _,
              start,
@@ -35,7 +37,9 @@ define([
              Informer,
              Campaigns,
              Offers,
-             Params) {
+             Params,
+             Render,
+             Events) {
     var Loader = function () {
         this.uh = user_history;
         this.adsparams = window.adsparams;
@@ -54,11 +58,17 @@ define([
         this.device = detect_device();
         this.browser = new DetectBrowser();
         this.page_load = false;
+        this.time_start = new Date().getTime();
         this.uh.load();
-        this.informer = new Informer();
-        this.campaigns = new Campaigns();
-        this.offers = new Offers();
+        this.informer = new Informer(this);
+        this.campaigns = new Campaigns(this);
+        this.offers = new Offers(this);
+        this.render = new Render(this);
         this.mouseInBlock = false;
+        _.extend(this, Events);
+        this.on("all", function(eventName){
+            console.log(eventName + ' was triggered!');
+        });
     };
     Loader.prototype.loader_offers = loader_offers;
     Loader.prototype.size_capacity_calculator = size_capacity_calculator;

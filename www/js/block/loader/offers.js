@@ -13,7 +13,7 @@ define(['jquery', './../settings'], function (jQuery, settings) {
 
             var deferred = jQuery.Deferred();
 
-            jQuery.ajax(dataItem.url).done(function(data) {
+            jQuery.ajax(dataItem.url, dataItem.param).done(function(data) {
                 deferred.resolve(data);
             }).fail(function() {
                 deferred.resolve({});

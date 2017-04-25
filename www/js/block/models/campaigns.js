@@ -2,7 +2,8 @@
  * Created by kuzmenko-pavel on 20.04.17.
  */
 define(['underscore'], function (_) {
-    var Campaigns = function () {
+    var Campaigns = function (app) {
+        this.app = app;
         this.all = new Array();
         this.place = new Array();
         this.retargetingAccount = new Array();
