@@ -3,7 +3,8 @@
  */
 define(['mobile_detect'], function (MobileDetect) {
     var md = new MobileDetect(window.navigator.userAgent);
-    return function () {
-        this.isOldIE= false;
+    return function (){
+        this.isOldIE = false;
+        this.IE7 = false;
     };
 });

@@ -19,7 +19,7 @@ define(function () {
                 },
                 {
                     param: 'social',
-                    url: '/place.json'
+                    url: '/social.json'
                 },
                 {
                     param: 'retargetingAccount',

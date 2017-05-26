@@ -24,14 +24,12 @@ define([
     "../../../bower_components/jquery/src/ajax/jsonp",
     "../../../bower_components/jquery/src/ajax/load",
     "../../../bower_components/jquery/src/event/ajax",
-    // "../../../bower_components/jquery/src/effects",
-    // "../../../bower_components/jquery/src/effects/animatedSelector",
     "../../../bower_components/jquery/src/offset",
     "../../../bower_components/jquery/src/dimensions",
     "../../../bower_components/jquery/src/deprecated",
     "../../../bower_components/jquery/src/exports/amd"
 ], function (jQuery) {
-
+    jQuery.ajaxSetup({crossDomain: true});
+    jQuery.support.cors = true;
     return jQuery;
-
 });

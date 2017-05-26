@@ -3,11 +3,7 @@
  */
 define(['underscore'], function (_) {
     var array = [];
-    var push = array.push;
     var slice = array.slice;
-    var splice = array.splice;
-
-    // Regular expression used to split event strings.
     var eventSplitter = /\s+/;
     var eventsApi = function (obj, action, name, rest) {
         if (!name) {
@@ -22,7 +18,6 @@ define(['underscore'], function (_) {
             return false;
         }
 
-        // Handle space separated event names.
         if (eventSplitter.test(name)) {
             var names = name.split(eventSplitter);
             for (var i = 0, l = names.length; i < l; i++) {
@@ -65,8 +60,6 @@ define(['underscore'], function (_) {
     };
     var Events = {
 
-        // Bind an event to a `callback` function. Passing `"all"` will bind
-        // the callback to all events fired.
         on: function (name, callback, context) {
             if (!eventsApi(this, 'on', name, [callback, context]) || !callback) {
                 return this;
@@ -77,8 +70,6 @@ define(['underscore'], function (_) {
             return this;
         },
 
-        // Bind an event to only be triggered a single time. After the first time
-        // the callback is invoked, it will be removed.
         once: function (name, callback, context) {
             if (!eventsApi(this, 'once', name, [callback, context]) || !callback) {
                 return this;
@@ -92,10 +83,6 @@ define(['underscore'], function (_) {
             return this.on(name, once, context);
         },
 
-        // Remove one or many callbacks. If `context` is null, removes all
-        // callbacks with that function. If `callback` is null, removes all
-        // callbacks for the event. If `name` is null, removes all bound
-        // callbacks for all events.
         off: function (name, callback, context) {
             var retain, ev, events, names, i, l, j, k;
             if (!this._events || !eventsApi(this, 'off', name, [callback, context])) {
@@ -129,10 +116,6 @@ define(['underscore'], function (_) {
             return this;
         },
 
-        // Trigger one or many events, firing all bound callbacks. Callbacks are
-        // passed the same arguments as `trigger` is, apart from the event name
-        // (unless you're listening on `"all"`, which will cause your callback to
-        // receive the true name of the event as the first argument).
         trigger: function (name) {
             if (!this._events) {
                 return this;
@@ -152,8 +135,6 @@ define(['underscore'], function (_) {
             return this;
         },
 
-        // Tell this object to stop listening to either specific events ... or
-        // to every object it's currently listening to.
         stopListening: function (obj, name, callback) {
             var listeners = this._listeners;
             if (!listeners) {
@@ -177,16 +158,8 @@ define(['underscore'], function (_) {
 
     };
 
-    // Implement fancy features of the Events API such as multiple event
-    // names `"change blur"` and jQuery-style event maps `{change: action}`
-    // in terms of the existing API.
-
-
     var listenMethods = {listenTo: 'on', listenToOnce: 'once'};
 
-    // Inversion-of-control versions of `on` and `once`. Tell *this* object to
-    // listen to an event in another object ... keeping track of what it's
-    // listening to.
     _.each(listenMethods, function (implementation, method) {
         Events[method] = function (obj, name, callback) {
             var listeners = this._listeners || (this._listeners = {});
@@ -200,7 +173,6 @@ define(['underscore'], function (_) {
         };
     });
 
-    // Aliases for backwards compatibility.
     Events.bind = Events.on;
     Events.unbind = Events.off;
     return Events;

@@ -7,6 +7,5 @@ define([
 ], function (jQuery, _) {
     return function () {
         this.loader();
-        this.render.render();
     };
 });

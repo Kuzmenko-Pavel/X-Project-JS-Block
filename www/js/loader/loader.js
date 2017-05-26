@@ -38,26 +38,25 @@ define([
     Loader.prototype.move_shake = move_shake;
     Loader.prototype.mouse_move_handler = function (e) {
         this.move_shake(e);
+        this.blocks.logging();
     };
     Loader.prototype.scroll_handler = function (e) {
-        //console.log('scroll_handler');
         this.blocks.logging();
     };
     Loader.prototype.resize_handler = function (e) {
-        //console.log('resize_handler');
         this.blocks.logging();
     };
     Loader.prototype.load_handler = function (e) {
-        //console.log('load_handler');
         this.start();
+        this.blocks.logging();
     };
     Loader.prototype.ready_handler = function (e) {
-        //console.log('ready_handler');
         this.start();
         var html_obj = jQuery(window);
         html_obj.scroll(_.bind(this.scroll_handler, this));
         html_obj.resize(_.bind(this.resize_handler, this));
         html_obj.mousemove(_.bind(this.mouse_move_handler, this));
+        this.blocks.logging();
     };
     return Loader;
 

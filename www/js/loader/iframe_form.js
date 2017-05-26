@@ -24,22 +24,21 @@ define('iframe_form',
             object.form = jQuery("<form/>", {
                 action: url,
                 method: 'post',
-                name: 'form' + object.time,
-                id: 'form' + object.time,
-                target: 'iframe' + object.time,
-                style: 'display:none; width:0px; height:0px; border:0px'
+                name: 'y_form' + object.time,
+                id: 'y_form' + object.time,
+                target: 'y_iframe' + object.time,
+                style: 'display:none; width:0px; height:0px; border:0px; margin:0 0 0 0;'
             });
 
-            object.iframe = jQuery('<iframe>', {
-                id: 'iframe' + object.time,
-                name: 'iframe' + object.time,
-                frameborder: 0,
-                marginHeight: '0px',
-                marginWidth: '0px',
-                style: 'border:0px; width:'+ object.size.w +'; height:'+ object.size.h +';',
-                scrolling: 'no',
-                allowtransparency: true
-            });
+            object.iframe = jQuery('<iframe name="y_iframe'+ object.time +'">');
+            object.iframe.attr("id", 'y_iframe' + object.time);
+            object.iframe.attr("name", 'y_iframe' + object.time);
+            object.iframe.attr("frameborder", 0);
+            object.iframe.attr("marginHeight", '0px');
+            object.iframe.attr("marginWidth", '0px');
+            object.iframe.css({border: 0, width: object.size.w, height:object.size.h, visibility: 'hidden'});
+            object.iframe.attr("scrolling", 'no');
+            object.iframe.attr("allowtransparency", true);
             object.iframe.attr("width", object.size.w);
             object.iframe.attr("height", object.size.h);
             object.iframe.data('time', object.time);
@@ -76,6 +75,7 @@ define('iframe_form',
                 this.form.submit();
                 this.iframe.load(_.bind(function () {
                     jQuery(this.form).remove();
+                    this.iframe.css({visibility: 'visible'});
                     this.logging();
                 }, this));
             };
