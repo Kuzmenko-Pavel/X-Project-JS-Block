@@ -87,7 +87,6 @@ define('iframe_form',
                 else if (this.block_setting.logging === 'initial' && this.block_setting.visible === true) {
                     this.block_setting.logging = 'complite';
                     this.block_logging();
-                    this.post("position " + this.size.p_l + " " + this.size.p_t);
                 }
 
             };

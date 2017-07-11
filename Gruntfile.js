@@ -49,8 +49,7 @@ module.exports = function (grunt) {
                             if (support.indexOf(req.method.toUpperCase()) !== -1) {
                                 var endpoints = {
                                     "/block": "www/block/block.html",
-                                    "/block.json": "www/block/json/block.json",
-                                    "/campaign.json": "www/block/json/campaign.json",
+                                    "/informer.json": "www/block/json/informer.json",
                                     "/place.json": "www/block/json/place.json",
                                     "/social.json": "www/block/json/social.json",
                                     "/retargeting.json": "www/block/json/retargeting.json",
@@ -85,8 +84,6 @@ module.exports = function (grunt) {
                 options: {
                     livereload: {
                         port: 35729,
-                        key: grunt.file.read('./livereload.key').toString(),
-                        cert: grunt.file.read('./livereload.crt').toString()
                     }
                 },
                 files: [
@@ -147,7 +144,8 @@ module.exports = function (grunt) {
                     findNestedDependencies: true,
                     preserveLicenseComments: false,
                     wrap: true,
-                    optimize: 'uglify2',
+                    //optimize: 'uglify2',
+                    optimize: 'none',
                     uglify2: {
                         output: {
                             beautify: false,

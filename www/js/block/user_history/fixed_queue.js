@@ -4,7 +4,7 @@
 define(['underscore'], function (_) {
     var FixedArray = function () {
     };
-    FixedArray.prototype = Array.prototype;
+    FixedArray.prototype = Function.prototype;
     FixedArray.prototype.add = function (arg1, arg2) {
         arg2 = (arg2 || false);
         if (arg2) {
@@ -56,8 +56,8 @@ define(['underscore'], function (_) {
         return this.join(";");
     };
     var FixedQueue = function (size) {
+        FixedArray.prototype.fixedSize = size;
         var queue = new FixedArray();
-        queue.fixedSize = size;
         return ( queue );
     };
     return FixedQueue;

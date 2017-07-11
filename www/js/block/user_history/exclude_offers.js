@@ -49,35 +49,25 @@ define(['underscore'], function (_) {
                  if (uh.invert()) {
                     if (value > 0) {
                         if (uh.counter()) {
-                            keys.push([key, value]);
+                            keys.push([key.replace(/\D/g, ''), value]);
                         }
                         else{
-                            keys.push(key);
+                            keys.push(key.replace(/\D/g, ''));
                         }
                     }
                 }
                 else {
                     if (value <= 0) {
                         if (uh.counter()) {
-                            keys.push([key, value]);
+                            keys.push([key.replace(/\D/g, ''), value]);
                         }
                         else{
-                            keys.push(key);
+                            keys.push(key.replace(/\D/g, ''));
                         }
                     }
                 }
             });
         return keys;
-    };
-
-    ExcludeOffers.prototype.getString = function () {
-        var keys = _.map(this.get(), function(el){
-            if (_.isArray(el)){
-                return el.join("~");
-            }
-            return el;
-        });
-        return keys.join(";");
     };
 
     return ExcludeOffers;

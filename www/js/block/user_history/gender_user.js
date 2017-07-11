@@ -27,7 +27,7 @@ define(['underscore'], function (_) {
     };
 
     GenderUser.prototype.get = function () {
-        var res = '';
+        var res = 0;
         if (!_.isUndefined(this['gender'])) {
             res = this['gender'];
         }

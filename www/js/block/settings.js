@@ -4,13 +4,13 @@
 define(function () {
     return {
         requiredData: {
-            block: {
-                param: 'block',
-                url: '/block.json'
+            informer: {
+                param: 'informer',
+                url: '/informer.json'
             },
-            campaign: {
-                param: 'campaign',
-                url: '/campaign.json'
+            offer_log: {
+                param: 'log',
+                url: '/logger.json'
             },
             offers: [
                 {
@@ -22,12 +22,12 @@ define(function () {
                     url: '/social.json'
                 },
                 {
-                    param: 'retargetingAccount',
-                    url: '/retargeting-account.json'
+                    param: 'account_retargeting',
+                    url: '/account_retargeting.json'
                 },
                 {
-                    param: 'retargetingOffer',
-                    url: '/retargeting.json'
+                    param: 'dynamic_retargeting',
+                    url: '/dynamic_retargeting.json'
                 }
             ]
         }

@@ -1,26 +1,15 @@
 /**
  * Created by kuzmenko-pavel on 25.04.17.
  */
-define(['jquery', 'underscore'], function (jQuery, _, link) {
-    return function(items){
-        $.each(items, function(i, v) {
-            $("div[data-id='"+ v.id +"']>div").each(function() {
-                $(this).click(function(event){
-                    var popup = window.open(link(v),'_blank');
-                    popup.moveTo(0,0);
-                    uh.load();
-                    if(v.retargeting == 0)
-                    {
-                        uh.exclude_click.add(v.id,1);
-                    }
-                    else
-                    {
-                        uh.retargeting_exclude_click.add(v.id,1);
-                    }
-                    uh.save();
-                    offerChange(this);
-                    });
+define(['jquery', 'underscore'], function (jQuery, _) {
+    return function(app, el){
+        var items = el.find('div[data-id]');
+        _.each(items, function(element, index, list) {
+            jQuery(element).click(function(event){
+                var item = jQuery(event.currentTarget);
+                var id = item.data('id');
+                app.offers.click(id);
             });
-        });
+        }, this);
     };
 });

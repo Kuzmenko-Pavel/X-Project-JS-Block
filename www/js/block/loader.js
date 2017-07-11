@@ -13,14 +13,10 @@ define([
     './animated/shake',
     './animated/blinking',
     './loader/main',
-    './loader/offers',
-    './style_calculator/size_capacity_calculator',
     './models/informer',
-    './models/campaigns',
     './models/offers',
     './models/params',
-    './render/main',
-    './Events'
+    './render/main'
 ], function (jQuery,
              _,
              start,
@@ -32,18 +28,15 @@ define([
              shake,
              blinking,
              loader,
-             loader_offers,
-             size_capacity_calculator,
              Informer,
-             Campaigns,
              Offers,
              Params,
-             Render,
-             Events) {
+             Render
+) {
     var Loader = function () {
         this.uh = user_history;
         this.adsparams = window.adsparams;
-        this.params = new Params();
+        this.params = new Params(this);
         this.image_format = 'png';
         this.image_cheker = check_image_format();
         this.image_cheker.then(
@@ -61,17 +54,14 @@ define([
         this.time_start = new Date().getTime();
         this.uh.load();
         this.informer = new Informer(this);
-        this.campaigns = new Campaigns(this);
         this.offers = new Offers(this);
         this.render = new Render(this);
         this.mouseInBlock = false;
-        _.extend(this, Events);
-        this.on("all", function(eventName){
-            console.log(eventName + ' was triggered!');
-        });
+        // _.extend(this, Events);
+        // this.on("all", function(eventName){
+        //     console.log(eventName + ' was triggered!');
+        // });
     };
-    Loader.prototype.loader_offers = loader_offers;
-    Loader.prototype.size_capacity_calculator = size_capacity_calculator;
     Loader.prototype.loader = loader;
     Loader.prototype.shake = shake;
     Loader.prototype.blinking = blinking;
@@ -90,7 +80,7 @@ define([
         //this.blinking(jQuery('#basic1'));
     };
     Loader.prototype.onmessage = function (e) {
-        console.log(e.originalEvent.data);
+        // console.log(e.originalEvent.data);
     };
     Loader.prototype.load_handler = function (e) {
 

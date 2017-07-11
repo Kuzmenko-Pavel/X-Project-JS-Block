@@ -1,15 +1,17 @@
-<div data-id='${id}' class='adv${c}Block reset'>
-    <div data-name='Header' class='adv${c}Header reset'>${title}</div>
-    <div data-name='Description' class='adv${c}Description reset'>${description}</div>
-    <div data-name='Cost' class='adv${c}Cost reset'>${price}</div>
-    <div data-name='Image' data-image-id='${id}' data-image-index='${index}' class='adv${c}ImageConS reset'>
-        <div class='control_next reset'>>></div>
-        <div class='control_prev reset'><<</div>
-        <ul class="reset">
-            {{each image}}
-            <li class="reset"><img data-name='Image' class='adv${c}ImageS reset' src='${$value}' alt=""/></li>
-            {{/each}}
-        </ul>
-    </div>
-    <div data-name='Button' class="adv${c}Button reset"><span class="reset">Купить</span></div>
+<% for(var offer in offers) { %>
+<div data-id='<%= offers[offer].id %>' class='<%= offers[offer].style_class %>'>
+            <div class='header'><%= offers[offer].title %></div>
+            <div class='description'><%= offers[offer].description %></div>
+            <div class='cost'><%= offers[offer].price %></div>
+            <div class='imageCon' data-image-id='<%= offers[offer].id %>' data-image-index='<%= offer %>'>
+                <div class='control_next'>>></div>
+                <div class='control_prev'><<</div>
+                <ul>
+                    <% for(var image in offers[offer].images) { %>
+                        <li><img src="<%= offers[offer].images[image] %>" alt=""/></li>
+                    <% } %>
+                </ul>
+            </div>
+            <div class="button"><%= offers[offer].button %></div>
 </div>
+<% } %>

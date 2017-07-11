@@ -51,10 +51,10 @@ define(['underscore'], function (_) {
         );
         for (x in keys) {
             if (typeof(keys[x]) != 'function') {
-                res.push([keys[x][0] + "~" + keys[x][1] + "~" + keys[x][2] + "~" + keys[x][4]]);
+                res.push([keys[x][0], keys[x][2], keys[x][4]]);
             }
         }
-        return res.join(";");
+        return res;
     };
     return RetargetingOffers;
 });

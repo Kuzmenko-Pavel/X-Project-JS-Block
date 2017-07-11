@@ -1,35 +1,76 @@
 /**
  * Created by kuzmenko-pavel on 20.04.17.
  */
-define(['underscore'], function (_) {
+define(['jquery','underscore'], function (jQuery, _) {
     var Informer = function (app) {
         this.app = app;
-        this.account = "";
-        this.auto_reload = 0;
-        this.auto_reload = 0;
-        this.blinking = 0;
-        this.blinking_reload = false;
-        this.capacity = 1;
-        this.domain = "";
+        this.informer_id = '';
+        this.informer_id_int = 0;
         this.footerHtml = "";
         this.headerHtml = "";
+        this.blinking = 0;
+        this.blinking_reload = false;
         this.html_notification = false;
-        this.informer_id = "";
-        this.informer_id_int = 0;
-        this.place_branch = false;
-        this.retargeting_branch = false;
-        this.retargeting_account_branch = false;
-        this.retargeting_capacity = 1;
-        this.retargeting_account_capacity = 1;
         this.shake = 0;
         this.shake_mouse = false;
         this.shake_reload = false;
-        this.social_branch = true;
-        this.title = "";
-        this.style = "";
+        this.capacity = 1;
+        this.capacity_styling = 1;
+        this.button = '';
+        this.ret_button = '';
+        this.rec_button = '';
+        this.campaigns = new Object();
+        this.place = new Array();
+        this.social = new Array();
+        this.account_retargeting = new Array();
+        this.dynamic_retargeting = new Array();
+        this.css = "";
     };
     Informer.prototype.parse = function (server_obj) {
-        _.extend(this,server_obj);
+        this.css = server_obj.css;
+        _.each(server_obj.campaigns, function(element, index, list) {
+            this.campaigns[element.id] = element;
+            if (element.retargeting && element.retargeting_type === 'offer'){
+                this.dynamic_retargeting.push([element.id, element.offer_by_campaign_unique]);
+                return;
+            }
+            else if (element.retargeting && element.retargeting_type === 'account'){
+                this.account_retargeting.push([element.id, element.offer_by_campaign_unique]);
+                return;
+            }
+            else if (!element.retargeting && !element.social){
+                this.place.push([element.id, element.offer_by_campaign_unique]);
+                return;
+            }
+             else if (!element.retargeting && element.social){
+                this.social.push([element.id, element.offer_by_campaign_unique]);
+                return;
+            }
+            else{
+                this.social.push([element.id, element.offer_by_campaign_unique]);
+                return;
+            }
+        }, this);
+        if (server_obj.block){
+            this.informer_id = server_obj.block.guid;
+            this.informer_id_int = server_obj.block.id;
+            this.capacity = server_obj.block.capacity;
+            this.capacity_styling = server_obj.block.capacity_styling;
+            this.headerHtml = server_obj.block.headerHtml;
+            this.footerHtml = server_obj.block.footerHtml;
+            this.blinking = server_obj.block.blinking;
+            this.blinking_reload = server_obj.block.blinking_reload;
+            this.html_notification = server_obj.block.html_notification;
+            this.shake = server_obj.block.shake;
+            this.shake_mouse = server_obj.block.shake_mouse;
+            this.shake_reload = server_obj.block.shake_reload;
+            this.button = server_obj.block.button;
+            this.ret_button = server_obj.block.ret_button;
+            this.rec_button = server_obj.block.rec_button;
+        }
+    };
+    Informer.prototype.apply_css = function () {
+        jQuery('head').append('<style type="text/css">' + this.css + '</style>');
     };
     return Informer;
 });

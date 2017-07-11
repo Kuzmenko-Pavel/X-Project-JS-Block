@@ -61,7 +61,7 @@ define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './
         UserHistory.prototype.exclude_get = function () {
             var keys = this.exclude.get().concat(this.exclude_click.get());
             keys = _.uniq(keys);
-            return keys.join(';');
+            return keys;
         };
         UserHistory.prototype.retargeting_clean = function (cl) {
             if (cl) {
@@ -88,12 +88,12 @@ define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './
         UserHistory.prototype.retargeting_exclude_get = function () {
             var keys = this.retargeting_exclude.get().concat(this.retargeting_exclude_click.get());
             keys = _.uniq(keys);
-            return keys.join(';');
+            return keys;
         };
         UserHistory.prototype.retargeting_account_exclude_get = function () {
             var keys = this.retargeting_account_exclude.get().concat(this.retargeting_account_exclude_click.get());
             keys = _.uniq(keys);
-            return keys.join(';');
+            return keys;
         };
         return new UserHistory();
     });
