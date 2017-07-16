@@ -24,10 +24,10 @@ define(function () {
         return false;
     };
     var settings = {
-        rg: 'http://0.0.0.0:8080',
-        rgb: '/pub',
-        cdn: 'http://localhost:8000',
-        ptbs: '/json-block/',
+        rg: 'https://rg.yottos.com',
+        rgb: '/v1/pub',
+        cdn: 'https://cdn.yottos.com',
+        ptbs: '/block/',
         etbs: '.json',
         IE: detectIE(),
         move_shake_sequence: [7, 4, 6, 10, 4, 3, 2, 7, 10, 5, 3, 5, 4, 10, 3, 4, 3, 2],

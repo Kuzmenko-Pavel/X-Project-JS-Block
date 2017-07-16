@@ -57,10 +57,6 @@ define([
         this.offers = new Offers(this);
         this.render = new Render(this);
         this.mouseInBlock = false;
-        // _.extend(this, Events);
-        // this.on("all", function(eventName){
-        //     console.log(eventName + ' was triggered!');
-        // });
     };
     Loader.prototype.loader = loader;
     Loader.prototype.shake = shake;

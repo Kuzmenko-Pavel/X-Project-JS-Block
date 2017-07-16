@@ -22,6 +22,13 @@ define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './
             this.activity_accounts = new ActivityAccount();
             this.activity_user = new ActivityUser();
         };
+        UserHistory.prototype.clear = function () {
+            if (test()) {
+                localStorage.clear();
+                return true;
+            }
+            return false;
+        };
         UserHistory.prototype.load = function () {
             if (test()) {
                 _.each(this, function (uh_element, uh_name, uh) {

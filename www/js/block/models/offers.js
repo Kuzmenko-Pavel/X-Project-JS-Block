@@ -71,12 +71,15 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
         }
         var style_class = campaign.style_class;
         var button = this.app.informer.button;
+        var branch = 'NL30';
         if (campaign.retargeting){
             button = this.app.informer.ret_button;
+            branch = 'NL31';
         }
         if (recomendet){
             style_class = campaign.style_class_recommendet;
             button = this.app.informer.rec_button;
+            branch = 'NL32';
         }
         var img_list = _.map(item.image, function(img){
             return img.replace(/(png|webp)/g,this.app.image_format);
@@ -105,6 +108,7 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
             id_cam: item.id_cam,
             guid_cam: campaign.guid,
             token: item.token,
+            branch: branch,
             button: button
         }));
         if (campaign.styling){
@@ -162,7 +166,6 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
     Offers.prototype.union = function (place, social, account_retargeting,  dynamic_retargeting) {
         this.items = new Array();
         this.styling = null;
-        console.log(place, social, account_retargeting,  dynamic_retargeting);
         if (dynamic_retargeting && dynamic_retargeting['offers'])
         {
             this.app.uh.retargeting_clean(dynamic_retargeting['clean']);
@@ -178,17 +181,30 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
         }
         if (place && place['offers'])
         {
-            console.log(place['clean']);
-            this.app.uh.exclude_clean(place['clean']);
+            //this.app.uh.exclude_clean(place['clean']);
             _.each(place['offers'], function(element, index, list) {
                 this.create(element);
             },this);
         }
         if (social && social['offers'])
         {
+            //this.app.uh.exclude_clean(social['clean']);
             _.each(social['offers'], function(element, index, list) {
                 this.create(element);
             },this);
+        }
+        if (this.styling){
+            while (0 < this.items.length && this.items.length < this.app.informer.capacity_styling){
+                this.items.unshift(this.items[Math.floor(Math.random()* (this.items.length - 1))]);
+            }
+        }
+        else{
+            while (0 < this.items.length && this.items.length < this.app.informer.capacity){
+                this.items.unshift(this.items[Math.floor(Math.random()* (this.items.length - 1))]);
+            }
+        }
+        if (this.items.length === 0){
+            this.app.uh.clear();
         }
     };
     Offers.prototype.get = function (id) {
@@ -196,7 +212,7 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
              return element.id === id;
          });
          if (offer === undefined){
-             offer = this.items[0];
+             offer = this.items[0];g
          }
          return offer;
     };

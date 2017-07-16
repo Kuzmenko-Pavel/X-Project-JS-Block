@@ -6,7 +6,7 @@ define(function () {
         requiredData: {
             informer: {
                 param: 'informer',
-                url: '/informer.json'
+                url: '/v1/informer.json'
             },
             offer_log: {
                 param: 'log',
@@ -15,19 +15,19 @@ define(function () {
             offers: [
                 {
                     param: 'place',
-                    url: '/place.json'
+                    url: '/v1/place.json'
                 },
                 {
                     param: 'social',
-                    url: '/social.json'
+                    url: '/v1/social.json'
                 },
                 {
                     param: 'account_retargeting',
-                    url: '/account_retargeting.json'
+                    url: '/v1/account_retargeting.json'
                 },
                 {
                     param: 'dynamic_retargeting',
-                    url: '/dynamic_retargeting.json'
+                    url: '/v1/dynamic_retargeting.json'
                 }
             ]
         }

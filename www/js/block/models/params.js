@@ -32,13 +32,14 @@ define(['jquery', 'json'], function (jQuery, JSON) {
             data['params']['test'] = this.app.adsparams.test;
             data['items'] = jQuery.map(this.app.offers.log_item, function(dataItem) {
                 var item = new Object();
-                item.id = dataItem.guid;
-                item.id_int = dataItem.id;
-                item.social = dataItem.camp.social;
+                item.guid = dataItem.guid;
+                item.id = dataItem.id;
+                item.campaign_social = dataItem.camp.social;
                 item.token = dataItem.token;
                 item.campaignId = dataItem.camp.guid;
                 item.campaignId_int = dataItem.camp.id;
                 item.retargeting = dataItem.camp.retargeting;
+                item.branch = dataItem.branch;
                 return item;
             });
         }

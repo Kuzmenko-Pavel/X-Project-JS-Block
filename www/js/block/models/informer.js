@@ -29,27 +29,22 @@ define(['jquery','underscore'], function (jQuery, _) {
     Informer.prototype.parse = function (server_obj) {
         this.css = server_obj.css;
         _.each(server_obj.campaigns, function(element, index, list) {
-            this.campaigns[element.id] = element;
             if (element.retargeting && element.retargeting_type === 'offer'){
                 this.dynamic_retargeting.push([element.id, element.offer_by_campaign_unique]);
-                return;
             }
             else if (element.retargeting && element.retargeting_type === 'account'){
                 this.account_retargeting.push([element.id, element.offer_by_campaign_unique]);
-                return;
             }
             else if (!element.retargeting && !element.social){
                 this.place.push([element.id, element.offer_by_campaign_unique]);
-                return;
             }
-             else if (!element.retargeting && element.social){
+            else if (!element.retargeting && element.social){
                 this.social.push([element.id, element.offer_by_campaign_unique]);
-                return;
             }
             else{
                 this.social.push([element.id, element.offer_by_campaign_unique]);
-                return;
             }
+            this.campaigns[element.id] = element;
         }, this);
         if (server_obj.block){
             this.informer_id = server_obj.block.guid;
@@ -70,7 +65,15 @@ define(['jquery','underscore'], function (jQuery, _) {
         }
     };
     Informer.prototype.apply_css = function () {
-        jQuery('head').append('<style type="text/css">' + this.css + '</style>');
+        if (document.createStyleSheet)
+        {
+            var styleSheet = document.createStyleSheet("");
+            styleSheet.cssText = this.css;
+        }
+        else
+        {
+            jQuery('<style type="text/css">' + this.css + '</style>').appendTo('head');
+        }
     };
     return Informer;
 });
