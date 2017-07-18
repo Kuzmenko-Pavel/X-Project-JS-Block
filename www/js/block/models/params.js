@@ -36,8 +36,8 @@ define(['jquery', 'json'], function (jQuery, JSON) {
                 item.id = dataItem.id;
                 item.campaign_social = dataItem.camp.social;
                 item.token = dataItem.token;
-                item.campaignId = dataItem.camp.guid;
-                item.campaignId_int = dataItem.camp.id;
+                item.campaign_guid = dataItem.camp.guid;
+                item.campaign_id = dataItem.camp.id;
                 item.retargeting = dataItem.camp.retargeting;
                 item.branch = dataItem.branch;
                 return item;

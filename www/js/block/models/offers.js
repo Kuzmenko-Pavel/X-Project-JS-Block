@@ -181,17 +181,17 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
         }
         if (place && place['offers'])
         {
-            //this.app.uh.exclude_clean(place['clean']);
             _.each(place['offers'], function(element, index, list) {
                 this.create(element);
             },this);
         }
-        if (social && social['offers'])
-        {
-            //this.app.uh.exclude_clean(social['clean']);
-            _.each(social['offers'], function(element, index, list) {
-                this.create(element);
-            },this);
+        if (this.items.length === 0){
+            if (social && social['offers'])
+            {
+                _.each(social['offers'], function(element, index, list) {
+                    this.create(element);
+                },this);
+            }
         }
         if (this.styling){
             while (0 < this.items.length && this.items.length < this.app.informer.capacity_styling){
@@ -203,6 +203,9 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
                 this.items.unshift(this.items[Math.floor(Math.random()* (this.items.length - 1))]);
             }
         }
+        if (place['clean'] || (place['clean'] && social['clean'])){
+             this.app.uh.exclude_clean(true);
+        }
         if (this.items.length === 0){
             this.app.uh.clear();
         }
@@ -212,7 +215,7 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
              return element.id === id;
          });
          if (offer === undefined){
-             offer = this.items[0];g
+             offer = this.items[0];
          }
          return offer;
     };

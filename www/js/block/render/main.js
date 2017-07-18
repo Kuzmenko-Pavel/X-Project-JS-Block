@@ -16,6 +16,7 @@ define(['jquery', 'underscore', './bind_redirect', './../templates/main', './bin
                 redirect(this.app, jQuery('#adsContainer'));
                 slider(jQuery('#adsContainer'));
                 this.app.offers.views(jQuery('#adsContainer'));
+                jQuery('.ellipsis').ellipsis();
             };
             return render_obj;
         };

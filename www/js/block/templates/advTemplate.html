@@ -1,8 +1,8 @@
 <% for(var offer in offers) { %>
 <div data-id='<%= offers[offer].id %>' class='<%= offers[offer].style_class %>'>
-            <div class='header'><%= offers[offer].title %></div>
-            <div class='description'><%= offers[offer].description %></div>
-            <div class='cost'><%= offers[offer].price %></div>
+            <div class='ellipsis multiline header'><%= offers[offer].title %></div>
+            <div class='ellipsis multiline description'><%= offers[offer].description %></div>
+            <div class='ellipsis cost'><%= offers[offer].price %></div>
             <div class='imageCon' data-image-id='<%= offers[offer].id %>' data-image-index='<%= offer %>'>
                 <div class='control_next'>>></div>
                 <div class='control_prev'><<</div>
@@ -12,6 +12,6 @@
                     <% } %>
                 </ul>
             </div>
-            <div class="button"><%= offers[offer].button %></div>
+            <div class="ellipsis button"><%= offers[offer].button %></div>
 </div>
 <% } %>

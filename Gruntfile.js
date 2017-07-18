@@ -107,12 +107,22 @@ module.exports = function (grunt) {
                     findNestedDependencies: true,
                     preserveLicenseComments: false,
                     wrap: true,
-                    optimize: 'none',
                     uglify2: {
                         output: {
-                            beautify: false
+                            beautify: false,
+                            quote_keys: true,
+                            ascii_only: true
                         },
                         compress: {
+                            unsafe: true,
+                            comparisons: true,
+                            cascade: true,
+                            collapse_vars: true,
+                            reduce_vars: true,
+                            warnings: true,
+                            loops: true,
+                            properties: true,
+                            screw_ie8 : false,
                             sequences: true,
                             dead_code: true,
                             conditionals: true,
@@ -120,18 +130,23 @@ module.exports = function (grunt) {
                             unused: true,
                             if_return: true,
                             join_vars: true,
-                            drop_console: false
+                            drop_console: true,
+                            passes: 3
                         },
                         warnings: true,
+                        verbose: true,
                         mangle: {
+                            screw_ie8 : false,
                             toplevel: true,
                             sort: true,
                             eval: true,
                             props: true
 
-                        }
+
+                        },
+                        ie8: true
                     },
-                    generateSourceMaps: true
+                    generateSourceMaps: false
                 }
             },
             compileLoader: {
