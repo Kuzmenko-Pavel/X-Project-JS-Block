@@ -54,17 +54,24 @@ define([
 
                 if(el.css("overflow") == "hidden")
                 {
-                    var text = el.html();
+                    var text = wordwrap(el.html(), Math.floor(el.width()/(parseInt(el.css('font-size')) / 1.91)));
                     var multiline = el.hasClass('multiline');
                     var t = jQuery(this.cloneNode(true))
-                        .hide()
-                        .css('position', 'absolute')
-                        .css('overflow', 'visible')
-                        .width(multiline ? el.width() : 'auto')
-                        .height(multiline ? 'auto' : el.height())
-                        ;
+                            .hide()
+                            .css('position', 'absolute')
+                            .css('overflow', 'visible')
+                            .width(multiline ? el.width() : 'auto')
+                            .height(multiline ? 'auto' : el.height());
 
-                    el.after(t);
+
+                    function wordwrap(str, width) {
+                        width = (width ? width : 75);
+                        if (!str) { return str; }
+                        var regex = '.{1,' +width+ '}(\s|$)|.{' +width+ '}|.+$';
+                        return str;
+                        return str.match(RegExp(regex, 'g')).join(' ');
+
+                    };
                     function height() {
                         return t.height() > el.height();
                     };
@@ -75,12 +82,12 @@ define([
 
                     var func = multiline ? height : width;
 
+                    t.html(text);
                     while (text.length > 0 && func())
                     {
                         text = text.substr(0, text.length - 1);
                         t.html(text + "...");
                     }
-
                     el.html(t.html());
                     t.remove();
                 }

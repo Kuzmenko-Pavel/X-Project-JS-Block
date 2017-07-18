@@ -107,6 +107,8 @@ module.exports = function (grunt) {
                     findNestedDependencies: true,
                     preserveLicenseComments: false,
                     wrap: true,
+                    optimize: 'uglify2',
+                    //optimize: 'none',
                     uglify2: {
                         output: {
                             beautify: false,
@@ -159,8 +161,8 @@ module.exports = function (grunt) {
                     findNestedDependencies: true,
                     preserveLicenseComments: false,
                     wrap: true,
-                    //optimize: 'uglify2',
-                    optimize: 'none',
+                    optimize: 'uglify2',
+                    //optimize: 'none',
                     uglify2: {
                         output: {
                             beautify: false,
