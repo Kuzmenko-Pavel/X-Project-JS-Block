@@ -18,6 +18,14 @@ define('block_render', ['jquery', 'underscore', './settings', './iframe_form'], 
         if (auto){
             dummy.addParameter('auto', 'true');
         }
+        _.each(location.search.substr(1).split("&"), function (element) {
+            var param = element.split("=");
+            if (param.length === 2){
+                if (param[0].indexOf('adsbyyottos_') !== -1){
+                    this.dummy.addParameter(param[0].split("_")[1], param[1]);
+                }
+            }
+        },{dummy:dummy});
         dummy.render();
         this.blocks.push(dummy);
     };
