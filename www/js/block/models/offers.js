@@ -222,7 +222,9 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
     Offers.prototype.click = function (id) {
                var offer = this.get(id);
                var popup = window.open(link(offer, this.app),'_blank');
-               popup.moveTo(0,0);
+               if (popup){
+                 popup.moveTo(0,0);
+               }
                this.app.uh.load();
                if(offer.camp.retargeting)
                {
