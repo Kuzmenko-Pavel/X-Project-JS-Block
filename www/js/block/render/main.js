@@ -18,6 +18,9 @@ define(['jquery', 'underscore', './bind_redirect', './../templates/main', './bin
                 this.app.offers.views(jQuery('#adsContainer'));
                 jQuery('.ellipsis').ellipsis();
             };
+            render_obj.not_found = function () {
+                jQuery('html').html(templates.advBlockNotFoundTemplate());
+            };
             return render_obj;
         };
     });

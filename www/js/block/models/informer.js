@@ -47,6 +47,9 @@ define(['jquery','underscore'], function (jQuery, _) {
             this.campaigns[element.id] = element;
         }, this);
         if (server_obj.block){
+            if (server_obj.block.id === undefined){
+                return false;
+            }
             this.informer_id = server_obj.block.guid;
             this.informer_id_int = server_obj.block.id;
             this.capacity = server_obj.block.capacity;
@@ -63,6 +66,7 @@ define(['jquery','underscore'], function (jQuery, _) {
             this.ret_button = server_obj.block.ret_button;
             this.rec_button = server_obj.block.rec_button;
         }
+        return true;
     };
     Informer.prototype.apply_css = function () {
         if (document.createStyleSheet)

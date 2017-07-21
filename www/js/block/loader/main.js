@@ -6,9 +6,13 @@ define(['jquery', 'underscore', './informer', './offers'],
         var loader_obj = function () {
             var informer_defferr = jQuery.when(informer_loader(this));
             informer_defferr.then(_.bind(function (informer) {
-                this.informer.parse(informer);
-                this.informer.apply_css();
-                offers_loader(this);
+                if (this.informer.parse(informer)){
+                    this.informer.apply_css();
+                    offers_loader(this);
+                }
+                else{
+                   this.render.not_found();
+                }
             }, this));
             return true;
         };
