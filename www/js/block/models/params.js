@@ -8,6 +8,7 @@ define(['jquery', 'json'], function (jQuery, JSON) {
         this.w_w = jQuery(window).width();
     };
     Params.prototype.generateRequestData = function (req_type) {
+        this.app.uh.load();
         var data = {};
         if (req_type === 'informer'){
             data['w'] = this.w_w;

@@ -82,7 +82,7 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
             branch = 'NL32';
         }
         var img_list = _.map(item.image, function(img){
-            return img.replace(/(png|webp)/g,this.app.image_format);
+            return jQuery.trim(img.replace(/(png|webp)/g,this.app.image_format));
         }, this);
 
         if (img_list.length === 2)
@@ -205,9 +205,12 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
         }
         if (place['clean'] || (place['clean'] && social['clean'])){
              this.app.uh.exclude_clean(true);
+             this.app.uh.save();
         }
         if (this.items.length === 0){
             this.app.uh.clear();
+            this.app.uh.save();
+            offers_loader(this.app);
         }
     };
     Offers.prototype.get = function (id) {
