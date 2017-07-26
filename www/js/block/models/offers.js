@@ -8,6 +8,7 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
         this.log_item = new Array();
         this.styling = null;
         this.brending = null;
+        this.req_count = 0;
     };
     Offers.prototype.create = function (item, recomendet) {
         if (this.styling){
@@ -208,9 +209,10 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
              this.app.uh.save();
         }
         if (this.items.length === 0){
-            this.app.uh.clear();
-            this.app.uh.save();
-            offers_loader(this.app);
+            if (this.app.uh.clear() && this.req_count < 10){
+                this.req_count++;
+                offers_loader(this.app);
+            }
         }
     };
     Offers.prototype.get = function (id) {
@@ -248,7 +250,9 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
                             this.view(id);
                         }
                 }, this);
-                offers_log(this.app);
+                if (items.length > 0){
+                    offers_log(this.app);
+                }
     };
     Offers.prototype.view = function (id) {
                 var offer = this.get(id);

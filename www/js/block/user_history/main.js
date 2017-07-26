@@ -25,6 +25,12 @@ define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './
         UserHistory.prototype.clear = function () {
             if (test()) {
                 localStorage.clear();
+                this.exclude_clean(true);
+                this.exclude_click_clean(true);
+                this.retargeting_clean(true);
+                this.retargeting_account_clean(true);
+                this.retargeting_click_clean(true);
+                this.load();
                 return true;
             }
             return false;
