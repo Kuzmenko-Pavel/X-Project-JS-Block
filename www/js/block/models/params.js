@@ -13,6 +13,7 @@ define(['jquery', 'json'], function (jQuery, JSON) {
         if (req_type === 'informer'){
             data['w'] = this.w_w;
                 data['h'] = this.w_h;
+            data['device'] = this.app.device;
             data['block_id'] = this.app.adsparams.block_id;
             data['auto'] = this.app.adsparams.auto;
             data['country'] = this.app.adsparams.country;
