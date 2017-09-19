@@ -90,7 +90,6 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
         if (this.app.browser.IE7) {
             img_list = img_list.slice(0, 1);
         }
-
         this.items.push(new Object({
             title: item.title,
             description: item.description,

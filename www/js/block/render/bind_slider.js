@@ -6,8 +6,7 @@ define(['jquery', 'underscore'], function (jQuery, _) {
         var items = el.find('.imageCon');
         _.each(items, function(element, index, list) {
             var el = jQuery(element);
-            var imgCount = el.find('img').length;
-            var slideCount = el.find('li').length;
+            var slideCount = el.find('img').length;
             var slideWidth = el.find('img').width();
             var slideHeight = el.find('img').height();
             var sliderUlWidth = slideCount * slideWidth;
@@ -15,7 +14,7 @@ define(['jquery', 'underscore'], function (jQuery, _) {
                 slideHeight = 'auto';
             }
             el.css({ width: slideWidth, height: slideHeight });
-            if (imgCount > 1)
+            if (slideCount > 1)
             {
                 el.find('ul').css({ width: sliderUlWidth, marginLeft: - slideWidth, zoom: 1 });
                 el.find('li').css({ zoom: 1 });
@@ -42,7 +41,7 @@ define(['jquery', 'underscore'], function (jQuery, _) {
                     el.find('ul').animate({
                         left: - slideWidth
                         }, 900, 'easeOutCirc', function () {
-                        el.find('li:last-child').prependTo(el.find('ul'));
+                        el.find('li:first-child').appendTo(el.find('ul'));
                         el.find('ul').css({'left': '',zoom: 1});
                     });
                 });
