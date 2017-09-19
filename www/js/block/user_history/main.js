@@ -31,6 +31,7 @@ define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './
                 this.retargeting_account_clean(true);
                 this.retargeting_click_clean(true);
                 this.load();
+                this.save();
                 return true;
             }
             return false;
@@ -59,6 +60,7 @@ define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './
 
         UserHistory.prototype.exclude_clean = function (cl) {
             if (cl) {
+                this.load();
                 this.exclude = new ExcludeOffers();
                 this.save();
             }
@@ -66,6 +68,7 @@ define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './
         };
         UserHistory.prototype.exclude_click_clean = function (cl) {
             if (cl) {
+                this.load();
                 this.exclude_click = new ExcludeOffers();
                 this.save();
             }
@@ -86,6 +89,7 @@ define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './
         };
         UserHistory.prototype.retargeting_account_clean = function (cl) {
             if (cl) {
+                this.load();
                 this.retargeting_account_exclude = new ExcludeOffers();
                 this.save();
             }
@@ -93,6 +97,7 @@ define(['underscore', 'json', './test', './fixed_queue', './exclude_offers', './
         };
         UserHistory.prototype.retargeting_click_clean = function (cl) {
             if (cl) {
+                this.load();
                 this.retargeting_click_exclude = new ExcludeOffers();
                 this.save();
             }

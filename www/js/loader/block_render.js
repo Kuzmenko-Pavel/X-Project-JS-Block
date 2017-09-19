@@ -4,8 +4,9 @@
 define('block_render', ['jquery', 'underscore', './settings', './iframe_form'], function (jQuery, _, settings, Iframe_form) {
     return function ($el, block_setting) {
         var client = $el.attr('data-ad-client');
+        var index = $el.attr('data-ad-index');
         var auto = false;
-        var url = settings.rg + settings.rgb + '?scr=' + client + '&mod=' + block_setting.m;
+        var url = settings.rg + settings.rgb + '?mod=' + block_setting.m;
         if (block_setting['w'] === 'auto' || block_setting['h'] === 'auto'){
             auto = true;
         }
@@ -15,6 +16,7 @@ define('block_render', ['jquery', 'underscore', './settings', './iframe_form'], 
         var dummy = new Iframe_form(url, $el, block_setting, client);
         dummy.addParameter('scr', client);
         dummy.addParameter('mod', block_setting.m);
+        dummy.addParameter('index', index);
         if (auto){
             dummy.addParameter('auto', 'true');
         }

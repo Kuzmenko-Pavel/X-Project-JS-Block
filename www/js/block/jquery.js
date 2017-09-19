@@ -48,11 +48,28 @@ define([
 
         jQuery.fn.ellipsis = function()
         {
+            var height = function(t, el){
+                    return t.height() > el.height();
+            };
+
+            var width = function (t, el) {
+                        return t.width() > el.width();
+            };
+
+            var wordwrap = function (str, width) {
+                return str;
+                // width = (width ? width : 75);
+                // if (!str) { return str; }
+                // var regex = '.{1,' +width+ '}(\s|$)|.{' +width+ '}|.+$';
+                //
+                // return str.match(RegExp(regex, 'g')).join(' ');
+
+            };
+
             return this.each(function()
             {
                 var el = jQuery(this);
-
-                if(el.css("overflow") == "hidden")
+                if(el.css("overflow") === 'hidden')
                 {
                     var text = wordwrap(el.html(), Math.floor(el.width()/(parseInt(el.css('font-size')) / 1.91)));
                     var multiline = el.hasClass('multiline');
@@ -63,24 +80,7 @@ define([
                             .width(multiline ? el.width() : 'auto')
                             .height(multiline ? 'auto' : el.height());
 
-
-                    function wordwrap(str, width) {
-                        width = (width ? width : 75);
-                        if (!str) { return str; }
-                        var regex = '.{1,' +width+ '}(\s|$)|.{' +width+ '}|.+$';
-                        return str;
-                        return str.match(RegExp(regex, 'g')).join(' ');
-
-                    };
-                    function height() {
-                        return t.height() > el.height();
-                    };
-
-                    function width() {
-                        return t.width() > el.width();
-                    };
-
-                    var func = multiline ? height : width;
+                    var func = multiline ? height(t, el) : width(t, el);
 
                     t.html(text);
                     while (text.length > 0 && func())

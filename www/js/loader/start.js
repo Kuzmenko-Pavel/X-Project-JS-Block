@@ -6,11 +6,10 @@ define([
     'underscore'
 ], function (jQuery, _) {
     return function () {
-        var self = this;
-        jQuery('ins.adsbyyottos:not([data-ad-status])').each(jQuery.proxy(function () {
-                var $el = jQuery(this);
-                self.block_settings.get($el, _.bind(self.block_render, self));
-            }
-        ), this);
+        jQuery('ins.adsbyyottos:not([data-ad-status])').each(_.bind(function (index, value) {
+                var $el = jQuery(value);
+                $el.attr('data-ad-index', index);
+                this.block_settings.get($el, _.bind(this.block_render, this));
+            },this));
     };
 });

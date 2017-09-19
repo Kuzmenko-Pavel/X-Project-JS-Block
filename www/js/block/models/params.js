@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 20.04.17.
  */
-define(['jquery', 'json'], function (jQuery, JSON) {
+define(['jquery', 'json', 'underscore'], function (jQuery, JSON, _) {
     var Params = function (app) {
         this.app = app;
         this.w_h = jQuery(window).height();
@@ -46,6 +46,10 @@ define(['jquery', 'json'], function (jQuery, JSON) {
             });
         }
         else {
+            data['index'] = parseInt(this.app.adsparams.index);
+            if (!_.isNumber(data['index'])){
+                data['index'] = 0;
+            }
             data['block_id'] = this.app.informer.informer_id_int;
             if (this.app.informer.capacity >= this.app.informer.capacity_styling) {
                 data['capacity'] = this.app.informer.capacity;
@@ -57,20 +61,24 @@ define(['jquery', 'json'], function (jQuery, JSON) {
             if (req_type === 'place') {
                 data['campaigns'] = this.app.informer.place;
                 data['exclude'] = this.app.uh.exclude_get();
+                data['offer_count'] = this.app.informer.offer_count.place;
             }
             else if (req_type === 'social') {
                 data['campaigns'] = this.app.informer.social;
                 data['exclude'] = this.app.uh.exclude_get();
+                data['offer_count'] = this.app.informer.offer_count.social;
             }
             else if (req_type === 'account_retargeting') {
                 data['campaigns'] = this.app.informer.account_retargeting;
                 data['exclude'] = this.app.uh.retargeting_account_exclude_get();
                 data['retargeting'] = this.app.uh.retargeting.get();
+                data['offer_count'] = this.app.informer.offer_count.account_retargeting;
             }
             else if (req_type === 'dynamic_retargeting') {
                 data['campaigns'] = this.app.informer.dynamic_retargeting;
                 data['exclude'] = this.app.uh.retargeting_exclude_get();
                 data['retargeting'] = this.app.uh.retargeting.get();
+                data['offer_count'] = this.app.informer.offer_count.dynamic_retargeting;
             }
         }
 

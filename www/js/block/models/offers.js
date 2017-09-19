@@ -21,8 +21,7 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
                 return;
             }
         }
-        var campaign = this.app.informer.campaigns[item.id_cam];
-        if (campaign.styling) {
+        if (item.campaign.styling) {
             if (this.styling === null || this.styling === item.id_cam) {
                 this.styling = item.id_cam;
             }
@@ -35,7 +34,7 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
                 this.styling = false;
             }
         }
-        if (campaign.brending) {
+        if (item.campaign.brending) {
             if (this.brending === null || this.brending === item.id_cam) {
                 this.brending = item.id_cam;
             }
@@ -48,35 +47,35 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
                 this.brending = false;
             }
         }
-        if (this.items.length === (this.app.informer.capacity_styling - 1) && this.styling && campaign.style_data) {
+        if (this.items.length === (this.app.informer.capacity_styling - 1) && this.styling && item.campaign.style_data) {
             var img = [];
-            img.push(campaign.style_data.img);
+            img.push(item.campaign.style_data.img);
             this.items.push(new Object({
-                title: campaign.style_data.head_title,
+                title: item.campaign.style_data.head_title,
                 description: null,
                 price: null,
                 url: item.url,
                 images: img,
-                style_class: 'logo' + campaign.style_class,
+                style_class: 'logo' + item.campaign.style_class,
                 id: null,
                 guid: null,
-                camp: campaign,
+                camp: item.campaign,
                 id_cam: null,
                 guid_cam: null,
                 token: null,
-                button: campaign.style_data.button_title
+                button: item.campaign.style_data.button_title
             }));
             return;
         }
-        var style_class = campaign.style_class;
+        var style_class = item.campaign.style_class;
         var button = this.app.informer.button;
         var branch = 'NL30';
-        if (campaign.retargeting) {
+        if (item.campaign.retargeting) {
             button = this.app.informer.ret_button;
             branch = 'NL31';
         }
         if (recomendet) {
-            style_class = campaign.style_class_recommendet;
+            style_class = item.campaign.style_class_recommendet;
             button = this.app.informer.rec_button;
             branch = 'NL32';
         }
@@ -101,20 +100,21 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
             style_class: 'adv' + style_class,
             id: item.id,
             guid: item.guid,
-            camp: campaign,
+            camp: item.campaign,
             id_cam: item.id_cam,
-            guid_cam: campaign.guid,
+            guid_cam: item.campaign.guid,
             token: item.token,
             branch: branch,
             button: button
         }));
-        if (campaign.styling) {
+        if (item.campaign.styling) {
             var styling_item = item.recommended || [];
             if (styling_item.length < this.app.informer.capacity_styling) {
                 styling_item = styling_item.concat(styling_item);
             }
             _.each(styling_item, function (element, index, list) {
                 element.id_cam = item.id_cam;
+                element.campaign = item.campaign;
                 this.create(element, true);
             }, this);
             if (!recomendet) {
@@ -124,11 +124,11 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
             }
         }
         else {
-            if (campaign.brending) {
+            if (item.campaign.brending) {
                 var brending_item = item.recommended || [];
-                var recomendet_count = campaign.recomendet_count;
+                var recomendet_count = item.campaign.recomendet_count;
                 var day = 0;
-                if (campaign.recomendet_type === 'min') {
+                if (item.campaign.recomendet_type === 'min') {
                     if (recomendet_count - day > 1) {
                         recomendet_count = recomendet_count - day;
                     }
@@ -136,7 +136,7 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
                         recomendet_count = 1;
                     }
                 }
-                else if (campaign.recomendet_type === 'max') {
+                else if (item.campaign.recomendet_type === 'max') {
                     if (1 + day < recomendet_count) {
                         recomendet_count = 1 + day;
                     }
@@ -149,6 +149,7 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
                 brending_item = brending_item.slice(0, recomendet_count);
                 _.each(brending_item, function (element, index, list) {
                     element.id_cam = item.id_cam;
+                    element.campaign = item.campaign;
                     this.create(element, true);
                 }, this);
             }
@@ -158,42 +159,120 @@ define(['jquery', 'underscore', './link', './../loader/offers', './../loader/off
     Offers.prototype.union = function (place, social, account_retargeting, dynamic_retargeting) {
         this.items = new Array();
         this.styling = null;
+        var full_block_offer = 0;
+        var one_block_offer = 0;
         if (dynamic_retargeting && dynamic_retargeting['offers']) {
+            full_block_offer = 0;
+            one_block_offer = 0;
+            _.each(dynamic_retargeting['offers'], function (element, index, list) {
+                list[index].campaign = this.app.informer.campaigns[element.id_cam];
+                if (list[index].campaign.styling || list[index].campaign.brending){
+                    full_block_offer +=1;
+                }
+                else{
+                    one_block_offer +=1;
+                }
+            }, this);
             this.app.uh.retargeting_clean(dynamic_retargeting['clean']);
             _.each(dynamic_retargeting['offers'], function (element, index, list) {
-                this.create(element);
+                if (full_block_offer >= one_block_offer){
+                    if (element.campaign.styling || element.campaign.brending){
+                        this.create(element);
+                    }
+                }
+                else{
+                    this.create(element);
+                }
             }, this);
         }
         if (account_retargeting && account_retargeting['offers']) {
+            full_block_offer = 0;
+            one_block_offer = 0;
             _.each(account_retargeting['offers'], function (element, index, list) {
-                this.create(element);
+                list[index].campaign = this.app.informer.campaigns[element.id_cam];
+                if (list[index].campaign.styling || list[index].campaign.brending){
+                    full_block_offer +=1;
+                }
+                else{
+                    one_block_offer +=1;
+                }
+            }, this);
+            _.each(account_retargeting['offers'], function (element, index, list) {
+                if (full_block_offer >= one_block_offer){
+                    if (element.campaign.styling || element.campaign.brending){
+                        this.create(element);
+                    }
+                }
+                else{
+                    this.create(element);
+                }
             }, this);
         }
         if (place && place['offers']) {
+            full_block_offer = 0;
+            one_block_offer = 0;
             _.each(place['offers'], function (element, index, list) {
-                this.create(element);
+                list[index].campaign = this.app.informer.campaigns[element.id_cam];
+                if (list[index].campaign.styling || list[index].campaign.brending){
+                    full_block_offer +=1;
+                }
+                else{
+                    one_block_offer +=1;
+                }
+            }, this);
+            _.each(place['offers'], function (element, index, list) {
+                if (full_block_offer >= one_block_offer){
+                    if (element.campaign.styling || element.campaign.brending){
+                        this.create(element);
+                    }
+                }
+                else{
+                    this.create(element);
+                }
             }, this);
         }
         if (this.items.length === 0) {
             if (social && social['offers']) {
+                full_block_offer = 0;
+                one_block_offer = 0;
                 _.each(social['offers'], function (element, index, list) {
-                    this.create(element);
+                    list[index].campaign = this.app.informer.campaigns[element.id_cam];
+                    if (list[index].campaign.styling || list[index].campaign.brending){
+                        full_block_offer +=1;
+                    }
+                    else{
+                    one_block_offer +=1;
+                }
+                }, this);
+                _.each(social['offers'], function (element, index, list) {
+                    if (full_block_offer >= one_block_offer){
+                        if (element.campaign.styling || element.campaign.brending){
+                            this.create(element);
+                        }
+                    }
+                    else{
+                        this.create(element);
+                    }
                 }, this);
             }
         }
+        var counter = 0;
         if (this.styling) {
+            counter = 0;
             while (0 < this.items.length && this.items.length < this.app.informer.capacity_styling) {
-                this.items.unshift(this.items[Math.floor(Math.random() * (this.items.length - 1))]);
+                this.items.push(this.items[counter]);
+                counter++;
             }
         }
         else {
+            counter = 0;
             while (0 < this.items.length && this.items.length < this.app.informer.capacity) {
-                this.items.unshift(this.items[Math.floor(Math.random() * (this.items.length - 1))]);
+                this.items.push(this.items[counter]);
+                counter++;
             }
         }
         if (place['clean'] || (place['clean'] && social['clean'])) {
             this.app.uh.exclude_clean(true);
-            this.app.uh.save();
         }
         if (this.items.length === 0) {
             if (this.app.uh.clear() && this.req_count < 10) {
