@@ -80,10 +80,10 @@ define([
                             .width(multiline ? el.width() : 'auto')
                             .height(multiline ? 'auto' : el.height());
 
-                    var func = multiline ? height(t, el) : width(t, el);
+                    var func = multiline ? height : width;
 
                     t.html(text);
-                    while (text.length > 0 && func())
+                    while (text.length > 0 && func(t, el))
                     {
                         text = text.substr(0, text.length - 1);
                         t.html(text + "...");

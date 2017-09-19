@@ -16,11 +16,11 @@ define('is_element_in_viewport', ['jquery'], function (jQuery) {
         var XOffset = 0;
         var innerWidth;
         var innerHeight;
-        if (typeof window.innerWidth != 'undefined') {
+        if (typeof window.innerWidth !== 'undefined') {
             innerWidth = window.innerWidth;
             innerHeight = window.innerHeight;
         }
-        else if (typeof document.documentElement != 'undefined' && typeof document.documentElement.clientWidth != 'undefined' && document.documentElement.clientWidth != 0) {
+        else if (typeof document.documentElement !== 'undefined' && typeof document.documentElement.clientWidth !== 'undefined' && document.documentElement.clientWidth !== 0) {
             innerWidth = document.documentElement.clientWidth;
             innerHeight = document.documentElement.clientHeight;
         }
@@ -28,7 +28,7 @@ define('is_element_in_viewport', ['jquery'], function (jQuery) {
             innerWidth = document.getElementsByTagName('body')[0].clientWidth;
             innerHeight = document.getElementsByTagName('body')[0].clientHeight;
         }
-        if (typeof window.pageYOffset != 'undefined') {
+        if (typeof window.pageYOffset !== 'undefined') {
             pageYOffset = window.pageYOffset;
             pageXOffset = window.pageXOffset;
         }
