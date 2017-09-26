@@ -101,7 +101,8 @@ module.exports = function (grunt) {
                 options: {
                     mainConfigFile: 'www/js/block/require_config.js',
                     baseUrl: 'www/js/block/',
-                    include: ['main', '../../../node_modules/requirejs/require'],
+                    include: ['main', '../../../bower_components/almond/almond'],
+                    //include: ['main', '../../../node_modules/requirejs/require'],
                     out: 'www/js/block.js',
                     removeCombined: false,
                     findNestedDependencies: true,
@@ -155,7 +156,8 @@ module.exports = function (grunt) {
                 options: {
                     mainConfigFile: 'www/js/loader/require_config.js',
                     baseUrl: 'www/js/loader/',
-                    include: ['main', '../../../node_modules/requirejs/require'],
+                    include: ['main', '../../../bower_components/almond/almond'],
+                    //include: ['main', '../../../node_modules/requirejs/require'],
                     out: 'www/js/loader.js',
                     removeCombined: false,
                     findNestedDependencies: true,

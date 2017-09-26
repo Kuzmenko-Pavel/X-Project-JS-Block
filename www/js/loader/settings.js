@@ -25,6 +25,7 @@ define(function () {
     };
     var settings = {
         rg: 'https://rg.yottos.com',
+        //rg: 'http://10.0.0.110:8080',
         rgb: '/v1/pub',
         cdn: 'https://cdn.yottos.com',
         ptbs: '/block/',
