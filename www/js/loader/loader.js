@@ -52,10 +52,10 @@ define([
     };
     Loader.prototype.ready_handler = function (e) {
         this.start();
-        var html_obj = jQuery(window);
-        html_obj.scroll(_.bind(this.scroll_handler, this));
-        html_obj.resize(_.bind(this.resize_handler, this));
-        html_obj.mousemove(_.bind(this.mouse_move_handler, this));
+        var $window = jQuery(window);
+        $window.scroll(_.bind(this.scroll_handler, this));
+        $window.resize(_.bind(this.resize_handler, this));
+        $window.mousemove(_.bind(this.mouse_move_handler, this));
         this.blocks.logging();
     };
     return Loader;

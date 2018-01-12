@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 07.04.17.
  */
-define('block_logging', ['jquery', './settings'], function (jQuery, settings) {
+define('block_logging', ['underscore', 'jquery', './settings'], function (_, jQuery, settings) {
     return function () {
 
         if (this.block_setting.logging === false) {

@@ -46,10 +46,7 @@ define('block_template', ['underscore', './settings'], function (_, settings) {
                     h = _.filter(settings.b_s.b_v_w, function (el) {
                         return between(el[1], w - s, w + s);
                     });
-                    if (_.size(h) === 0) {
-                        return false;
-                    }
-                    return true;
+                    return (_.size(h) !== 0);
                 });
                 if (_.size(h) === 0) {
                     if (w <= 200) {
@@ -70,12 +67,7 @@ define('block_template', ['underscore', './settings'], function (_, settings) {
                             h = _.filter(settings.b_s.b_h_w, function (el) {
                                 return between(el[1], w - s, w + s);
                             });
-                            if (_.size(h) === 0) {
-                                return false;
-                            }
-                            else {
-                                return true;
-                            }
+                            return (_.size(h) !== 0);
                         });
                         if (_.size(h) === 0) {
                             if (w <= 600) {
@@ -93,12 +85,7 @@ define('block_template', ['underscore', './settings'], function (_, settings) {
                         h = _.filter(settings.b_s.b_h_w, function (el) {
                             return between(el[1], w - s, w + s);
                         });
-                        if (_.size(h) === 0) {
-                            return false;
-                        }
-                        else {
-                            return true;
-                        }
+                        return (_.size(h) !== 0);
                     });
                     if (_.size(h) === 0) {
                         if (w <= 600) {
