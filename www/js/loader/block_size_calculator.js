@@ -6,17 +6,20 @@ define('block_size_calculator', ['jquery', 'underscore', './block_template'], fu
         var size = {w: null, h: null, p_w_h: null, p_w_w: null,
             w_h: null, w_w: null, s_h: null, s_w: null, w_p_t: null, w_p_l: null, w_p_t_c: null, w_p_l_c: null,
             p_l: null, p_t: null};
+        $el.parent().css({width:'100%'});
         var w_position = $el.offset();
-        size.s_h = jQuery(document).height();
-        size.s_w = jQuery(document).width();
+        var $document = jQuery(document);
+        var $parent = $el.parent();
+        size.s_h = $document.height();
+        size.s_w = $document.width();
         size.w_h = $el.height();
         size.w_w = $el.width();
         size.w_p_t = w_position.top;
         size.w_p_l = w_position.left;
         size.w_p_t_c = w_position.top + (size.w_h / 2);
         size.w_p_l_c = w_position.left + (size.w_w / 2);
-        size.p_w_h = $el.parent().height();
-        size.p_w_w = $el.parent().width();
+        size.p_w_h = $parent.height();
+        size.p_w_w = $parent.width();
         if (_.isNumber(block_setting.h)) {
             size.h = block_setting.h;
         }
@@ -53,7 +56,6 @@ define('block_size_calculator', ['jquery', 'underscore', './block_template'], fu
                 size.w = size.p_w_w;
             }
         }
-
-        return size;
+        return {w: size.w, h: size.h};
     };
 });

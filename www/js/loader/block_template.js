@@ -8,27 +8,33 @@ define('block_template', ['underscore', './settings'], function (_, settings) {
         };
 
         if (between(size.w_p_l_c, (size.s_w / 2) - 250, (size.s_w / 2) + 250)) {
+            //center
             size.p_l = 'c';
         }
         else if (between(size.w_p_l_c, 0, (size.s_w / 2) - 250)) {
+            //left
             size.p_l = 'l';
         }
         else if (between(size.w_p_l_c, (size.s_w / 2) + 250, size.s_w)) {
+            //right
             size.p_l = 'r';
 
         }
         if (between(size.w_p_t_c, 350, size.s_h - 500)) {
+            //center
             size.p_t = 'c';
         }
         else if (between(size.w_p_t_c, 0, 350)) {
+            //top
             size.p_t = 't';
         }
         else if (between(size.w_p_t_c, size.s_h - 500, size.s_h)) {
+            //bottom
             size.p_t = 'b';
 
         }
-
-        var find_blocks_by_width = function (w) {
+        console.log(size);
+        var find_blocks = function (w) {
             var h = [];
             var steps = [1, 3, 5, 7, 10, 15, 20, 25, 30, 35, 40, 50, 75, 100, 125];
             var vertical = false;
@@ -53,8 +59,6 @@ define('block_template', ['underscore', './settings'], function (_, settings) {
                         h = [settings.b_s.b_v_w[settings.b_s.b_v_w.length - 1]];
                     }
                 }
-                console.groupEnd();
-
             }
             else {
                 if (size.p_l === 'c' && size.p_t === 'c') {
@@ -109,16 +113,7 @@ define('block_template', ['underscore', './settings'], function (_, settings) {
             return [h[0][0], w];
 
         };
-        var find_blocks_by_height = function (h) {
-            var vertical = between(h, settings.block_width_range[0], settings.block_width_range[1]);
-        };
-        var block;
-        if (_.isNull(size.h) && !_.isNull(size.w)) {
-            block = find_blocks_by_width(size.w);
-        }
-        else if (_.isNull(size.w) && !_.isNull(size.h)) {
-            block = find_blocks_by_height(size.h);
-        }
+        var block = find_blocks(size.w);
         if (_.isArray(block)) {
             size.h = block[0];
             size.w = block[1];

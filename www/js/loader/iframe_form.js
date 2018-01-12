@@ -5,6 +5,7 @@ define('iframe_form',
     ['jquery', 'underscore', './block_logging', './block_active_view', './block_size_calculator'],
     function (jQuery, _, block_logging, block_active_view, block_size_calculator) {
         return function (url, $el, block_setting, client) {
+            var sandbox = 'allow-scripts allow-same-origin allow-popups';
             var object = this;
             object.client = client;
             object.size = block_size_calculator($el, block_setting);
@@ -42,6 +43,7 @@ define('iframe_form',
             object.iframe.attr("width", object.size.w);
             object.iframe.attr("height", object.size.h);
             object.iframe.data('time', object.time);
+            object.iframe.attr("sandbox", sandbox);
 
             object.addParameter = function (parameter, value) {
                 jQuery("<input type='hidden' />")
