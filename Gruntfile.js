@@ -1,3 +1,5 @@
+var fs = require('fs');
+var mime = require('mime-types');
 module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -18,6 +20,29 @@ module.exports = function (grunt) {
                     protocol: 'http',
                     base: ['www'],
                     middleware: function (connect, options, middlewares) {
+                        middlewares.unshift(function (req, res, next) {
+                            var fileName = '.' + req.url;
+                            var extension = fileName.split('.').pop();
+                            if (!grunt.file.exists('./www/'+ fileName)){
+                                if (extension === 'webp'){
+                                    fileName = '404/404.webp';
+                                }
+                                else if (extension === 'png'){
+                                    fileName = '404/404.png';
+                                }
+                            }
+                            fs.readFile('./www/'+ fileName, function (err, content) {
+                                if (err) {
+                                    res.writeHead(404, {'Content-type':'text/html'});
+                                    return res.end("No such fileName");
+
+                                } else {
+                                    //specify the content type in the response will be an image
+                                    res.writeHead(200, {'Content-Type': mime.lookup('./www/'+ fileName)});
+                                    return res.end(content);
+                                }
+                            });
+                        });
                         middlewares.unshift(function (req, res, next) {
                             res.setHeader('Access-Control-Allow-Origin', '*');
                             res.setHeader('Access-Control-Allow-Credentials', true);
