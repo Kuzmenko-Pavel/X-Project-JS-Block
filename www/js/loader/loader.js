@@ -2,8 +2,8 @@
  * Created by kuzmenko-pavel on 04.04.17.
  */
 define([
-    'jquery',
-    'underscore',
+    './jquery',
+    './underscore',
     './start',
     './block_render',
     './block_settings',
@@ -53,9 +53,9 @@ define([
     Loader.prototype.ready_handler = function (e) {
         this.start();
         var $window = jQuery(window);
-        $window.scroll(_.bind(this.scroll_handler, this));
-        $window.resize(_.bind(this.resize_handler, this));
-        $window.mousemove(_.bind(this.mouse_move_handler, this));
+        $window.scroll(jQuery.proxy(this.scroll_handler, this));
+        $window.resize(jQuery.proxy(this.resize_handler, this));
+        $window.mousemove(jQuery.proxy(this.mouse_move_handler, this));
         this.blocks.logging();
     };
     return Loader;

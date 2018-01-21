@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 11.04.17.
  */
-define('block_size_calculator', ['jquery', 'underscore', './block_template'], function (jQuery, _, block_template) {
+define('block_size_calculator', ['jquery', './underscore', './block_template'], function (jQuery, _, block_template) {
     return function ($el, block_setting) {
         var size = {w: null, h: null, p_w_h: null, p_w_w: null,
             w_h: null, w_w: null, s_h: null, s_w: null, w_p_t: null, w_p_l: null, w_p_t_c: null, w_p_l_c: null,

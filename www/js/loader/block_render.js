@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 05.04.17.
  */
-define('block_render', ['jquery', 'underscore', './settings', './iframe_form'], function (jQuery, _, settings, Iframe_form) {
+define('block_render', ['./jquery', './underscore', './settings', './iframe_form'], function (jQuery, _, settings, Iframe_form) {
     return function ($el, block_setting) {
         var client = $el.attr('data-ad-client');
         var index = $el.attr('data-ad-index');

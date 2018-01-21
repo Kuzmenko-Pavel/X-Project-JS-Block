@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 07.04.17.
  */
-define('block_logging', ['underscore', 'jquery', './settings'], function (_, jQuery, settings) {
+define('block_logging', ['./jquery', './settings'], function (jQuery, settings) {
     return function () {
 
         if (this.block_setting.logging === false) {
@@ -9,14 +9,14 @@ define('block_logging', ['underscore', 'jquery', './settings'], function (_, jQu
         }
         var src = settings.rg + '/bl.js?guid=' + this.client + '&request=' + this.block_setting.logging;
         var jqxhr = jQuery.get(src);
-        jqxhr.done(_.bind(function () {
+        jqxhr.done(jQuery.proxy(function () {
             if (this.block_setting.logging !== 'complite') {
                 this.logging();
             }
         }, this));
-        jqxhr.fail(_.bind(function () {
+        jqxhr.fail(jQuery.proxy(function () {
                     var fail_jqxhr = jQuery.getScript(src);
-                    fail_jqxhr.done(_.bind(function () {
+                    fail_jqxhr.done(jQuery.proxy(function () {
                         if (this.block_setting.logging !== 'complite') {
                             this.logging();
                         }

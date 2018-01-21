@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 11.04.17.
  */
-define('block_template', ['underscore', './settings'], function (_, settings) {
+define('block_template', ['./underscore', './settings'], function (_, settings) {
     return function (size) {
         var between = function (x, min, max) {
             return x >= min && x <= max;
