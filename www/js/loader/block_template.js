@@ -33,7 +33,6 @@ define('block_template', ['./underscore', './settings'], function (_, settings) 
             size.p_t = 'b';
 
         }
-        console.log(size);
         var find_blocks = function (w) {
             var h = [];
             var steps = [1, 3, 5, 7, 10, 15, 20, 25, 30, 35, 40, 50, 75, 100, 125];

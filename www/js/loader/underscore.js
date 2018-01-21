@@ -26,7 +26,7 @@
   // All **ECMAScript 5** native function implementations that we hope to use
   // are declared here.
 
-  // var nativeIsArray      = Array.isArray;
+  var nativeIsArray      = Array.isArray;
   //   var nativeKeys         = Object.keys;
   //   var nativeBind         = FuncProto.bind;
     var nativeCreate       = Object.create;
@@ -219,14 +219,14 @@
   //
   // // Return all the elements that pass a truth test.
   // // Aliased as `select`.
-  // _.filter = _.select = function(obj, predicate, context) {
-  //   var results = [];
-  //   predicate = cb(predicate, context);
-  //   _.each(obj, function(value, index, list) {
-  //     if (predicate(value, index, list)) results.push(value);
-  //   });
-  //   return results;
-  // };
+  _.filter = _.select = function(obj, predicate, context) {
+    var results = [];
+    predicate = cb(predicate, context);
+    _.each(obj, function(value, index, list) {
+      if (predicate(value, index, list)) results.push(value);
+    });
+    return results;
+  };
   //
   // // Return all the elements for which a truth test fails.
   // _.reject = function(obj, predicate, context) {
@@ -1203,9 +1203,9 @@
   //
   // // Is a given value an array?
   // // Delegates to ECMA5's native Array.isArray
-  // _.isArray = nativeIsArray || function(obj) {
-  //   return toString.call(obj) === '[object Array]';
-  // };
+  _.isArray = nativeIsArray || function(obj) {
+    return toString.call(obj) === '[object Array]';
+  };
   //
   // Is a given variable an object?
   _.isObject = function(obj) {

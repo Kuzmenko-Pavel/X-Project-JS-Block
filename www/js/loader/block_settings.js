@@ -1,41 +1,47 @@
 /**
  * Created by kuzmenko-pavel on 05.04.17.
  */
-define('block_settings', ['./jquery', './settings'], function (jQuery, settings) {
+define('block_settings', ['./jquery', './settings', './storage'], function (jQuery, settings, storage) {
     var BlockSettings = function () {
         this.cache = {};
+        this.storage = storage;
         this.get = function ($el, callback) {
             var client = $el.attr('data-ad-client');
-            console.log('$el.attr(data-ad-client)', performance.now());
+            var storage_data = this.storage.get(client);
+            var src = settings.cdn + settings.ptbs + client + settings.etbs;
+            var Fsrc = settings.cdn + settings.ptbs + client + '.js';
             $el.attr('data-ad-status', 'init');
-            console.log("$el.attr('data-ad-status', 'init');", performance.now());
+            if (storage_data !== undefined){
+                this.cache[client] = storage_data;
+            }
             if (this.cache[client] === undefined) {
-                console.log("this.cache[client] === undefined", performance.now());
-                var src = settings.cdn + settings.ptbs + client + settings.etbs;
-                var jqxhr = jQuery.getJSON(src);
-                console.log("jQuery.getJSON(src);", performance.now());
-                jqxhr.done(jQuery.proxy(function (data) {
-                    this.cache[client] = data;
-                    console.log("jqxhr.done", performance.now());
-                    callback($el, this.cache[client]);
-                }, this));
-                jqxhr.fail(jQuery.proxy(function (jqXHR, textStatus, errorThrown) {
-                    this.cache[client] = {h: 'auto', w: 'auto', m: '1'};
-                    if (settings.IE) {
-                        var Fsrc = settings.cdn + settings.ptbs + client + '.js';
-                        var Fjqxhr = jQuery.getScript(Fsrc);
-                        Fjqxhr.always(jQuery.proxy(function () {
-                            callback($el, this.cache[client]);
-                        }, this));
-                    }
-                    else {
-                        callback($el, this.cache[client]);
-                    }
-                }, this));
+                this.xhr($el, client, src, Fsrc, callback);
             }
             else {
                 callback($el, this.cache[client]);
+                this.xhr($el, client, src, Fsrc, function(){});
             }
+        };
+        this.xhr = function ($el, client, src, Fsrc, callback_fun) {
+            var jqxhr = jQuery.getJSON(src);
+            jqxhr.done(jQuery.proxy(function (data) {
+                callback_fun($el, data);
+                this.storage.add(client, data);
+                this.cache[client] = data;
+            }, this));
+            jqxhr.fail(jQuery.proxy(function () {
+                this.cache[client] = {h: 'auto', w: 'auto', m: '1'};
+                if (settings.IE) {
+                    var Fjqxhr = jQuery.getScript(Fsrc);
+                    Fjqxhr.always(jQuery.proxy(function () {
+                        callback_fun($el, this.cache[client]);
+                    }, this));
+                }
+                else {
+                    callback_fun($el, this.cache[client]);
+                }
+                this.storage.add(client, this.cache[client]);
+            }, this));
         };
     };
     return new BlockSettings();
