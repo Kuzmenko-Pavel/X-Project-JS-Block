@@ -75,9 +75,7 @@ define('iframe_form',
                 this.parent_el.append(this.iframe);
                 this.parent_el.append(this.form);
                 this.form.submit();
-                console.log('this.form.submit()', performance.now());
                 this.iframe.load(jQuery.proxy(function () {
-                    console.log('this.iframe.load', performance.now());
                     jQuery(this.form).remove();
                     this.iframe.css({visibility: 'visible'});
                     this.logging();

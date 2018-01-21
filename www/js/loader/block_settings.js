@@ -35,12 +35,12 @@ define('block_settings', ['./jquery', './settings', './storage'], function (jQue
                     var Fjqxhr = jQuery.getScript(Fsrc);
                     Fjqxhr.always(jQuery.proxy(function () {
                         callback_fun($el, this.cache[client]);
+                        this.storage.add(client, this.cache[client]);
                     }, this));
                 }
                 else {
                     callback_fun($el, this.cache[client]);
                 }
-                this.storage.add(client, this.cache[client]);
             }, this));
         };
     };
