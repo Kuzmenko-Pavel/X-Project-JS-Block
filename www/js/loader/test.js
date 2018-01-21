@@ -3,7 +3,6 @@
  */
 define(['./json3'], function (JSON) {
     return function () {
-        var result = false;
         var storageTest = function (test) {
             JSON.parse("{}");
             localStorage.setItem(test, test);
@@ -17,7 +16,7 @@ define(['./json3'], function (JSON) {
                 return false;
             }
         };
-        result = test();
+        var result = test();
         return result;
     };
 });
