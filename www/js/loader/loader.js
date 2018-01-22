@@ -47,10 +47,12 @@ define([
         this.blocks.logging();
     };
     Loader.prototype.load_handler = function (e) {
+        console.log('load_handler');
         this.start();
         this.blocks.logging();
     };
     Loader.prototype.ready_handler = function (e) {
+        console.log('ready_handler');
         this.start();
         var $window = jQuery(window);
         $window.scroll(YottosLib._.bind(this.scroll_handler, this));
