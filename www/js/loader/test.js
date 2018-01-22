@@ -1,10 +1,10 @@
 /**
  * Created by kuzmenko-pavel on 13.04.17.
  */
-define(['./json3'], function (JSON) {
+define(['./ytl'], function (YottosLib) {
     return function () {
         var storageTest = function (test) {
-            JSON.parse("{}");
+            YottosLib.JSON.parse("{}");
             localStorage.setItem(test, test);
             localStorage.removeItem(test);
         };

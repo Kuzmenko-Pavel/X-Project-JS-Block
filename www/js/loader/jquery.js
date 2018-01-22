@@ -7,16 +7,16 @@ define([
     "./jquery/core/ready",
     "./jquery/support",
     "./jquery/data",
-    "./jquery/queue",
-    "./jquery/queue/delay",
+    // "./jquery/queue",
+    // "./jquery/queue/delay",
     "./jquery/attributes",
     "./jquery/event",
-    "./jquery/event/alias",
-    "./jquery/manipulation",
-    "./jquery/manipulation/_evalUrl",
+    // "./jquery/event/alias",
+    // "./jquery/manipulation",
+    // "./jquery/manipulation/_evalUrl",
     "./jquery/wrap",
     "./jquery/css",
-    "./jquery/css/hiddenVisibleSelectors",
+    // "./jquery/css/hiddenVisibleSelectors",
     "./jquery/serialize",
     "./jquery/ajax",
     "./jquery/ajax/xhr",
@@ -27,9 +27,9 @@ define([
     "./jquery/offset",
     "./jquery/dimensions",
     "./jquery/deprecated",
-    "./jquery/exports/amd"
+    // "./jquery/exports/amd"
 ], function (jQuery) {
-    jQuery.ajaxSetup({crossDomain: true});
-    jQuery.support.cors = true;
+    // jQuery.ajaxSetup({crossDomain: true});
+    // jQuery.support.cors = true;
     return jQuery;
 });

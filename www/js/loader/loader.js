@@ -3,14 +3,14 @@
  */
 define([
     './jquery',
-    './underscore',
+    './ytl',
     './start',
     './block_render',
     './block_settings',
     './move_shake',
     './settings'
 ], function (jQuery,
-             _,
+             YottosLib,
              start,
              block_render,
              block_settings,
@@ -22,12 +22,12 @@ define([
         this.page_load = false;
         this.blocks = [];
         this.blocks.send = function (msg, block) {
-            _.each(this, function (element) {
+            YottosLib._.each(this, function (element) {
                 element.post(this.msg);
             }, {msg: msg});
         };
         this.blocks.logging = function (block) {
-            _.each(this, function (element) {
+            YottosLib._.each(this, function (element) {
                 element.logging();
             });
         };
@@ -53,9 +53,9 @@ define([
     Loader.prototype.ready_handler = function (e) {
         this.start();
         var $window = jQuery(window);
-        $window.scroll(jQuery.proxy(this.scroll_handler, this));
-        $window.resize(jQuery.proxy(this.resize_handler, this));
-        $window.mousemove(jQuery.proxy(this.mouse_move_handler, this));
+        $window.scroll(YottosLib._.bind(this.scroll_handler, this));
+        $window.resize(YottosLib._.bind(this.resize_handler, this));
+        $window.mousemove(YottosLib._.bind(this.mouse_move_handler, this));
         this.blocks.logging();
     };
     return Loader;

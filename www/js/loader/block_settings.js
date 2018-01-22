@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 05.04.17.
  */
-define('block_settings', ['./jquery', './settings', './storage'], function (jQuery, settings, storage) {
+define('block_settings', ['./jquery', './ytl', './settings', './storage'], function (jQuery, YottosLib, settings, storage) {
     var BlockSettings = function () {
         this.cache = {};
         this.storage = storage;
@@ -24,16 +24,16 @@ define('block_settings', ['./jquery', './settings', './storage'], function (jQue
         };
         this.xhr = function ($el, client, src, Fsrc, callback_fun) {
             var jqxhr = jQuery.getJSON(src);
-            jqxhr.done(jQuery.proxy(function (data) {
+            jqxhr.done(YottosLib._.bind(function (data) {
                 callback_fun($el, data);
                 this.storage.add(client, data);
                 this.cache[client] = data;
             }, this));
-            jqxhr.fail(jQuery.proxy(function () {
+            jqxhr.fail(YottosLib._.bind(function () {
                 this.cache[client] = {h: 'auto', w: 'auto', m: '1'};
                 if (settings.IE) {
                     var Fjqxhr = jQuery.getScript(Fsrc);
-                    Fjqxhr.always(jQuery.proxy(function () {
+                    Fjqxhr.always(YottosLib._.bind(function () {
                         callback_fun($el, this.cache[client]);
                         this.storage.add(client, this.cache[client]);
                     }, this));

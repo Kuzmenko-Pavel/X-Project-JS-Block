@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 05.04.17.
  */
-define('block_render', ['./jquery', './underscore', './settings', './iframe_form'], function (jQuery, _, settings, Iframe_form) {
+define('block_render', ['./jquery', './ytl', './settings', './iframe_form'], function (jQuery, YottosLib, settings, Iframe_form) {
     return function ($el, block_setting) {
         var client = $el.attr('data-ad-client');
         var index = $el.attr('data-ad-index');
@@ -20,7 +20,7 @@ define('block_render', ['./jquery', './underscore', './settings', './iframe_form
         if (auto){
             dummy.addParameter('auto', 'true');
         }
-        _.each(location.search.substr(1).split("&"), function (element) {
+        YottosLib._.each(location.search.substr(1).split("&"), function (element) {
             var param = element.split("=");
             if (param.length === 2){
                 if (param[0].indexOf('adsbyyottos_') !== -1){

@@ -63,11 +63,6 @@ module.exports = function (grunt) {
         },
         watch: {
             taskName: {
-                options: {
-                    livereload: {
-                        port: 35729,
-                    }
-                },
                 files: [
                     "www/js/loader/**/*.js",
                     "bower_components/**/*.js"
@@ -78,17 +73,18 @@ module.exports = function (grunt) {
         requirejs: {
             compileLoader: {
                 options: {
-                    mainConfigFile: 'www/js/loader/require_config.js',
-                    baseUrl: 'www/js/loader/',
-                    include: ['main', '../../../bower_components/almond/almond'],
+                    // mainConfigFile: 'www/js/loader/require_config.js',
+                    // include: ['main', '../../../bower_components/almond/almond'],
                     //include: ['main', '../../../node_modules/requirejs/require'],
+                    baseUrl: 'www/js/loader/',
+                    include: ['main'],
                     out: 'www/js/loader.js',
-                    removeCombined: false,
+                    removeCombined: true,
                     findNestedDependencies: true,
                     preserveLicenseComments: false,
                     wrap: true,
-                    optimize: 'uglify2',
-                    //optimize: 'none',
+                    // optimize: 'uglify2',
+                    optimize: 'none',
                     uglify2: {
                         output: {
                             beautify: false,
@@ -128,7 +124,17 @@ module.exports = function (grunt) {
                         },
                         ie8: true
                     },
-                    generateSourceMaps: false
+                    generateSourceMaps: false,
+                    onModuleBundleComplete: function (data) {
+                        var fs = module.require('fs'),
+                            amdclean = module.require('amdclean'),
+                            outputFile = data.path,
+                            cleanedCode = amdclean.clean({
+                                'filePath': outputFile
+                            });
+
+                        fs.writeFileSync(outputFile, cleanedCode);
+                    }
                 }
             }
         }

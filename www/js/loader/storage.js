@@ -1,4 +1,4 @@
-define(['./underscore', './test', './Base64'], function (_, test, b) {
+define(['./test', './ytl'], function (test, YottosLib) {
     var UserHistory = function () {
         this.uh_name = 'adsbyyottos';
         this.uh = {};
@@ -30,11 +30,11 @@ define(['./underscore', './test', './Base64'], function (_, test, b) {
     UserHistory.prototype.load = function () {
         if (test()) {
             try {
-                this.uh = JSON.parse(b.decode(localStorage.getItem(this.uh_name)));
+                this.uh = YottosLib.JSON.parse(YottosLib.b.d(localStorage.getItem(this.uh_name)));
             } catch (e) {
                 this.uh = {};
             }
-            if (_.isNull(this.uh)){
+            if (YottosLib._.isNull(this.uh)){
                 this.uh = {};
             }
             return true;
@@ -43,7 +43,7 @@ define(['./underscore', './test', './Base64'], function (_, test, b) {
     };
     UserHistory.prototype.save = function () {
         if (test()) {
-            localStorage.setItem(this.uh_name, b.encode(JSON.stringify(this.uh)));
+            localStorage.setItem(this.uh_name, YottosLib.b.e(YottosLib.JSON.stringify(this.uh)));
             return true;
         }
         return false;

@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 11.04.17.
  */
-define('block_template', ['./underscore', './settings'], function (_, settings) {
+define('block_template', ['./ytl', './settings'], function (YottosLib, settings) {
     return function (size) {
         var between = function (x, min, max) {
             return x >= min && x <= max;
@@ -41,13 +41,13 @@ define('block_template', ['./underscore', './settings'], function (_, settings) 
                 vertical = between(w, settings.block_width_range[0], settings.block_width_range[1]);
             }
             if (vertical) {
-                _.some(steps, function (s) {
+                YottosLib._.some(steps, function (s) {
                     h = _.filter(settings.b_s.b_v_w, function (el) {
                         return between(el[1], w - s, w + s);
                     });
-                    return (_.size(h) !== 0);
+                    return (YottosLib._.size(h) !== 0);
                 });
-                if (_.size(h) === 0) {
+                if (YottosLib._.size(h) === 0) {
                     if (w <= 200) {
                         h = [settings.b_s.b_v_w[0]];
                     }
@@ -61,14 +61,14 @@ define('block_template', ['./underscore', './settings'], function (_, settings) 
                         h = _.filter(settings.b_s.b_c_w, function (el) {
                             return between(el[1], w - 10, w + 10);
                         });
-                    if (_.size(h) === 0) {
-                        _.some(steps, function (s) {
-                            h = _.filter(settings.b_s.b_h_w, function (el) {
+                    if (YottosLib._.size(h) === 0) {
+                        YottosLib._.some(steps, function (s) {
+                            h = YottosLib._.filter(settings.b_s.b_h_w, function (el) {
                                 return between(el[1], w - s, w + s);
                             });
-                            return (_.size(h) !== 0);
+                            return (YottosLib._.size(h) !== 0);
                         });
-                        if (_.size(h) === 0) {
+                        if (YottosLib._.size(h) === 0) {
                             if (w <= 600) {
                                 h = [settings.b_s.b_h_w[0]];
                             }
@@ -80,13 +80,13 @@ define('block_template', ['./underscore', './settings'], function (_, settings) 
 
                 }
                 else {
-                    _.some(steps, function (s) {
-                        h = _.filter(settings.b_s.b_h_w, function (el) {
+                    YottosLib._.some(steps, function (s) {
+                        h = YottosLib._.filter(settings.b_s.b_h_w, function (el) {
                             return between(el[1], w - s, w + s);
                         });
-                        return (_.size(h) !== 0);
+                        return (YottosLib._.size(h) !== 0);
                     });
-                    if (_.size(h) === 0) {
+                    if (YottosLib._.size(h) === 0) {
                         if (w <= 600) {
                             h = [settings.b_s.b_h_w[0]];
                         }
@@ -100,7 +100,7 @@ define('block_template', ['./underscore', './settings'], function (_, settings) 
 
         };
         var block = find_blocks(size.w);
-        if (_.isArray(block)) {
+        if (YottosLib._.isArray(block)) {
             size.h = block[0];
             size.w = block[1];
         }

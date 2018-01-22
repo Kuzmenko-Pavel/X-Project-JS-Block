@@ -2,15 +2,15 @@
  * Created by kuzmenko-pavel on 05.04.17.
  */
 define('iframe_form',
-    ['./jquery', './underscore', './block_logging', './block_active_view', './block_size_calculator'],
-    function (jQuery, _, block_logging, block_active_view, block_size_calculator) {
+    ['./jquery', './ytl', './block_logging', './block_active_view', './block_size_calculator'],
+    function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator) {
         return function (url, $el, block_setting, client) {
             var sandbox = 'allow-scripts allow-same-origin allow-popups';
             var object = this;
             object.client = client;
             object.size = block_size_calculator($el, block_setting);
             object.block_setting = block_setting;
-            _.extend(object.block_setting,
+            YottosLib._.extend(object.block_setting,
                 {
                     visible: false,
                     logging: false,
@@ -75,7 +75,7 @@ define('iframe_form',
                 this.parent_el.append(this.iframe);
                 this.parent_el.append(this.form);
                 this.form.submit();
-                this.iframe.load(jQuery.proxy(function () {
+                this.iframe.load(YottosLib._.bind(function () {
                     jQuery(this.form).remove();
                     this.iframe.css({visibility: 'visible'});
                     this.logging();
