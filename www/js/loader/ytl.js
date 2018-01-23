@@ -267,6 +267,65 @@ define([], function () {
     _.prototype.toString = function() {
         return '' + this._wrapped;
     };
+    _.on_event = function(evnt, elem, callback, context, once) {
+        var func = _.bind(callback, context || elem);
+        var modern = elem.addEventListener;
+        var add = modern ? 'addEventListener' : 'attachEvent';
+        // var rem = modern ? 'removeEventListener' : 'detachEvent';
+        var pre = modern ? '' : 'on';
+        elem[add](pre + evnt, func, {once: once || false}, false);
+    };
+    _.on_load = function(win, callback, context) {
+        var fn = _.bind(callback, context || win);
+        var done = false;
+        var  top = true;
+        var doc = win.document;
+        var root = doc.documentElement;
+        var modern = doc.addEventListener;
+        var add = modern ? 'addEventListener' : 'attachEvent';
+        var rem = modern ? 'removeEventListener' : 'detachEvent';
+        var pre = modern ? '' : 'on';
+
+        var init = function(e) {
+                if (e.type === 'readystatechange' && doc.readyState !== 'complete'){
+                    return;
+                }
+                (e.type === 'load' ? win : doc)[rem](pre + e.type, init, false);
+                if (!done && (done = true)){
+                    fn.call(win, e.type || e);
+                }
+            };
+
+        var poll = function() {
+                try {
+                    root.doScroll('left');
+                } catch(e) {
+                    setTimeout(poll, 50);
+                    return;
+                }
+                init('poll');
+            };
+
+        if (doc.readyState === 'complete'){
+            fn.call(win, 'lazy');
+        }
+        else {
+            if (!modern && root.doScroll) {
+                try {
+                    top = !win.frameElement;
+                } catch(e) {
+
+                }
+                if (top) {
+                    poll();
+                }
+            }
+            doc[add](pre + 'DOMContentLoaded', init, false);
+            doc[add](pre + 'readystatechange', init, false);
+            win[add](pre + 'load', init, false);
+        }
+
+    };
 
     var YottosLib = function () {};
     YottosLib.prototype.JSON = window.JSON || {};
@@ -289,7 +348,7 @@ define([], function () {
                     v = '"' + v + '"';
                 }
                 else if (t === "object" && v !== null) {
-                    v = JSON.stringify(v);
+                    v = this.stringify(v);
                 }
                 json.push((arr ? "" : '"' + n + '":') + String(v));
             }

@@ -42,7 +42,7 @@ define('block_template', ['./ytl', './settings'], function (YottosLib, settings)
             }
             if (vertical) {
                 YottosLib._.some(steps, function (s) {
-                    h = _.filter(settings.b_s.b_v_w, function (el) {
+                    h = YottosLib._.filter(settings.b_s.b_v_w, function (el) {
                         return between(el[1], w - s, w + s);
                     });
                     return (YottosLib._.size(h) !== 0);
@@ -58,7 +58,7 @@ define('block_template', ['./ytl', './settings'], function (YottosLib, settings)
             }
             else {
                 if (size.p_l === 'c' && size.p_t === 'c') {
-                        h = _.filter(settings.b_s.b_c_w, function (el) {
+                        h = YottosLib._.filter(settings.b_s.b_c_w, function (el) {
                             return between(el[1], w - 10, w + 10);
                         });
                     if (YottosLib._.size(h) === 0) {

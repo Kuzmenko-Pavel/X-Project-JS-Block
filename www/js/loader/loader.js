@@ -31,6 +31,12 @@ define([
                 element.logging();
             });
         };
+        if (!this.page_load){
+            this.page_load = true;
+            YottosLib._.on_load(window, this.ready_handler, this);
+            YottosLib._.on_event('load', window, this.load_handler, this, true);
+
+        }
     };
     Loader.prototype.block_settings = block_settings;
     Loader.prototype.block_render = block_render;
@@ -47,18 +53,16 @@ define([
         this.blocks.logging();
     };
     Loader.prototype.load_handler = function (e) {
-        console.log('load_handler');
         this.start();
         this.blocks.logging();
+        YottosLib._.on_event('scroll', window, this.scroll_handler, this);
+        YottosLib._.on_event('resize', window, this.resize_handler, this);
+        YottosLib._.on_event('mousemove', window, this.mouse_move_handler, this);
     };
     Loader.prototype.ready_handler = function (e) {
-        console.log('ready_handler');
         this.start();
-        var $window = jQuery(window);
-        $window.scroll(YottosLib._.bind(this.scroll_handler, this));
-        $window.resize(YottosLib._.bind(this.resize_handler, this));
-        $window.mousemove(YottosLib._.bind(this.mouse_move_handler, this));
         this.blocks.logging();
+
     };
     return Loader;
 
