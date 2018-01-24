@@ -2,6 +2,7 @@
   "name": "advertise-js-block",
   "version": "0.0.1",
   "devDependencies": {
+    "amdclean": "^2.7.0",
     "bower": "~1.x",
     "grunt": "~1.x",
     "grunt-exec": "^3.0.0"

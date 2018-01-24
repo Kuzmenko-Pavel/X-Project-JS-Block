@@ -125,6 +125,7 @@ module.exports = function (grunt) {
                         ie8: true
                     },
                     generateSourceMaps: false,
+                    useStrict: true,
                     onModuleBundleComplete: function (data) {
                         var fs = module.require('fs'),
                             amdclean = module.require('amdclean'),

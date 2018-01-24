@@ -8,8 +8,7 @@ define([
     return function () {
         jQuery('ins.adsbyyottos:not([data-ad-status])').each(YottosLib._.bind(function (index, value) {
                 var $el = jQuery(value);
-                $el.attr('data-ad-index', index);
-                this.block_settings.get($el, YottosLib._.bind(this.block_render, this));
+                this.block_settings.get($el, YottosLib._.bind(this.block_render, this), index);
             },this));
     };
 });

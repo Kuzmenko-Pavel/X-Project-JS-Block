@@ -2,9 +2,7 @@
  * Created by kuzmenko-pavel on 05.04.17.
  */
 define('block_render', ['./jquery', './ytl', './settings', './iframe_form'], function (jQuery, YottosLib, settings, Iframe_form) {
-    return function ($el, block_setting) {
-        var client = $el.attr('data-ad-client');
-        var index = $el.attr('data-ad-index');
+    return function ($el, block_setting, client, index) {
         var auto = false;
         var url = settings.rg + settings.rgb + '?mod=' + block_setting.m;
         if (block_setting['w'] === 'auto' || block_setting['h'] === 'auto'){

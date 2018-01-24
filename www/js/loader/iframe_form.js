@@ -72,8 +72,8 @@ define('iframe_form',
                         "margin":"0 auto",
                         "display":"block"
                     });
-                this.parent_el.append(this.iframe);
-                this.parent_el.append(this.form);
+                this.parent_el.append(this.iframe, this.form);
+                // this.parent_el.append();
                 this.form.submit();
                 this.iframe.load(YottosLib._.bind(function () {
                     jQuery(this.form).remove();
