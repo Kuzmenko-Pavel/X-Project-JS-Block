@@ -26,7 +26,7 @@ define([
     "./jquery/event/ajax",
     "./jquery/offset",
     "./jquery/dimensions",
-    "./jquery/deprecated",
+    "./jquery/deprecated"
     // "./jquery/exports/amd"
 ], function (jQuery) {
     // jQuery.ajaxSetup({crossDomain: true});
