@@ -89,6 +89,7 @@ module.exports = function (grunt) {
                         output: {
                             beautify: false,
                             quote_keys: true,
+                            screw_ie8: false,
                             ascii_only: true
                         },
                         compress: {
@@ -100,7 +101,7 @@ module.exports = function (grunt) {
                             warnings: true,
                             loops: true,
                             properties: true,
-                            screw_ie8 : false,
+                            screw_ie8: false,
                             sequences: true,
                             dead_code: true,
                             conditionals: true,
@@ -114,7 +115,7 @@ module.exports = function (grunt) {
                         warnings: true,
                         verbose: true,
                         mangle: {
-                            screw_ie8 : false,
+                            screw_ie8: false,
                             toplevel: true,
                             sort: true,
                             eval: true,
