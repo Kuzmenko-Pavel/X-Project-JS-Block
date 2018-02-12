@@ -5,7 +5,7 @@ define('iframe_form',
     ['./jquery', './ytl', './block_logging', './block_active_view', './block_size_calculator'],
     function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator) {
         return function (url, $el, block_setting, client) {
-            var sandbox = 'allow-scripts allow-same-origin allow-popups';
+            var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
             var object = this;
             object.client = client;
             object.size = block_size_calculator($el, block_setting);
