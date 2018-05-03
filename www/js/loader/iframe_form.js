@@ -7,6 +7,7 @@ define('iframe_form',
         return function (url, $el, block_setting, client) {
             var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
             var object = this;
+            object.loaded = false;
             object.client = client;
             object.size = block_size_calculator($el, block_setting);
             object.block_setting = block_setting;
@@ -20,6 +21,15 @@ define('iframe_form',
             object.block_logging = block_logging;
             object.block_active_view = block_active_view;
             object.parent_el = $el;
+            object.root = object.parent_el;
+            if (object.root[0].attachShadow){
+                try {
+                    object.root = jQuery(object.root[0].attachShadow({mode: "closed"}));
+                }
+                catch (err) {
+                    object.root = jQuery(object.root[0].createShadowRoot({mode: "closed"}));
+                }
+            }
             object.time = new Date().getTime();
 
             object.form = jQuery("<form/>", {
@@ -72,15 +82,24 @@ define('iframe_form',
                         "margin":"0 auto",
                         "display":"block"
                     });
-                this.parent_el.append(this.iframe, this.form);
-                // this.parent_el.append();
+                this.root.append(this.iframe, this.form);
                 this.form.submit();
-                this.iframe.load(YottosLib._.bind(function () {
+            };
+
+            object.iframe.load(YottosLib._.bind(function () {
+                if(this.loaded){
+                    this.loaded = false;
+                    this.render();
+                }
+                else {
                     jQuery(this.form).remove();
                     this.iframe.css({visibility: 'visible'});
                     this.logging();
-                }, this));
-            };
+                    this.loaded = true;
+                }
+
+            }, object));
+
             object.logging = function () {
                 this.block_active_view();
                 if (this.block_setting.logging === false) {
