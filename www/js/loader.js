@@ -1,5 +1,5 @@
 ;(function() {
-var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_concat, jquery_var_push, jquery_var_indexOf, jquery_var_class2type, jquery_var_toString, jquery_var_hasOwn, jquery_var_support, jquery_core, jquery_sizzle, jquery_selector_sizzle, jquery_selector, jquery_traversing_var_dir, jquery_traversing_var_siblings, jquery_traversing_var_rneedsContext, jquery_core_var_rsingleTag, jquery_traversing_findFilter, jquery_core_init, jquery_traversing, jquery_var_rnotwhite, jquery_callbacks, jquery_deferred, jquery_core_ready, jquery_support, jquery_data_support, jquery_data_var_acceptData, jquery_data, jquery_attributes_support, jquery_attributes_val, jquery_core_access, jquery_attributes_attr, jquery_attributes_prop, jquery_attributes_classes, jquery_attributes, jquery_manipulation_var_rcheckableType, jquery_manipulation_var_rtagName, jquery_manipulation_var_rscriptType, jquery_manipulation_var_rleadingWhitespace, jquery_manipulation_var_nodeNames, jquery_manipulation_createSafeFragment, jquery_manipulation_support, jquery_manipulation_wrapMap, jquery_manipulation_getAll, jquery_manipulation_setGlobalEval, jquery_manipulation_buildFragment, jquery_event_support, jquery_event, jquery_manipulation, jquery_wrap, jquery_var_pnum, jquery_css_var_rmargin, jquery_var_rcssNum, jquery_css_var_rnumnonpx, jquery_css_var_cssExpand, jquery_css_var_isHidden, jquery_css_var_swap, jquery_var_documentElement, jquery_css_support, jquery_css_curCSS = {}, jquery_css_adjustCSS, jquery_css_defaultDisplay, jquery_css_addGetHookIf, jquery_css, jquery_serialize, jquery_ajax_var_location, jquery_ajax_var_nonce, jquery_ajax_var_rquery, jquery_ajax_parseJSON, jquery_ajax_parseXML, jquery_ajax, jquery_ajax_xhr, jquery_ajax_script, jquery_ajax_jsonp, jquery_core_parseHTML, jquery_event_alias, jquery_ajax_load, jquery_event_ajax, jquery_offset, jquery_dimensions, jquery_deprecated, jquery, ytl, start, settings, block_logging, is_element_in_viewport, block_active_view, block_template, block_size_calculator, iframe_form, block_render, test, storage, block_settings, move_shake, loader, main;
+var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_concat, jquery_var_push, jquery_var_indexOf, jquery_var_class2type, jquery_var_toString, jquery_var_hasOwn, jquery_var_support, jquery_core, jquery_sizzle, jquery_selector_sizzle, jquery_selector, jquery_traversing_var_dir, jquery_traversing_var_siblings, jquery_traversing_var_rneedsContext, jquery_core_var_rsingleTag, jquery_traversing_findFilter, jquery_core_init, jquery_traversing, jquery_var_rnotwhite, jquery_callbacks, jquery_deferred, jquery_core_ready, jquery_support, jquery_data_support, jquery_data_var_acceptData, jquery_data, jquery_attributes_support, jquery_attributes_val, jquery_core_access, jquery_attributes_attr, jquery_attributes_prop, jquery_attributes_classes, jquery_attributes, jquery_manipulation_var_rcheckableType, jquery_manipulation_var_rtagName, jquery_manipulation_var_rscriptType, jquery_manipulation_var_rleadingWhitespace, jquery_manipulation_var_nodeNames, jquery_manipulation_createSafeFragment, jquery_manipulation_support, jquery_manipulation_wrapMap, jquery_manipulation_getAll, jquery_manipulation_setGlobalEval, jquery_manipulation_buildFragment, jquery_event_support, jquery_event, jquery_manipulation, jquery_wrap, jquery_var_pnum, jquery_css_var_rmargin, jquery_var_rcssNum, jquery_css_var_rnumnonpx, jquery_css_var_cssExpand, jquery_css_var_isHidden, jquery_css_var_swap, jquery_var_documentElement, jquery_css_support, jquery_css_curCSS = {}, jquery_css_adjustCSS, jquery_css_defaultDisplay, jquery_css_addGetHookIf, jquery_css, jquery_serialize, jquery_ajax_var_location, jquery_ajax_var_nonce, jquery_ajax_var_rquery, jquery_ajax_parseJSON, jquery_ajax_parseXML, jquery_ajax, jquery_ajax_xhr, jquery_ajax_script, jquery_ajax_jsonp, jquery_core_parseHTML, jquery_event_alias, jquery_ajax_load, jquery_event_ajax, jquery_offset, jquery_dimensions, jquery_deprecated, jquery, ytl, start, settings, block_logging, is_element_in_viewport, block_active_view, block_template, block_size_calculator, post_array, iframe_form, block_render, test, storage, block_settings, move_shake, loader, main;
 (function () {
   jquery_var_deletedIds = [];
   jquery_var_document = window.document;
@@ -7917,13 +7917,23 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       return string;
     };
     YottosLib.prototype._ = _;
+    YottosLib.prototype.post_exists = function () {
+      var post = false;
+      var postMessage = 'postMessage';
+      if (window[postMessage]) {
+        post = true;
+      }
+      return post;
+    };
     return new YottosLib();
   }();
   start = function (jQuery, YottosLib) {
     return function () {
-      jQuery('ins.adsbyyottos:not([data-ad-status])').each(YottosLib._.bind(function (index, el) {
+      jQuery('ins.adsbyyottos').each(YottosLib._.bind(function (index, el) {
         var $el = jQuery(el);
-        this.block_settings.get($el, YottosLib._.bind(this.block_render, this), index);
+        if ($el.attr('data-ad-status') === undefined) {
+          this.block_settings.get($el, YottosLib._.bind(this.block_render, this), index);
+        }
       }, this));
     };
   }(jquery, ytl);
@@ -8436,11 +8446,38 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       };
     };
   }(jquery, ytl, block_template);
-  iframe_form = function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator) {
+  post_array = function (YottosLib) {
+    var post_array = function (obj) {
+      this.stack = [];
+      this.obj = obj;
+      this.callHandler = function () {
+      };
+      this.post_message = function (msg) {
+        var target = this.obj.iframe[0];
+        if (target.contentWindow && target.contentWindow.postMessage) {
+          target.contentWindow.postMessage(msg, '*');
+        }
+      };
+      this.push = function (obj) {
+        this.stack.push(obj);
+        this.callHandler();
+      };
+      this.pop = function () {
+        this.callHandler();
+        return this.stack.pop();
+      };
+      this.remove = function (index) {
+        this.stack.splice(index, 1);
+      };
+    };
+    return post_array;
+  }(ytl);
+  iframe_form = function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator, PostArray) {
     return function (url, $el, block_setting, client) {
       var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
       var object = this;
       object.loaded = false;
+      object.loading_count = 0;
       object.client = client;
       object.size = block_size_calculator($el, block_setting);
       object.block_setting = block_setting;
@@ -8490,13 +8527,10 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       object.addParameter = function (parameter, value) {
         jQuery('<input type=\'hidden\' />').attr('name', parameter).attr('value', value).appendTo(object.form);
       };
-      object.post = function (msg) {
-        var target = jQuery(this.iframe);
-        if (typeof jQuery === 'function' && target instanceof jQuery) {
-          target = target[0];
-        }
-        if (target.contentWindow.postMessage) {
-          target.contentWindow.postMessage(msg, '*');
+      object.post = new PostArray(object);
+      object.receive = function (data) {
+        if (data.key === this.time) {
+          this.post.remove(data.id);
         }
       };
       object.render = function () {
@@ -8511,30 +8545,40 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
           'display': 'block'
         });
         this.root.append(this.iframe, this.form);
+        this.iframe.load(YottosLib._.bind(function () {
+          if (this.loaded) {
+            this.loaded = false;
+            if (this.loading_count < 5) {
+              this.re_render();
+            }
+          } else {
+            this.form.remove();
+            this.iframe.css({ visibility: 'visible' });
+            if (this.loading_count++ < 1) {
+              this.logging();
+            }
+            this.loaded = true;
+          }
+        }, this));
         this.form.submit();
       };
-      object.iframe.load(YottosLib._.bind(function () {
-        if (this.loaded) {
-          this.loaded = false;
-          this.render();
-        } else {
-          jQuery(this.form).remove();
-          this.iframe.css({ visibility: 'visible' });
-          this.logging();
-          this.loaded = true;
-        }
-      }, object));
+      object.re_render = function () {
+        this.root.append(this.form);
+        this.form.submit();
+      };
       object.logging = function () {
         this.block_active_view();
         if (this.block_setting.logging === false) {
+          // this.post.push('initial ' + this.time);
           this.block_logging();
         } else if (this.block_setting.logging === 'initial' && this.block_setting.visible === true) {
           this.block_setting.logging = 'complite';
+          // this.post.push('complite ' + this.time);
           this.block_logging();
         }
       };
     };
-  }(jquery, ytl, block_logging, block_active_view, block_size_calculator);
+  }(jquery, ytl, block_logging, block_active_view, block_size_calculator, post_array);
   block_render = function (jQuery, YottosLib, settings, Iframe_form) {
     return function ($el, block_setting, client, index) {
       var auto = false;
@@ -8549,6 +8593,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       dummy.addParameter('scr', client);
       dummy.addParameter('mod', block_setting.m);
       dummy.addParameter('index', index);
+      dummy.addParameter('post', YottosLib.post_exists());
       if (auto) {
         dummy.addParameter('auto', 'true');
       }
@@ -8708,10 +8753,18 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       this.sequence = settings.move_shake_sequence.slice();
       this.page_load = false;
       this.blocks = [];
-      this.blocks.send = function (msg, block) {
+      this.blocks.send = function (msg) {
         YottosLib._.each(this, function (element) {
-          element.post(this.msg);
+          element.post.push(this.msg);
         }, { msg: msg });
+      };
+      this.blocks.receive = function (data) {
+        data = JSON.parse(data);
+        YottosLib._.each(this, function (element) {
+          if (element.time === data.key) {
+            element.receive(data);
+          }
+        }, { data: data });
       };
       this.blocks.logging = function (block) {
         YottosLib._.each(this, function (element) {
@@ -8744,6 +8797,11 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       YottosLib._.on_event('scroll', window, this.scroll_handler, this);
       YottosLib._.on_event('resize', window, this.resize_handler, this);
       YottosLib._.on_event('mousemove', window, this.mouse_move_handler, this);
+      YottosLib._.on_event('message', window, function (e) {
+        if (e && e.data) {
+          this.blocks.receive(e.data);
+        }
+      }, this);
     };
     Loader.prototype.ready_handler = function (e) {
       this.start();

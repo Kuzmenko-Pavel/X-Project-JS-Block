@@ -472,6 +472,13 @@ define([], function () {
             return string;
         };
     YottosLib.prototype._ = _;
-
+    YottosLib.prototype.post_exists = function () {
+        var post = false;
+        var postMessage = 'postMessage';
+        if (window[postMessage]){
+            post = true;
+        }
+        return post;
+    };
     return  new YottosLib();
 });

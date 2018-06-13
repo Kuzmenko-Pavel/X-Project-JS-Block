@@ -21,10 +21,18 @@ define([
         this.sequence = settings.move_shake_sequence.slice();
         this.page_load = false;
         this.blocks = [];
-        this.blocks.send = function (msg, block) {
+        this.blocks.send = function (msg) {
             YottosLib._.each(this, function (element) {
-                element.post(this.msg);
+                element.post.push(this.msg);
             }, {msg: msg});
+        };
+        this.blocks.receive = function (data) {
+            data = JSON.parse(data);
+            YottosLib._.each(this, function (element) {
+                if (element.time === data.key){
+                    element.receive(data);
+                }
+            }, {data: data});
         };
         this.blocks.logging = function (block) {
             YottosLib._.each(this, function (element) {
@@ -58,6 +66,11 @@ define([
         YottosLib._.on_event('scroll', window, this.scroll_handler, this);
         YottosLib._.on_event('resize', window, this.resize_handler, this);
         YottosLib._.on_event('mousemove', window, this.mouse_move_handler, this);
+        YottosLib._.on_event('message', window, function(e) {
+            if (e && e.data){
+                this.blocks.receive(e.data);
+            }
+        }, this);
     };
     Loader.prototype.ready_handler = function (e) {
         this.start();

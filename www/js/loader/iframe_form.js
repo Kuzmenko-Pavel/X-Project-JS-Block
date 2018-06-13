@@ -2,12 +2,13 @@
  * Created by kuzmenko-pavel on 05.04.17.
  */
 define('iframe_form',
-    ['./jquery', './ytl', './block_logging', './block_active_view', './block_size_calculator'],
-    function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator) {
+    ['./jquery', './ytl', './block_logging', './block_active_view', './block_size_calculator', './post_array'],
+    function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator, PostArray) {
         return function (url, $el, block_setting, client) {
             var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
             var object = this;
             object.loaded = false;
+            object.loading_count = 0;
             object.client = client;
             object.size = block_size_calculator($el, block_setting);
             object.block_setting = block_setting;
@@ -61,15 +62,11 @@ define('iframe_form',
                     .attr("value", value)
                     .appendTo(object.form);
             };
-            object.post = function (msg) {
-                var target = jQuery(this.iframe);
-                if (typeof jQuery === "function" && target instanceof jQuery) {
-                    target = target[0];
+            object.post = new PostArray(object);
+            object.receive = function (data) {
+                if (data.key === this.time){
+                    this.post.remove(data.id);
                 }
-                if (target.contentWindow.postMessage) {
-                    target.contentWindow.postMessage(msg, '*');
-                }
-
             };
             object.render = function () {
                 this.parent_el.css({
@@ -83,30 +80,39 @@ define('iframe_form',
                         "display":"block"
                     });
                 this.root.append(this.iframe, this.form);
+                this.iframe.load(YottosLib._.bind(function () {
+                    if(this.loaded){
+                        this.loaded = false;
+                        if (this.loading_count < 5){
+                            this.re_render();
+                        }
+                    }
+                    else {
+                        this.form.remove();
+                        this.iframe.css({visibility: 'visible'});
+                        if (this.loading_count++ < 1){
+                            this.logging();
+                        }
+                        this.loaded = true;
+                    }
+
+                }, this));
                 this.form.submit();
             };
 
-            object.iframe.load(YottosLib._.bind(function () {
-                if(this.loaded){
-                    this.loaded = false;
-                    this.render();
-                }
-                else {
-                    jQuery(this.form).remove();
-                    this.iframe.css({visibility: 'visible'});
-                    this.logging();
-                    this.loaded = true;
-                }
-
-            }, object));
-
+            object.re_render = function () {
+                this.root.append(this.form);
+                this.form.submit();
+            };
             object.logging = function () {
                 this.block_active_view();
                 if (this.block_setting.logging === false) {
+                    // this.post.push('initial ' + this.time);
                     this.block_logging();
                 }
                 else if (this.block_setting.logging === 'initial' && this.block_setting.visible === true) {
                     this.block_setting.logging = 'complite';
+                    // this.post.push('complite ' + this.time);
                     this.block_logging();
                 }
 

@@ -15,6 +15,7 @@ define('block_render', ['./jquery', './ytl', './settings', './iframe_form'], fun
         dummy.addParameter('scr', client);
         dummy.addParameter('mod', block_setting.m);
         dummy.addParameter('index', index);
+        dummy.addParameter('post', YottosLib.post_exists());
         if (auto){
             dummy.addParameter('auto', 'true');
         }
