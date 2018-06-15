@@ -1,5 +1,5 @@
 ;(function() {
-var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_concat, jquery_var_push, jquery_var_indexOf, jquery_var_class2type, jquery_var_toString, jquery_var_hasOwn, jquery_var_support, jquery_core, jquery_sizzle, jquery_selector_sizzle, jquery_selector, jquery_traversing_var_dir, jquery_traversing_var_siblings, jquery_traversing_var_rneedsContext, jquery_core_var_rsingleTag, jquery_traversing_findFilter, jquery_core_init, jquery_traversing, jquery_var_rnotwhite, jquery_callbacks, jquery_deferred, jquery_core_ready, jquery_support, jquery_data_support, jquery_data_var_acceptData, jquery_data, jquery_attributes_support, jquery_attributes_val, jquery_core_access, jquery_attributes_attr, jquery_attributes_prop, jquery_attributes_classes, jquery_attributes, jquery_manipulation_var_rcheckableType, jquery_manipulation_var_rtagName, jquery_manipulation_var_rscriptType, jquery_manipulation_var_rleadingWhitespace, jquery_manipulation_var_nodeNames, jquery_manipulation_createSafeFragment, jquery_manipulation_support, jquery_manipulation_wrapMap, jquery_manipulation_getAll, jquery_manipulation_setGlobalEval, jquery_manipulation_buildFragment, jquery_event_support, jquery_event, jquery_manipulation, jquery_wrap, jquery_var_pnum, jquery_css_var_rmargin, jquery_var_rcssNum, jquery_css_var_rnumnonpx, jquery_css_var_cssExpand, jquery_css_var_isHidden, jquery_css_var_swap, jquery_var_documentElement, jquery_css_support, jquery_css_curCSS = {}, jquery_css_adjustCSS, jquery_css_defaultDisplay, jquery_css_addGetHookIf, jquery_css, jquery_serialize, jquery_ajax_var_location, jquery_ajax_var_nonce, jquery_ajax_var_rquery, jquery_ajax_parseJSON, jquery_ajax_parseXML, jquery_ajax, jquery_ajax_xhr, jquery_ajax_script, jquery_ajax_jsonp, jquery_core_parseHTML, jquery_event_alias, jquery_ajax_load, jquery_event_ajax, jquery_offset, jquery_dimensions, jquery_deprecated, jquery, ytl, start, settings, block_logging, is_element_in_viewport, block_active_view, block_template, block_size_calculator, post_array, iframe_form, block_render, test, storage, block_settings, move_shake, loader, main;
+var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_concat, jquery_var_push, jquery_var_indexOf, jquery_var_class2type, jquery_var_toString, jquery_var_hasOwn, jquery_core, jquery_sizzle, jquery_selector_sizzle, jquery_selector, jquery_traversing_var_dir, jquery_traversing_var_siblings, jquery_traversing_var_rneedsContext, jquery_core_var_rsingleTag, jquery_traversing_findFilter, jquery_core_init, jquery_traversing, jquery_var_rnotwhite, jquery_callbacks, jquery_deferred, jquery_var_support, jquery_attributes_support, jquery_attributes_val, jquery_core_access, jquery_attributes_attr, jquery_attributes_prop, jquery_attributes_classes, jquery_attributes, jquery_var_pnum, jquery_css_var_rmargin, jquery_var_rcssNum, jquery_css_var_rnumnonpx, jquery_css_var_cssExpand, jquery_css_var_isHidden, jquery_css_var_swap, jquery_var_documentElement, jquery_css_support, jquery_css_curCSS = {}, jquery_css_adjustCSS, jquery_manipulation_var_rcheckableType, jquery_manipulation_var_rtagName, jquery_manipulation_var_rscriptType, jquery_manipulation_var_rleadingWhitespace, jquery_manipulation_var_nodeNames, jquery_manipulation_createSafeFragment, jquery_manipulation_support, jquery_manipulation_wrapMap, jquery_manipulation_getAll, jquery_manipulation_setGlobalEval, jquery_manipulation_buildFragment, jquery_data_var_acceptData, jquery_event_support, jquery_data_support, jquery_data, jquery_event, jquery_manipulation, jquery_css_defaultDisplay, jquery_css_addGetHookIf, jquery_core_ready, jquery_css, jquery_ajax_var_location, jquery_ajax_var_nonce, jquery_ajax_var_rquery, jquery_ajax_parseJSON, jquery_ajax, jquery_ajax_xhr, jquery_ajax_script, jquery_ajax_jsonp, jquery_core_parseHTML, jquery_event_alias, jquery_ajax_load, jquery_offset, jquery_dimensions, jquery, ytl, start, settings, block_logging, is_element_in_viewport, block_active_view, block_template, block_size_calculator, post_array, iframe_form, block_render, test, storage, block_settings, move_shake, loader, main;
 (function () {
   jquery_var_deletedIds = [];
   jquery_var_document = window.document;
@@ -22,8 +22,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
   jquery_var_hasOwn = function (class2type) {
     return class2type.hasOwnProperty;
   }(jquery_var_class2type);
-  jquery_var_support = {};
-  jquery_core = function (deletedIds, document, slice, concat, push, indexOf, class2type, toString, hasOwn, support) {
+  jquery_core = function (deletedIds, document, slice, concat, push, indexOf, class2type, toString, hasOwn) {
     var version = '@VERSION',
       // Define a local copy of jQuery
       jQuery = function (selector, context) {
@@ -203,11 +202,11 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         }
         // Support: IE<9
         // Handle iteration over inherited properties before own properties.
-        if (!support.ownFirst) {
-          for (key in obj) {
-            return hasOwn.call(obj, key);
-          }
+        // if ( !support.ownFirst ) {
+        for (key in obj) {
+          return hasOwn.call(obj, key);
         }
+        // }
         // Own properties are enumerated firstly, so to speed up,
         // if last one is own, then all properties are own.
         for (key in obj) {
@@ -368,10 +367,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       },
       now: function () {
         return +new Date();
-      },
-      // jQuery.support is not used in Core but other projects attach their
-      // properties to it so it needs to exist.
-      support: support
+      }
     });
     // JSHint would error on this code due to the Symbol not being defined in ES5.
     // Defining this global in .jshintrc would create a danger of using the global
@@ -398,7 +394,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       return type === 'array' || length === 0 || typeof length === 'number' && length > 0 && length - 1 in obj;
     }
     return jQuery;
-  }(jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_concat, jquery_var_push, jquery_var_indexOf, jquery_var_class2type, jquery_var_toString, jquery_var_hasOwn, jquery_var_support);
+  }(jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_concat, jquery_var_push, jquery_var_indexOf, jquery_var_class2type, jquery_var_toString, jquery_var_hasOwn);
   /*!
    * Sizzle CSS Selector Engine v2.2.1
    * http://sizzlejs.com/
@@ -2600,442 +2596,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     });
     return jQuery;
   }(jquery_core, jquery_var_slice);
-  jquery_core_ready = function (jQuery, document) {
-    // The deferred used on DOM ready
-    var readyList;
-    jQuery.fn.ready = function (fn) {
-      // Add the callback
-      jQuery.ready.promise().done(fn);
-      return this;
-    };
-    jQuery.extend({
-      // Is the DOM ready to be used? Set to true once it occurs.
-      isReady: false,
-      // A counter to track how many items to wait for before
-      // the ready event fires. See #6781
-      readyWait: 1,
-      // Hold (or release) the ready event
-      holdReady: function (hold) {
-        if (hold) {
-          jQuery.readyWait++;
-        } else {
-          jQuery.ready(true);
-        }
-      },
-      // Handle when the DOM is ready
-      ready: function (wait) {
-        // Abort if there are pending holds or we're already ready
-        if (wait === true ? --jQuery.readyWait : jQuery.isReady) {
-          return;
-        }
-        // Remember that the DOM is ready
-        jQuery.isReady = true;
-        // If a normal DOM Ready event fired, decrement, and wait if need be
-        if (wait !== true && --jQuery.readyWait > 0) {
-          return;
-        }
-        // If there are functions bound, to execute
-        readyList.resolveWith(document, [jQuery]);
-        // Trigger any bound ready events
-        if (jQuery.fn.triggerHandler) {
-          jQuery(document).triggerHandler('ready');
-          jQuery(document).off('ready');
-        }
-      }
-    });
-    /**
-     * Clean-up method for dom ready events
-     */
-    function detach() {
-      if (document.addEventListener) {
-        document.removeEventListener('DOMContentLoaded', completed);
-        window.removeEventListener('load', completed);
-      } else {
-        document.detachEvent('onreadystatechange', completed);
-        window.detachEvent('onload', completed);
-      }
-    }
-    /**
-     * The ready event handler and self cleanup method
-     */
-    function completed() {
-      // readyState === "complete" is good enough for us to call the dom ready in oldIE
-      if (document.addEventListener || window.event.type === 'load' || document.readyState === 'complete') {
-        detach();
-        jQuery.ready();
-      }
-    }
-    jQuery.ready.promise = function (obj) {
-      if (!readyList) {
-        readyList = jQuery.Deferred();
-        // Catch cases where $(document).ready() is called
-        // after the browser event has already occurred.
-        // Support: IE6-10
-        // Older IE sometimes signals "interactive" too soon
-        if (document.readyState === 'complete' || document.readyState !== 'loading' && !document.documentElement.doScroll) {
-          // Handle it asynchronously to allow scripts the opportunity to delay ready
-          window.setTimeout(jQuery.ready);  // Standards-based browsers support DOMContentLoaded
-        } else if (document.addEventListener) {
-          // Use the handy event callback
-          document.addEventListener('DOMContentLoaded', completed);
-          // A fallback to window.onload, that will always work
-          window.addEventListener('load', completed);  // If IE event model is used
-        } else {
-          // Ensure firing before onload, maybe late but safe also for iframes
-          document.attachEvent('onreadystatechange', completed);
-          // A fallback to window.onload, that will always work
-          window.attachEvent('onload', completed);
-          // If IE and not a frame
-          // continually check to see if the document is ready
-          var top = false;
-          try {
-            top = window.frameElement == null && document.documentElement;
-          } catch (e) {
-          }
-          if (top && top.doScroll) {
-            (function doScrollCheck() {
-              if (!jQuery.isReady) {
-                try {
-                  // Use the trick by Diego Perini
-                  // http://javascript.nwbox.com/IEContentLoaded/
-                  top.doScroll('left');
-                } catch (e) {
-                  return window.setTimeout(doScrollCheck, 50);
-                }
-                // detach all dom ready events
-                detach();
-                // and execute any waiting functions
-                jQuery.ready();
-              }
-            }());
-          }
-        }
-      }
-      return readyList.promise(obj);
-    };
-    // Kick off the DOM ready check even if the user does not
-    jQuery.ready.promise();
-  }(jquery_core, jquery_var_document);
-  jquery_support = function (jQuery, support, document) {
-    // Support: IE<9
-    // Iteration over object's inherited properties before its own
-    var i;
-    for (i in jQuery(support)) {
-      break;
-    }
-    support.ownFirst = i === '0';
-    // Note: most support tests are defined in their respective modules.
-    // false until the test is run
-    support.inlineBlockNeedsLayout = false;
-    // Execute ASAP in case we need to set body.style.zoom
-    jQuery(function () {
-      // Minified: var a,b,c,d
-      var val, div, body, container;
-      body = document.getElementsByTagName('body')[0];
-      if (!body || !body.style) {
-        // Return for frameset docs that don't have a body
-        return;
-      }
-      // Setup
-      div = document.createElement('div');
-      container = document.createElement('div');
-      container.style.cssText = 'position:absolute;border:0;width:0;height:0;top:0;left:-9999px';
-      body.appendChild(container).appendChild(div);
-      if (typeof div.style.zoom !== 'undefined') {
-        // Support: IE<8
-        // Check if natively block-level elements act like inline-block
-        // elements when setting their display to 'inline' and giving
-        // them layout
-        div.style.cssText = 'display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1';
-        support.inlineBlockNeedsLayout = val = div.offsetWidth === 3;
-        if (val) {
-          // Prevent IE 6 from affecting layout for positioned elements #11048
-          // Prevent IE from shrinking the body in IE 7 mode #12869
-          // Support: IE<8
-          body.style.zoom = 1;
-        }
-      }
-      body.removeChild(container);
-    });
-    return support;
-  }(jquery_core, jquery_var_support, jquery_var_document);
-  jquery_data_support = function (document, support) {
-    (function () {
-      var div = document.createElement('div');
-      // Support: IE<9
-      support.deleteExpando = true;
-      try {
-        delete div.test;
-      } catch (e) {
-        support.deleteExpando = false;
-      }
-      // Null elements to avoid leaks in IE.
-      div = null;
-    }());
-    return support;
-  }(jquery_var_document, jquery_var_support);
-  jquery_data_var_acceptData = function (jQuery) {
-    /**
-     * Determines whether an object can have data
-     */
-    return function (elem) {
-      var noData = jQuery.noData[(elem.nodeName + ' ').toLowerCase()], nodeType = +elem.nodeType || 1;
-      // Do not set data on non-element DOM nodes because it will not be cleared (#8335).
-      return nodeType !== 1 && nodeType !== 9 ? false : // Nodes accept data unless otherwise specified; rejection can be conditional
-      !noData || noData !== true && elem.getAttribute('classid') === noData;
-    };
-  }(jquery_core);
-  jquery_data = function (jQuery, deletedIds, support, acceptData) {
-    var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/, rmultiDash = /([A-Z])/g;
-    function dataAttr(elem, key, data) {
-      // If nothing was found internally, try to fetch any
-      // data from the HTML5 data-* attribute
-      if (data === undefined && elem.nodeType === 1) {
-        var name = 'data-' + key.replace(rmultiDash, '-$1').toLowerCase();
-        data = elem.getAttribute(name);
-        if (typeof data === 'string') {
-          try {
-            data = data === 'true' ? true : data === 'false' ? false : data === 'null' ? null : // Only convert to a number if it doesn't change the string
-            +data + '' === data ? +data : rbrace.test(data) ? jQuery.parseJSON(data) : data;
-          } catch (e) {
-          }
-          // Make sure we set the data so it isn't changed later
-          jQuery.data(elem, key, data);
-        } else {
-          data = undefined;
-        }
-      }
-      return data;
-    }
-    // checks a cache object for emptiness
-    function isEmptyDataObject(obj) {
-      var name;
-      for (name in obj) {
-        // if the public data object is empty, the private is still empty
-        if (name === 'data' && jQuery.isEmptyObject(obj[name])) {
-          continue;
-        }
-        if (name !== 'toJSON') {
-          return false;
-        }
-      }
-      return true;
-    }
-    function internalData(elem, name, data, pvt) {
-      if (!acceptData(elem)) {
-        return;
-      }
-      var ret, thisCache, internalKey = jQuery.expando,
-        // We have to handle DOM nodes and JS objects differently because IE6-7
-        // can't GC object references properly across the DOM-JS boundary
-        isNode = elem.nodeType,
-        // Only DOM nodes need the global jQuery cache; JS object data is
-        // attached directly to the object so GC can occur automatically
-        cache = isNode ? jQuery.cache : elem,
-        // Only defining an ID for JS objects if its cache already exists allows
-        // the code to shortcut on the same path as a DOM node with no cache
-        id = isNode ? elem[internalKey] : elem[internalKey] && internalKey;
-      // Avoid doing any more work than we need to when trying to get data on an
-      // object that has no data at all
-      if ((!id || !cache[id] || !pvt && !cache[id].data) && data === undefined && typeof name === 'string') {
-        return;
-      }
-      if (!id) {
-        // Only DOM nodes need a new unique ID for each element since their data
-        // ends up in the global cache
-        if (isNode) {
-          id = elem[internalKey] = deletedIds.pop() || jQuery.guid++;
-        } else {
-          id = internalKey;
-        }
-      }
-      if (!cache[id]) {
-        // Avoid exposing jQuery metadata on plain JS objects when the object
-        // is serialized using JSON.stringify
-        cache[id] = isNode ? {} : { toJSON: jQuery.noop };
-      }
-      // An object can be passed to jQuery.data instead of a key/value pair; this gets
-      // shallow copied over onto the existing cache
-      if (typeof name === 'object' || typeof name === 'function') {
-        if (pvt) {
-          cache[id] = jQuery.extend(cache[id], name);
-        } else {
-          cache[id].data = jQuery.extend(cache[id].data, name);
-        }
-      }
-      thisCache = cache[id];
-      // jQuery data() is stored in a separate object inside the object's internal data
-      // cache in order to avoid key collisions between internal data and user-defined
-      // data.
-      if (!pvt) {
-        if (!thisCache.data) {
-          thisCache.data = {};
-        }
-        thisCache = thisCache.data;
-      }
-      if (data !== undefined) {
-        thisCache[jQuery.camelCase(name)] = data;
-      }
-      // Check for both converted-to-camel and non-converted data property names
-      // If a data property was specified
-      if (typeof name === 'string') {
-        // First Try to find as-is property data
-        ret = thisCache[name];
-        // Test for null|undefined property data
-        if (ret == null) {
-          // Try to find the camelCased property
-          ret = thisCache[jQuery.camelCase(name)];
-        }
-      } else {
-        ret = thisCache;
-      }
-      return ret;
-    }
-    function internalRemoveData(elem, name, pvt) {
-      if (!acceptData(elem)) {
-        return;
-      }
-      var thisCache, i, isNode = elem.nodeType,
-        // See jQuery.data for more information
-        cache = isNode ? jQuery.cache : elem, id = isNode ? elem[jQuery.expando] : jQuery.expando;
-      // If there is already no cache entry for this object, there is no
-      // purpose in continuing
-      if (!cache[id]) {
-        return;
-      }
-      if (name) {
-        thisCache = pvt ? cache[id] : cache[id].data;
-        if (thisCache) {
-          // Support array or space separated string names for data keys
-          if (!jQuery.isArray(name)) {
-            // try the string as a key before any manipulation
-            if (name in thisCache) {
-              name = [name];
-            } else {
-              // split the camel cased version by spaces unless a key with the spaces exists
-              name = jQuery.camelCase(name);
-              if (name in thisCache) {
-                name = [name];
-              } else {
-                name = name.split(' ');
-              }
-            }
-          } else {
-            // If "name" is an array of keys...
-            // When data is initially created, via ("key", "val") signature,
-            // keys will be converted to camelCase.
-            // Since there is no way to tell _how_ a key was added, remove
-            // both plain key and camelCase key. #12786
-            // This will only penalize the array argument path.
-            name = name.concat(jQuery.map(name, jQuery.camelCase));
-          }
-          i = name.length;
-          while (i--) {
-            delete thisCache[name[i]];
-          }
-          // If there is no data left in the cache, we want to continue
-          // and let the cache object itself get destroyed
-          if (pvt ? !isEmptyDataObject(thisCache) : !jQuery.isEmptyObject(thisCache)) {
-            return;
-          }
-        }
-      }
-      // See jQuery.data for more information
-      if (!pvt) {
-        delete cache[id].data;
-        // Don't destroy the parent cache unless the internal data object
-        // had been the only thing left in it
-        if (!isEmptyDataObject(cache[id])) {
-          return;
-        }
-      }
-      // Destroy the cache
-      if (isNode) {
-        jQuery.cleanData([elem], true);  // Use delete when supported for expandos or `cache` is not a window per isWindow (#10080)
-                                         /* jshint eqeqeq: false */
-      } else if (support.deleteExpando || cache != cache.window) {
-        /* jshint eqeqeq: true */
-        delete cache[id];  // When all else fails, undefined
-      } else {
-        cache[id] = undefined;
-      }
-    }
-    jQuery.extend({
-      cache: {},
-      // The following elements (space-suffixed to avoid Object.prototype collisions)
-      // throw uncatchable exceptions if you attempt to set expando properties
-      noData: {
-        'applet ': true,
-        'embed ': true,
-        // ...but Flash objects (which have this classid) *can* handle expandos
-        'object ': 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000'
-      },
-      hasData: function (elem) {
-        elem = elem.nodeType ? jQuery.cache[elem[jQuery.expando]] : elem[jQuery.expando];
-        return !!elem && !isEmptyDataObject(elem);
-      },
-      data: function (elem, name, data) {
-        return internalData(elem, name, data);
-      },
-      removeData: function (elem, name) {
-        return internalRemoveData(elem, name);
-      },
-      // For internal use only.
-      _data: function (elem, name, data) {
-        return internalData(elem, name, data, true);
-      },
-      _removeData: function (elem, name) {
-        return internalRemoveData(elem, name, true);
-      }
-    });
-    jQuery.fn.extend({
-      data: function (key, value) {
-        var i, name, data, elem = this[0], attrs = elem && elem.attributes;
-        // Special expections of .data basically thwart jQuery.access,
-        // so implement the relevant behavior ourselves
-        // Gets all values
-        if (key === undefined) {
-          if (this.length) {
-            data = jQuery.data(elem);
-            if (elem.nodeType === 1 && !jQuery._data(elem, 'parsedAttrs')) {
-              i = attrs.length;
-              while (i--) {
-                // Support: IE11+
-                // The attrs elements can be null (#14894)
-                if (attrs[i]) {
-                  name = attrs[i].name;
-                  if (name.indexOf('data-') === 0) {
-                    name = jQuery.camelCase(name.slice(5));
-                    dataAttr(elem, name, data[name]);
-                  }
-                }
-              }
-              jQuery._data(elem, 'parsedAttrs', true);
-            }
-          }
-          return data;
-        }
-        // Sets multiple values
-        if (typeof key === 'object') {
-          return this.each(function () {
-            jQuery.data(this, key);
-          });
-        }
-        return arguments.length > 1 ? // Sets one value
-        this.each(function () {
-          jQuery.data(this, key, value);
-        }) : // Gets one value
-        // Try to fetch any internally stored data first
-        elem ? dataAttr(elem, key, jQuery.data(elem, key)) : undefined;
-      },
-      removeData: function (key) {
-        return this.each(function () {
-          jQuery.removeData(this, key);
-        });
-      }
-    });
-    return jQuery;
-  }(jquery_core, jquery_var_deletedIds, jquery_data_support, jquery_data_var_acceptData);
+  jquery_var_support = {};
   jquery_attributes_support = function (document, support) {
     (function () {
       var a, input = document.createElement('input'), div = document.createElement('div'), select = document.createElement('select'), opt = select.appendChild(document.createElement('option'));
@@ -3703,6 +3264,313 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     // Return jQuery for attributes-only inclusion
     return jQuery;
   }(jquery_core);
+  jquery_var_pnum = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source;
+  jquery_css_var_rmargin = /^margin/;
+  jquery_var_rcssNum = function (pnum) {
+    return new RegExp('^(?:([+-])=|)(' + pnum + ')([a-z%]*)$', 'i');
+  }(jquery_var_pnum);
+  jquery_css_var_rnumnonpx = function (pnum) {
+    return new RegExp('^(' + pnum + ')(?!px)[a-z%]+$', 'i');
+  }(jquery_var_pnum);
+  jquery_css_var_cssExpand = [
+    'Top',
+    'Right',
+    'Bottom',
+    'Left'
+  ];
+  jquery_css_var_isHidden = function (jQuery) {
+    return function (elem, el) {
+      // isHidden might be called from jQuery#filter function;
+      // in that case, element will be second argument
+      elem = el || elem;
+      return jQuery.css(elem, 'display') === 'none' || !jQuery.contains(elem.ownerDocument, elem);
+    };
+  }(jquery_core);
+  jquery_css_var_swap = function (elem, options, callback, args) {
+    var ret, name, old = {};
+    // Remember the old values, and insert the new ones
+    for (name in options) {
+      old[name] = elem.style[name];
+      elem.style[name] = options[name];
+    }
+    ret = callback.apply(elem, args || []);
+    // Revert the old values
+    for (name in options) {
+      elem.style[name] = old[name];
+    }
+    return ret;
+  };
+  jquery_var_documentElement = function (document) {
+    return document.documentElement;
+  }(jquery_var_document);
+  jquery_css_support = function (jQuery, document, documentElement, support) {
+    (function () {
+      var pixelPositionVal, pixelMarginRightVal, boxSizingReliableVal, reliableHiddenOffsetsVal, reliableMarginRightVal, reliableMarginLeftVal, container = document.createElement('div'), div = document.createElement('div');
+      // Finish early in limited (non-browser) environments
+      if (!div.style) {
+        return;
+      }
+      div.style.cssText = 'float:left;opacity:.5';
+      // Support: IE<9
+      // Make sure that element opacity exists (as opposed to filter)
+      support.opacity = div.style.opacity === '0.5';
+      // Verify style float existence
+      // (IE uses styleFloat instead of cssFloat)
+      support.cssFloat = !!div.style.cssFloat;
+      div.style.backgroundClip = 'content-box';
+      div.cloneNode(true).style.backgroundClip = '';
+      support.clearCloneStyle = div.style.backgroundClip === 'content-box';
+      container = document.createElement('div');
+      container.style.cssText = 'border:0;width:8px;height:0;top:0;left:-9999px;' + 'padding:0;margin-top:1px;position:absolute';
+      div.innerHTML = '';
+      container.appendChild(div);
+      // Support: Firefox<29, Android 2.3
+      // Vendor-prefix box-sizing
+      support.boxSizing = div.style.boxSizing === '' || div.style.MozBoxSizing === '' || div.style.WebkitBoxSizing === '';
+      jQuery.extend(support, {
+        reliableHiddenOffsets: function () {
+          if (pixelPositionVal == null) {
+            computeStyleTests();
+          }
+          return reliableHiddenOffsetsVal;
+        },
+        boxSizingReliable: function () {
+          // We're checking for pixelPositionVal here instead of boxSizingReliableVal
+          // since that compresses better and they're computed together anyway.
+          if (pixelPositionVal == null) {
+            computeStyleTests();
+          }
+          return boxSizingReliableVal;
+        },
+        pixelMarginRight: function () {
+          // Support: Android 4.0-4.3
+          if (pixelPositionVal == null) {
+            computeStyleTests();
+          }
+          return pixelMarginRightVal;
+        },
+        pixelPosition: function () {
+          if (pixelPositionVal == null) {
+            computeStyleTests();
+          }
+          return pixelPositionVal;
+        },
+        reliableMarginRight: function () {
+          // Support: Android 2.3
+          if (pixelPositionVal == null) {
+            computeStyleTests();
+          }
+          return reliableMarginRightVal;
+        },
+        reliableMarginLeft: function () {
+          // Support: IE <=8 only, Android 4.0 - 4.3 only, Firefox <=3 - 37
+          if (pixelPositionVal == null) {
+            computeStyleTests();
+          }
+          return reliableMarginLeftVal;
+        }
+      });
+      function computeStyleTests() {
+        var contents, divStyle, documentElement = document.documentElement;
+        // Setup
+        documentElement.appendChild(container);
+        div.style.cssText = // Support: Android 2.3
+        // Vendor-prefix box-sizing
+        '-webkit-box-sizing:border-box;box-sizing:border-box;' + 'position:relative;display:block;' + 'margin:auto;border:1px;padding:1px;' + 'top:1%;width:50%';
+        // Support: IE<9
+        // Assume reasonable values in the absence of getComputedStyle
+        pixelPositionVal = boxSizingReliableVal = reliableMarginLeftVal = false;
+        pixelMarginRightVal = reliableMarginRightVal = true;
+        // Check for getComputedStyle so that this code is not run in IE<9.
+        if (window.getComputedStyle) {
+          divStyle = window.getComputedStyle(div);
+          pixelPositionVal = (divStyle || {}).top !== '1%';
+          reliableMarginLeftVal = (divStyle || {}).marginLeft === '2px';
+          boxSizingReliableVal = (divStyle || { width: '4px' }).width === '4px';
+          // Support: Android 4.0 - 4.3 only
+          // Some styles come back with percentage values, even though they shouldn't
+          div.style.marginRight = '50%';
+          pixelMarginRightVal = (divStyle || { marginRight: '4px' }).marginRight === '4px';
+          // Support: Android 2.3 only
+          // Div with explicit width and no margin-right incorrectly
+          // gets computed margin-right based on width of container (#3333)
+          // WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
+          contents = div.appendChild(document.createElement('div'));
+          // Reset CSS: box-sizing; display; margin; border; padding
+          contents.style.cssText = div.style.cssText = // Support: Android 2.3
+          // Vendor-prefix box-sizing
+          '-webkit-box-sizing:content-box;-moz-box-sizing:content-box;' + 'box-sizing:content-box;display:block;margin:0;border:0;padding:0';
+          contents.style.marginRight = contents.style.width = '0';
+          div.style.width = '1px';
+          reliableMarginRightVal = !parseFloat((window.getComputedStyle(contents) || {}).marginRight);
+          div.removeChild(contents);
+        }
+        // Support: IE6-8
+        // First check that getClientRects works as expected
+        // Check if table cells still have offsetWidth/Height when they are set
+        // to display:none and there are still other visible table cells in a
+        // table row; if so, offsetWidth/Height are not reliable for use when
+        // determining if an element has been hidden directly using
+        // display:none (it is still safe to use offsets if a parent element is
+        // hidden; don safety goggles and see bug #4512 for more information).
+        div.style.display = 'none';
+        reliableHiddenOffsetsVal = div.getClientRects().length === 0;
+        if (reliableHiddenOffsetsVal) {
+          div.style.display = '';
+          div.innerHTML = '<table><tr><td></td><td>t</td></tr></table>';
+          div.childNodes[0].style.borderCollapse = 'separate';
+          contents = div.getElementsByTagName('td');
+          contents[0].style.cssText = 'margin:0;border:0;padding:0;display:none';
+          reliableHiddenOffsetsVal = contents[0].offsetHeight === 0;
+          if (reliableHiddenOffsetsVal) {
+            contents[0].style.display = '';
+            contents[1].style.display = 'none';
+            reliableHiddenOffsetsVal = contents[0].offsetHeight === 0;
+          }
+        }
+        // Teardown
+        documentElement.removeChild(container);
+      }
+    }());
+    return support;
+  }(jquery_core, jquery_var_document, jquery_var_documentElement, jquery_var_support);
+  jquery_css_curCSS = function (exports, jQuery, documentElement, rnumnonpx, rmargin, support) {
+    var getStyles, curCSS, rposition = /^(top|right|bottom|left)$/;
+    if (window.getComputedStyle) {
+      getStyles = function (elem) {
+        // Support: IE<=11+, Firefox<=30+ (#15098, #14150)
+        // IE throws on elements created in popups
+        // FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
+        var view = elem.ownerDocument.defaultView;
+        if (!view || !view.opener) {
+          view = window;
+        }
+        return view.getComputedStyle(elem);
+      };
+      curCSS = function (elem, name, computed) {
+        var width, minWidth, maxWidth, ret, style = elem.style;
+        computed = computed || getStyles(elem);
+        // getPropertyValue is only needed for .css('filter') in IE9, see #12537
+        ret = computed ? computed.getPropertyValue(name) || computed[name] : undefined;
+        // Support: Opera 12.1x only
+        // Fall back to style even without computed
+        // computed is undefined for elems on document fragments
+        if ((ret === '' || ret === undefined) && !jQuery.contains(elem.ownerDocument, elem)) {
+          ret = jQuery.style(elem, name);
+        }
+        if (computed) {
+          // A tribute to the "awesome hack by Dean Edwards"
+          // Chrome < 17 and Safari 5.0 uses "computed value"
+          // instead of "used value" for margin-right
+          // Safari 5.1.7 (at least) returns percentage for a larger set of values,
+          // but width seems to be reliably pixels
+          // this is against the CSSOM draft spec:
+          // http://dev.w3.org/csswg/cssom/#resolved-values
+          if (!support.pixelMarginRight() && rnumnonpx.test(ret) && rmargin.test(name)) {
+            // Remember the original values
+            width = style.width;
+            minWidth = style.minWidth;
+            maxWidth = style.maxWidth;
+            // Put in the new values to get a computed value out
+            style.minWidth = style.maxWidth = style.width = ret;
+            ret = computed.width;
+            // Revert the changed values
+            style.width = width;
+            style.minWidth = minWidth;
+            style.maxWidth = maxWidth;
+          }
+        }
+        // Support: IE
+        // IE returns zIndex value as an integer.
+        return ret === undefined ? ret : ret + '';
+      };
+    } else if (documentElement.currentStyle) {
+      getStyles = function (elem) {
+        return elem.currentStyle;
+      };
+      curCSS = function (elem, name, computed) {
+        var left, rs, rsLeft, ret, style = elem.style;
+        computed = computed || getStyles(elem);
+        ret = computed ? computed[name] : undefined;
+        // Avoid setting ret to empty string here
+        // so we don't default to auto
+        if (ret == null && style && style[name]) {
+          ret = style[name];
+        }
+        // From the awesome hack by Dean Edwards
+        // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
+        // If we're not dealing with a regular pixel number
+        // but a number that has a weird ending, we need to convert it to pixels
+        // but not position css attributes, as those are
+        // proportional to the parent element instead
+        // and we can't measure the parent instead because it
+        // might trigger a "stacking dolls" problem
+        if (rnumnonpx.test(ret) && !rposition.test(name)) {
+          // Remember the original values
+          left = style.left;
+          rs = elem.runtimeStyle;
+          rsLeft = rs && rs.left;
+          // Put in the new values to get a computed value out
+          if (rsLeft) {
+            rs.left = elem.currentStyle.left;
+          }
+          style.left = name === 'fontSize' ? '1em' : ret;
+          ret = style.pixelLeft + 'px';
+          // Revert the changed values
+          style.left = left;
+          if (rsLeft) {
+            rs.left = rsLeft;
+          }
+        }
+        // Support: IE
+        // IE returns zIndex value as an integer.
+        return ret === undefined ? ret : ret + '' || 'auto';
+      };
+    }
+    exports.getStyles = getStyles;
+    exports.curCSS = curCSS;
+    return exports;
+  }(jquery_css_curCSS, jquery_core, jquery_var_documentElement, jquery_css_var_rnumnonpx, jquery_css_var_rmargin, jquery_css_support);
+  jquery_css_adjustCSS = function (jQuery, rcssNum) {
+    function adjustCSS(elem, prop, valueParts, tween) {
+      var adjusted, scale = 1, maxIterations = 20, currentValue = tween ? function () {
+          return tween.cur();
+        } : function () {
+          return jQuery.css(elem, prop, '');
+        }, initial = currentValue(), unit = valueParts && valueParts[3] || (jQuery.cssNumber[prop] ? '' : 'px'),
+        // Starting value computation is required for potential unit mismatches
+        initialInUnit = (jQuery.cssNumber[prop] || unit !== 'px' && +initial) && rcssNum.exec(jQuery.css(elem, prop));
+      if (initialInUnit && initialInUnit[3] !== unit) {
+        // Trust units reported by jQuery.css
+        unit = unit || initialInUnit[3];
+        // Make sure we update the tween properties later on
+        valueParts = valueParts || [];
+        // Iteratively approximate from a nonzero starting point
+        initialInUnit = +initial || 1;
+        do {
+          // If previous iteration zeroed out, double until we get *something*.
+          // Use string for doubling so we don't accidentally see scale as unchanged below
+          scale = scale || '.5';
+          // Adjust and apply
+          initialInUnit = initialInUnit / scale;
+          jQuery.style(elem, prop, initialInUnit + unit);  // Update scale, tolerating zero or NaN from tween.cur()
+                                                           // Break the loop if scale is unchanged or perfect, or if we've just had enough.
+        } while (scale !== (scale = currentValue() / initial) && scale !== 1 && --maxIterations);
+      }
+      if (valueParts) {
+        initialInUnit = +initialInUnit || +initial || 0;
+        // Apply relative offset (+=/-=) if specified
+        adjusted = valueParts[1] ? initialInUnit + (valueParts[1] + 1) * valueParts[2] : +valueParts[2];
+        if (tween) {
+          tween.unit = unit;
+          tween.start = initialInUnit;
+          tween.end = adjusted;
+        }
+      }
+      return adjusted;
+    }
+    return adjustCSS;
+  }(jquery_core, jquery_var_rcssNum);
   jquery_manipulation_var_rcheckableType = /^(?:checkbox|radio)$/i;
   jquery_manipulation_var_rtagName = /<([\w:-]+)/;
   jquery_manipulation_var_rscriptType = /^$|\/(?:java|ecma)script/i;
@@ -3958,6 +3826,17 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     }
     return buildFragment;
   }(jquery_core, jquery_manipulation_var_rcheckableType, jquery_manipulation_var_rtagName, jquery_manipulation_var_rscriptType, jquery_manipulation_var_rleadingWhitespace, jquery_manipulation_createSafeFragment, jquery_manipulation_wrapMap, jquery_manipulation_getAll, jquery_manipulation_setGlobalEval, jquery_manipulation_support);
+  jquery_data_var_acceptData = function (jQuery) {
+    /**
+     * Determines whether an object can have data
+     */
+    return function (elem) {
+      var noData = jQuery.noData[(elem.nodeName + ' ').toLowerCase()], nodeType = +elem.nodeType || 1;
+      // Do not set data on non-element DOM nodes because it will not be cleared (#8335).
+      return nodeType !== 1 && nodeType !== 9 ? false : // Nodes accept data unless otherwise specified; rejection can be conditional
+      !noData || noData !== true && elem.getAttribute('classid') === noData;
+    };
+  }(jquery_core);
   jquery_event_support = function (document, support) {
     (function () {
       var i, eventName, div = document.createElement('div');
@@ -3979,6 +3858,272 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     }());
     return support;
   }(jquery_var_document, jquery_var_support);
+  jquery_data_support = function (document, support) {
+    (function () {
+      var div = document.createElement('div');
+      // Support: IE<9
+      support.deleteExpando = true;
+      try {
+        delete div.test;
+      } catch (e) {
+        support.deleteExpando = false;
+      }
+      // Null elements to avoid leaks in IE.
+      div = null;
+    }());
+    return support;
+  }(jquery_var_document, jquery_var_support);
+  jquery_data = function (jQuery, deletedIds, support, acceptData) {
+    var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/, rmultiDash = /([A-Z])/g;
+    function dataAttr(elem, key, data) {
+      // If nothing was found internally, try to fetch any
+      // data from the HTML5 data-* attribute
+      if (data === undefined && elem.nodeType === 1) {
+        var name = 'data-' + key.replace(rmultiDash, '-$1').toLowerCase();
+        data = elem.getAttribute(name);
+        if (typeof data === 'string') {
+          try {
+            data = data === 'true' ? true : data === 'false' ? false : data === 'null' ? null : // Only convert to a number if it doesn't change the string
+            +data + '' === data ? +data : rbrace.test(data) ? jQuery.parseJSON(data) : data;
+          } catch (e) {
+          }
+          // Make sure we set the data so it isn't changed later
+          jQuery.data(elem, key, data);
+        } else {
+          data = undefined;
+        }
+      }
+      return data;
+    }
+    // checks a cache object for emptiness
+    function isEmptyDataObject(obj) {
+      var name;
+      for (name in obj) {
+        // if the public data object is empty, the private is still empty
+        if (name === 'data' && jQuery.isEmptyObject(obj[name])) {
+          continue;
+        }
+        if (name !== 'toJSON') {
+          return false;
+        }
+      }
+      return true;
+    }
+    function internalData(elem, name, data, pvt) {
+      if (!acceptData(elem)) {
+        return;
+      }
+      var ret, thisCache, internalKey = jQuery.expando,
+        // We have to handle DOM nodes and JS objects differently because IE6-7
+        // can't GC object references properly across the DOM-JS boundary
+        isNode = elem.nodeType,
+        // Only DOM nodes need the global jQuery cache; JS object data is
+        // attached directly to the object so GC can occur automatically
+        cache = isNode ? jQuery.cache : elem,
+        // Only defining an ID for JS objects if its cache already exists allows
+        // the code to shortcut on the same path as a DOM node with no cache
+        id = isNode ? elem[internalKey] : elem[internalKey] && internalKey;
+      // Avoid doing any more work than we need to when trying to get data on an
+      // object that has no data at all
+      if ((!id || !cache[id] || !pvt && !cache[id].data) && data === undefined && typeof name === 'string') {
+        return;
+      }
+      if (!id) {
+        // Only DOM nodes need a new unique ID for each element since their data
+        // ends up in the global cache
+        if (isNode) {
+          id = elem[internalKey] = deletedIds.pop() || jQuery.guid++;
+        } else {
+          id = internalKey;
+        }
+      }
+      if (!cache[id]) {
+        // Avoid exposing jQuery metadata on plain JS objects when the object
+        // is serialized using JSON.stringify
+        cache[id] = isNode ? {} : { toJSON: jQuery.noop };
+      }
+      // An object can be passed to jQuery.data instead of a key/value pair; this gets
+      // shallow copied over onto the existing cache
+      if (typeof name === 'object' || typeof name === 'function') {
+        if (pvt) {
+          cache[id] = jQuery.extend(cache[id], name);
+        } else {
+          cache[id].data = jQuery.extend(cache[id].data, name);
+        }
+      }
+      thisCache = cache[id];
+      // jQuery data() is stored in a separate object inside the object's internal data
+      // cache in order to avoid key collisions between internal data and user-defined
+      // data.
+      if (!pvt) {
+        if (!thisCache.data) {
+          thisCache.data = {};
+        }
+        thisCache = thisCache.data;
+      }
+      if (data !== undefined) {
+        thisCache[jQuery.camelCase(name)] = data;
+      }
+      // Check for both converted-to-camel and non-converted data property names
+      // If a data property was specified
+      if (typeof name === 'string') {
+        // First Try to find as-is property data
+        ret = thisCache[name];
+        // Test for null|undefined property data
+        if (ret == null) {
+          // Try to find the camelCased property
+          ret = thisCache[jQuery.camelCase(name)];
+        }
+      } else {
+        ret = thisCache;
+      }
+      return ret;
+    }
+    function internalRemoveData(elem, name, pvt) {
+      if (!acceptData(elem)) {
+        return;
+      }
+      var thisCache, i, isNode = elem.nodeType,
+        // See jQuery.data for more information
+        cache = isNode ? jQuery.cache : elem, id = isNode ? elem[jQuery.expando] : jQuery.expando;
+      // If there is already no cache entry for this object, there is no
+      // purpose in continuing
+      if (!cache[id]) {
+        return;
+      }
+      if (name) {
+        thisCache = pvt ? cache[id] : cache[id].data;
+        if (thisCache) {
+          // Support array or space separated string names for data keys
+          if (!jQuery.isArray(name)) {
+            // try the string as a key before any manipulation
+            if (name in thisCache) {
+              name = [name];
+            } else {
+              // split the camel cased version by spaces unless a key with the spaces exists
+              name = jQuery.camelCase(name);
+              if (name in thisCache) {
+                name = [name];
+              } else {
+                name = name.split(' ');
+              }
+            }
+          } else {
+            // If "name" is an array of keys...
+            // When data is initially created, via ("key", "val") signature,
+            // keys will be converted to camelCase.
+            // Since there is no way to tell _how_ a key was added, remove
+            // both plain key and camelCase key. #12786
+            // This will only penalize the array argument path.
+            name = name.concat(jQuery.map(name, jQuery.camelCase));
+          }
+          i = name.length;
+          while (i--) {
+            delete thisCache[name[i]];
+          }
+          // If there is no data left in the cache, we want to continue
+          // and let the cache object itself get destroyed
+          if (pvt ? !isEmptyDataObject(thisCache) : !jQuery.isEmptyObject(thisCache)) {
+            return;
+          }
+        }
+      }
+      // See jQuery.data for more information
+      if (!pvt) {
+        delete cache[id].data;
+        // Don't destroy the parent cache unless the internal data object
+        // had been the only thing left in it
+        if (!isEmptyDataObject(cache[id])) {
+          return;
+        }
+      }
+      // Destroy the cache
+      if (isNode) {
+        jQuery.cleanData([elem], true);  // Use delete when supported for expandos or `cache` is not a window per isWindow (#10080)
+                                         /* jshint eqeqeq: false */
+      } else if (support.deleteExpando || cache != cache.window) {
+        /* jshint eqeqeq: true */
+        delete cache[id];  // When all else fails, undefined
+      } else {
+        cache[id] = undefined;
+      }
+    }
+    jQuery.extend({
+      cache: {},
+      // The following elements (space-suffixed to avoid Object.prototype collisions)
+      // throw uncatchable exceptions if you attempt to set expando properties
+      noData: {
+        'applet ': true,
+        'embed ': true,
+        // ...but Flash objects (which have this classid) *can* handle expandos
+        'object ': 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000'
+      },
+      hasData: function (elem) {
+        elem = elem.nodeType ? jQuery.cache[elem[jQuery.expando]] : elem[jQuery.expando];
+        return !!elem && !isEmptyDataObject(elem);
+      },
+      data: function (elem, name, data) {
+        return internalData(elem, name, data);
+      },
+      removeData: function (elem, name) {
+        return internalRemoveData(elem, name);
+      },
+      // For internal use only.
+      _data: function (elem, name, data) {
+        return internalData(elem, name, data, true);
+      },
+      _removeData: function (elem, name) {
+        return internalRemoveData(elem, name, true);
+      }
+    });
+    jQuery.fn.extend({
+      data: function (key, value) {
+        var i, name, data, elem = this[0], attrs = elem && elem.attributes;
+        // Special expections of .data basically thwart jQuery.access,
+        // so implement the relevant behavior ourselves
+        // Gets all values
+        if (key === undefined) {
+          if (this.length) {
+            data = jQuery.data(elem);
+            if (elem.nodeType === 1 && !jQuery._data(elem, 'parsedAttrs')) {
+              i = attrs.length;
+              while (i--) {
+                // Support: IE11+
+                // The attrs elements can be null (#14894)
+                if (attrs[i]) {
+                  name = attrs[i].name;
+                  if (name.indexOf('data-') === 0) {
+                    name = jQuery.camelCase(name.slice(5));
+                    dataAttr(elem, name, data[name]);
+                  }
+                }
+              }
+              jQuery._data(elem, 'parsedAttrs', true);
+            }
+          }
+          return data;
+        }
+        // Sets multiple values
+        if (typeof key === 'object') {
+          return this.each(function () {
+            jQuery.data(this, key);
+          });
+        }
+        return arguments.length > 1 ? // Sets one value
+        this.each(function () {
+          jQuery.data(this, key, value);
+        }) : // Gets one value
+        // Try to fetch any internally stored data first
+        elem ? dataAttr(elem, key, jQuery.data(elem, key)) : undefined;
+      },
+      removeData: function (key) {
+        return this.each(function () {
+          jQuery.removeData(this, key);
+        });
+      }
+    });
+    return jQuery;
+  }(jquery_core, jquery_var_deletedIds, jquery_data_support, jquery_data_var_acceptData);
   jquery_event = function (jQuery, document, rnotwhite, hasOwn, slice, support, acceptData) {
     var rformElems = /^(?:input|select|textarea)$/i, rkeyEvent = /^key/, rmouseEvent = /^(?:mouse|pointer|contextmenu|drag|drop)|click/, rfocusMorph = /^(?:focusinfocus|focusoutblur)$/, rtypenamespace = /^([^.]*)(?:\.(.+)|)/;
     function returnTrue() {
@@ -5202,368 +5347,6 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     });
     return jQuery;
   }(jquery_core, jquery_var_document, jquery_var_concat, jquery_var_push, jquery_var_deletedIds, jquery_core_access, jquery_manipulation_var_rcheckableType, jquery_manipulation_var_rtagName, jquery_manipulation_var_rscriptType, jquery_manipulation_var_rleadingWhitespace, jquery_manipulation_var_nodeNames, jquery_manipulation_createSafeFragment, jquery_manipulation_wrapMap, jquery_manipulation_getAll, jquery_manipulation_setGlobalEval, jquery_manipulation_buildFragment, jquery_manipulation_support, jquery_data_var_acceptData);
-  jquery_wrap = function (jQuery) {
-    jQuery.fn.extend({
-      wrapAll: function (html) {
-        if (jQuery.isFunction(html)) {
-          return this.each(function (i) {
-            jQuery(this).wrapAll(html.call(this, i));
-          });
-        }
-        if (this[0]) {
-          // The elements to wrap the target around
-          var wrap = jQuery(html, this[0].ownerDocument).eq(0).clone(true);
-          if (this[0].parentNode) {
-            wrap.insertBefore(this[0]);
-          }
-          wrap.map(function () {
-            var elem = this;
-            while (elem.firstChild && elem.firstChild.nodeType === 1) {
-              elem = elem.firstChild;
-            }
-            return elem;
-          }).append(this);
-        }
-        return this;
-      },
-      wrapInner: function (html) {
-        if (jQuery.isFunction(html)) {
-          return this.each(function (i) {
-            jQuery(this).wrapInner(html.call(this, i));
-          });
-        }
-        return this.each(function () {
-          var self = jQuery(this), contents = self.contents();
-          if (contents.length) {
-            contents.wrapAll(html);
-          } else {
-            self.append(html);
-          }
-        });
-      },
-      wrap: function (html) {
-        var isFunction = jQuery.isFunction(html);
-        return this.each(function (i) {
-          jQuery(this).wrapAll(isFunction ? html.call(this, i) : html);
-        });
-      },
-      unwrap: function () {
-        return this.parent().each(function () {
-          if (!jQuery.nodeName(this, 'body')) {
-            jQuery(this).replaceWith(this.childNodes);
-          }
-        }).end();
-      }
-    });
-    return jQuery;
-  }(jquery_core);
-  jquery_var_pnum = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source;
-  jquery_css_var_rmargin = /^margin/;
-  jquery_var_rcssNum = function (pnum) {
-    return new RegExp('^(?:([+-])=|)(' + pnum + ')([a-z%]*)$', 'i');
-  }(jquery_var_pnum);
-  jquery_css_var_rnumnonpx = function (pnum) {
-    return new RegExp('^(' + pnum + ')(?!px)[a-z%]+$', 'i');
-  }(jquery_var_pnum);
-  jquery_css_var_cssExpand = [
-    'Top',
-    'Right',
-    'Bottom',
-    'Left'
-  ];
-  jquery_css_var_isHidden = function (jQuery) {
-    return function (elem, el) {
-      // isHidden might be called from jQuery#filter function;
-      // in that case, element will be second argument
-      elem = el || elem;
-      return jQuery.css(elem, 'display') === 'none' || !jQuery.contains(elem.ownerDocument, elem);
-    };
-  }(jquery_core);
-  jquery_css_var_swap = function (elem, options, callback, args) {
-    var ret, name, old = {};
-    // Remember the old values, and insert the new ones
-    for (name in options) {
-      old[name] = elem.style[name];
-      elem.style[name] = options[name];
-    }
-    ret = callback.apply(elem, args || []);
-    // Revert the old values
-    for (name in options) {
-      elem.style[name] = old[name];
-    }
-    return ret;
-  };
-  jquery_var_documentElement = function (document) {
-    return document.documentElement;
-  }(jquery_var_document);
-  jquery_css_support = function (jQuery, document, documentElement, support) {
-    (function () {
-      var pixelPositionVal, pixelMarginRightVal, boxSizingReliableVal, reliableHiddenOffsetsVal, reliableMarginRightVal, reliableMarginLeftVal, container = document.createElement('div'), div = document.createElement('div');
-      // Finish early in limited (non-browser) environments
-      if (!div.style) {
-        return;
-      }
-      div.style.cssText = 'float:left;opacity:.5';
-      // Support: IE<9
-      // Make sure that element opacity exists (as opposed to filter)
-      support.opacity = div.style.opacity === '0.5';
-      // Verify style float existence
-      // (IE uses styleFloat instead of cssFloat)
-      support.cssFloat = !!div.style.cssFloat;
-      div.style.backgroundClip = 'content-box';
-      div.cloneNode(true).style.backgroundClip = '';
-      support.clearCloneStyle = div.style.backgroundClip === 'content-box';
-      container = document.createElement('div');
-      container.style.cssText = 'border:0;width:8px;height:0;top:0;left:-9999px;' + 'padding:0;margin-top:1px;position:absolute';
-      div.innerHTML = '';
-      container.appendChild(div);
-      // Support: Firefox<29, Android 2.3
-      // Vendor-prefix box-sizing
-      support.boxSizing = div.style.boxSizing === '' || div.style.MozBoxSizing === '' || div.style.WebkitBoxSizing === '';
-      jQuery.extend(support, {
-        reliableHiddenOffsets: function () {
-          if (pixelPositionVal == null) {
-            computeStyleTests();
-          }
-          return reliableHiddenOffsetsVal;
-        },
-        boxSizingReliable: function () {
-          // We're checking for pixelPositionVal here instead of boxSizingReliableVal
-          // since that compresses better and they're computed together anyway.
-          if (pixelPositionVal == null) {
-            computeStyleTests();
-          }
-          return boxSizingReliableVal;
-        },
-        pixelMarginRight: function () {
-          // Support: Android 4.0-4.3
-          if (pixelPositionVal == null) {
-            computeStyleTests();
-          }
-          return pixelMarginRightVal;
-        },
-        pixelPosition: function () {
-          if (pixelPositionVal == null) {
-            computeStyleTests();
-          }
-          return pixelPositionVal;
-        },
-        reliableMarginRight: function () {
-          // Support: Android 2.3
-          if (pixelPositionVal == null) {
-            computeStyleTests();
-          }
-          return reliableMarginRightVal;
-        },
-        reliableMarginLeft: function () {
-          // Support: IE <=8 only, Android 4.0 - 4.3 only, Firefox <=3 - 37
-          if (pixelPositionVal == null) {
-            computeStyleTests();
-          }
-          return reliableMarginLeftVal;
-        }
-      });
-      function computeStyleTests() {
-        var contents, divStyle, documentElement = document.documentElement;
-        // Setup
-        documentElement.appendChild(container);
-        div.style.cssText = // Support: Android 2.3
-        // Vendor-prefix box-sizing
-        '-webkit-box-sizing:border-box;box-sizing:border-box;' + 'position:relative;display:block;' + 'margin:auto;border:1px;padding:1px;' + 'top:1%;width:50%';
-        // Support: IE<9
-        // Assume reasonable values in the absence of getComputedStyle
-        pixelPositionVal = boxSizingReliableVal = reliableMarginLeftVal = false;
-        pixelMarginRightVal = reliableMarginRightVal = true;
-        // Check for getComputedStyle so that this code is not run in IE<9.
-        if (window.getComputedStyle) {
-          divStyle = window.getComputedStyle(div);
-          pixelPositionVal = (divStyle || {}).top !== '1%';
-          reliableMarginLeftVal = (divStyle || {}).marginLeft === '2px';
-          boxSizingReliableVal = (divStyle || { width: '4px' }).width === '4px';
-          // Support: Android 4.0 - 4.3 only
-          // Some styles come back with percentage values, even though they shouldn't
-          div.style.marginRight = '50%';
-          pixelMarginRightVal = (divStyle || { marginRight: '4px' }).marginRight === '4px';
-          // Support: Android 2.3 only
-          // Div with explicit width and no margin-right incorrectly
-          // gets computed margin-right based on width of container (#3333)
-          // WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
-          contents = div.appendChild(document.createElement('div'));
-          // Reset CSS: box-sizing; display; margin; border; padding
-          contents.style.cssText = div.style.cssText = // Support: Android 2.3
-          // Vendor-prefix box-sizing
-          '-webkit-box-sizing:content-box;-moz-box-sizing:content-box;' + 'box-sizing:content-box;display:block;margin:0;border:0;padding:0';
-          contents.style.marginRight = contents.style.width = '0';
-          div.style.width = '1px';
-          reliableMarginRightVal = !parseFloat((window.getComputedStyle(contents) || {}).marginRight);
-          div.removeChild(contents);
-        }
-        // Support: IE6-8
-        // First check that getClientRects works as expected
-        // Check if table cells still have offsetWidth/Height when they are set
-        // to display:none and there are still other visible table cells in a
-        // table row; if so, offsetWidth/Height are not reliable for use when
-        // determining if an element has been hidden directly using
-        // display:none (it is still safe to use offsets if a parent element is
-        // hidden; don safety goggles and see bug #4512 for more information).
-        div.style.display = 'none';
-        reliableHiddenOffsetsVal = div.getClientRects().length === 0;
-        if (reliableHiddenOffsetsVal) {
-          div.style.display = '';
-          div.innerHTML = '<table><tr><td></td><td>t</td></tr></table>';
-          div.childNodes[0].style.borderCollapse = 'separate';
-          contents = div.getElementsByTagName('td');
-          contents[0].style.cssText = 'margin:0;border:0;padding:0;display:none';
-          reliableHiddenOffsetsVal = contents[0].offsetHeight === 0;
-          if (reliableHiddenOffsetsVal) {
-            contents[0].style.display = '';
-            contents[1].style.display = 'none';
-            reliableHiddenOffsetsVal = contents[0].offsetHeight === 0;
-          }
-        }
-        // Teardown
-        documentElement.removeChild(container);
-      }
-    }());
-    return support;
-  }(jquery_core, jquery_var_document, jquery_var_documentElement, jquery_var_support);
-  jquery_css_curCSS = function (exports, jQuery, documentElement, rnumnonpx, rmargin, support) {
-    var getStyles, curCSS, rposition = /^(top|right|bottom|left)$/;
-    if (window.getComputedStyle) {
-      getStyles = function (elem) {
-        // Support: IE<=11+, Firefox<=30+ (#15098, #14150)
-        // IE throws on elements created in popups
-        // FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
-        var view = elem.ownerDocument.defaultView;
-        if (!view || !view.opener) {
-          view = window;
-        }
-        return view.getComputedStyle(elem);
-      };
-      curCSS = function (elem, name, computed) {
-        var width, minWidth, maxWidth, ret, style = elem.style;
-        computed = computed || getStyles(elem);
-        // getPropertyValue is only needed for .css('filter') in IE9, see #12537
-        ret = computed ? computed.getPropertyValue(name) || computed[name] : undefined;
-        // Support: Opera 12.1x only
-        // Fall back to style even without computed
-        // computed is undefined for elems on document fragments
-        if ((ret === '' || ret === undefined) && !jQuery.contains(elem.ownerDocument, elem)) {
-          ret = jQuery.style(elem, name);
-        }
-        if (computed) {
-          // A tribute to the "awesome hack by Dean Edwards"
-          // Chrome < 17 and Safari 5.0 uses "computed value"
-          // instead of "used value" for margin-right
-          // Safari 5.1.7 (at least) returns percentage for a larger set of values,
-          // but width seems to be reliably pixels
-          // this is against the CSSOM draft spec:
-          // http://dev.w3.org/csswg/cssom/#resolved-values
-          if (!support.pixelMarginRight() && rnumnonpx.test(ret) && rmargin.test(name)) {
-            // Remember the original values
-            width = style.width;
-            minWidth = style.minWidth;
-            maxWidth = style.maxWidth;
-            // Put in the new values to get a computed value out
-            style.minWidth = style.maxWidth = style.width = ret;
-            ret = computed.width;
-            // Revert the changed values
-            style.width = width;
-            style.minWidth = minWidth;
-            style.maxWidth = maxWidth;
-          }
-        }
-        // Support: IE
-        // IE returns zIndex value as an integer.
-        return ret === undefined ? ret : ret + '';
-      };
-    } else if (documentElement.currentStyle) {
-      getStyles = function (elem) {
-        return elem.currentStyle;
-      };
-      curCSS = function (elem, name, computed) {
-        var left, rs, rsLeft, ret, style = elem.style;
-        computed = computed || getStyles(elem);
-        ret = computed ? computed[name] : undefined;
-        // Avoid setting ret to empty string here
-        // so we don't default to auto
-        if (ret == null && style && style[name]) {
-          ret = style[name];
-        }
-        // From the awesome hack by Dean Edwards
-        // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
-        // If we're not dealing with a regular pixel number
-        // but a number that has a weird ending, we need to convert it to pixels
-        // but not position css attributes, as those are
-        // proportional to the parent element instead
-        // and we can't measure the parent instead because it
-        // might trigger a "stacking dolls" problem
-        if (rnumnonpx.test(ret) && !rposition.test(name)) {
-          // Remember the original values
-          left = style.left;
-          rs = elem.runtimeStyle;
-          rsLeft = rs && rs.left;
-          // Put in the new values to get a computed value out
-          if (rsLeft) {
-            rs.left = elem.currentStyle.left;
-          }
-          style.left = name === 'fontSize' ? '1em' : ret;
-          ret = style.pixelLeft + 'px';
-          // Revert the changed values
-          style.left = left;
-          if (rsLeft) {
-            rs.left = rsLeft;
-          }
-        }
-        // Support: IE
-        // IE returns zIndex value as an integer.
-        return ret === undefined ? ret : ret + '' || 'auto';
-      };
-    }
-    exports.getStyles = getStyles;
-    exports.curCSS = curCSS;
-    return exports;
-  }(jquery_css_curCSS, jquery_core, jquery_var_documentElement, jquery_css_var_rnumnonpx, jquery_css_var_rmargin, jquery_css_support);
-  jquery_css_adjustCSS = function (jQuery, rcssNum) {
-    function adjustCSS(elem, prop, valueParts, tween) {
-      var adjusted, scale = 1, maxIterations = 20, currentValue = tween ? function () {
-          return tween.cur();
-        } : function () {
-          return jQuery.css(elem, prop, '');
-        }, initial = currentValue(), unit = valueParts && valueParts[3] || (jQuery.cssNumber[prop] ? '' : 'px'),
-        // Starting value computation is required for potential unit mismatches
-        initialInUnit = (jQuery.cssNumber[prop] || unit !== 'px' && +initial) && rcssNum.exec(jQuery.css(elem, prop));
-      if (initialInUnit && initialInUnit[3] !== unit) {
-        // Trust units reported by jQuery.css
-        unit = unit || initialInUnit[3];
-        // Make sure we update the tween properties later on
-        valueParts = valueParts || [];
-        // Iteratively approximate from a nonzero starting point
-        initialInUnit = +initial || 1;
-        do {
-          // If previous iteration zeroed out, double until we get *something*.
-          // Use string for doubling so we don't accidentally see scale as unchanged below
-          scale = scale || '.5';
-          // Adjust and apply
-          initialInUnit = initialInUnit / scale;
-          jQuery.style(elem, prop, initialInUnit + unit);  // Update scale, tolerating zero or NaN from tween.cur()
-                                                           // Break the loop if scale is unchanged or perfect, or if we've just had enough.
-        } while (scale !== (scale = currentValue() / initial) && scale !== 1 && --maxIterations);
-      }
-      if (valueParts) {
-        initialInUnit = +initialInUnit || +initial || 0;
-        // Apply relative offset (+=/-=) if specified
-        adjusted = valueParts[1] ? initialInUnit + (valueParts[1] + 1) * valueParts[2] : +valueParts[2];
-        if (tween) {
-          tween.unit = unit;
-          tween.start = initialInUnit;
-          tween.end = adjusted;
-        }
-      }
-      return adjusted;
-    }
-    return adjustCSS;
-  }(jquery_core, jquery_var_rcssNum);
   jquery_css_defaultDisplay = function (jQuery, document) {
     var iframe, elemdisplay = {
         // Support: Firefox
@@ -5629,6 +5412,122 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     }
     return addGetHookIf;
   }();
+  jquery_core_ready = function (jQuery, document) {
+    // The deferred used on DOM ready
+    var readyList;
+    jQuery.fn.ready = function (fn) {
+      // Add the callback
+      jQuery.ready.promise().done(fn);
+      return this;
+    };
+    jQuery.extend({
+      // Is the DOM ready to be used? Set to true once it occurs.
+      isReady: false,
+      // A counter to track how many items to wait for before
+      // the ready event fires. See #6781
+      readyWait: 1,
+      // Hold (or release) the ready event
+      holdReady: function (hold) {
+        if (hold) {
+          jQuery.readyWait++;
+        } else {
+          jQuery.ready(true);
+        }
+      },
+      // Handle when the DOM is ready
+      ready: function (wait) {
+        // Abort if there are pending holds or we're already ready
+        if (wait === true ? --jQuery.readyWait : jQuery.isReady) {
+          return;
+        }
+        // Remember that the DOM is ready
+        jQuery.isReady = true;
+        // If a normal DOM Ready event fired, decrement, and wait if need be
+        if (wait !== true && --jQuery.readyWait > 0) {
+          return;
+        }
+        // If there are functions bound, to execute
+        readyList.resolveWith(document, [jQuery]);
+        // Trigger any bound ready events
+        if (jQuery.fn.triggerHandler) {
+          jQuery(document).triggerHandler('ready');
+          jQuery(document).off('ready');
+        }
+      }
+    });
+    /**
+     * Clean-up method for dom ready events
+     */
+    function detach() {
+      if (document.addEventListener) {
+        document.removeEventListener('DOMContentLoaded', completed);
+        window.removeEventListener('load', completed);
+      } else {
+        document.detachEvent('onreadystatechange', completed);
+        window.detachEvent('onload', completed);
+      }
+    }
+    /**
+     * The ready event handler and self cleanup method
+     */
+    function completed() {
+      // readyState === "complete" is good enough for us to call the dom ready in oldIE
+      if (document.addEventListener || window.event.type === 'load' || document.readyState === 'complete') {
+        detach();
+        jQuery.ready();
+      }
+    }
+    jQuery.ready.promise = function (obj) {
+      if (!readyList) {
+        readyList = jQuery.Deferred();
+        // Catch cases where $(document).ready() is called
+        // after the browser event has already occurred.
+        // Support: IE6-10
+        // Older IE sometimes signals "interactive" too soon
+        if (document.readyState === 'complete' || document.readyState !== 'loading' && !document.documentElement.doScroll) {
+          // Handle it asynchronously to allow scripts the opportunity to delay ready
+          window.setTimeout(jQuery.ready);  // Standards-based browsers support DOMContentLoaded
+        } else if (document.addEventListener) {
+          // Use the handy event callback
+          document.addEventListener('DOMContentLoaded', completed);
+          // A fallback to window.onload, that will always work
+          window.addEventListener('load', completed);  // If IE event model is used
+        } else {
+          // Ensure firing before onload, maybe late but safe also for iframes
+          document.attachEvent('onreadystatechange', completed);
+          // A fallback to window.onload, that will always work
+          window.attachEvent('onload', completed);
+          // If IE and not a frame
+          // continually check to see if the document is ready
+          var top = false;
+          try {
+            top = window.frameElement == null && document.documentElement;
+          } catch (e) {
+          }
+          if (top && top.doScroll) {
+            (function doScrollCheck() {
+              if (!jQuery.isReady) {
+                try {
+                  // Use the trick by Diego Perini
+                  // http://javascript.nwbox.com/IEContentLoaded/
+                  top.doScroll('left');
+                } catch (e) {
+                  return window.setTimeout(doScrollCheck, 50);
+                }
+                // detach all dom ready events
+                detach();
+                // and execute any waiting functions
+                jQuery.ready();
+              }
+            }());
+          }
+        }
+      }
+      return readyList.promise(obj);
+    };
+    // Kick off the DOM ready check even if the user does not
+    jQuery.ready.promise();
+  }(jquery_core, jquery_var_document);
   jquery_css = function (jQuery, pnum, access, rmargin, document, rcssNum, rnumnonpx, cssExpand, isHidden, swap, curCSS, adjustCSS, defaultDisplay, addGetHookIf, support) {
     var
       // BuildExclude
@@ -6005,88 +5904,6 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     });
     return jQuery;
   }(jquery_core, jquery_var_pnum, jquery_core_access, jquery_css_var_rmargin, jquery_var_document, jquery_var_rcssNum, jquery_css_var_rnumnonpx, jquery_css_var_cssExpand, jquery_css_var_isHidden, jquery_css_var_swap, jquery_css_curCSS, jquery_css_adjustCSS, jquery_css_defaultDisplay, jquery_css_addGetHookIf, jquery_css_support);
-  jquery_serialize = function (jQuery, rcheckableType) {
-    var r20 = /%20/g, rbracket = /\[\]$/, rCRLF = /\r?\n/g, rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i, rsubmittable = /^(?:input|select|textarea|keygen)/i;
-    function buildParams(prefix, obj, traditional, add) {
-      var name;
-      if (jQuery.isArray(obj)) {
-        // Serialize array item.
-        jQuery.each(obj, function (i, v) {
-          if (traditional || rbracket.test(prefix)) {
-            // Treat each array item as a scalar.
-            add(prefix, v);
-          } else {
-            // Item is non-scalar (array or object), encode its numeric index.
-            buildParams(prefix + '[' + (typeof v === 'object' && v != null ? i : '') + ']', v, traditional, add);
-          }
-        });
-      } else if (!traditional && jQuery.type(obj) === 'object') {
-        // Serialize object item.
-        for (name in obj) {
-          buildParams(prefix + '[' + name + ']', obj[name], traditional, add);
-        }
-      } else {
-        // Serialize scalar item.
-        add(prefix, obj);
-      }
-    }
-    // Serialize an array of form elements or a set of
-    // key/values into a query string
-    jQuery.param = function (a, traditional) {
-      var prefix, s = [], add = function (key, value) {
-          // If value is a function, invoke it and return its value
-          value = jQuery.isFunction(value) ? value() : value == null ? '' : value;
-          s[s.length] = encodeURIComponent(key) + '=' + encodeURIComponent(value);
-        };
-      // Set traditional to true for jQuery <= 1.3.2 behavior.
-      if (traditional === undefined) {
-        traditional = jQuery.ajaxSettings && jQuery.ajaxSettings.traditional;
-      }
-      // If an array was passed in, assume that it is an array of form elements.
-      if (jQuery.isArray(a) || a.jquery && !jQuery.isPlainObject(a)) {
-        // Serialize the form elements
-        jQuery.each(a, function () {
-          add(this.name, this.value);
-        });
-      } else {
-        // If traditional, encode the "old" way (the way 1.3.2 or older
-        // did it), otherwise encode params recursively.
-        for (prefix in a) {
-          buildParams(prefix, a[prefix], traditional, add);
-        }
-      }
-      // Return the resulting serialization
-      return s.join('&').replace(r20, '+');
-    };
-    jQuery.fn.extend({
-      serialize: function () {
-        return jQuery.param(this.serializeArray());
-      },
-      serializeArray: function () {
-        return this.map(function () {
-          // Can add propHook for "elements" to filter or add form elements
-          var elements = jQuery.prop(this, 'elements');
-          return elements ? jQuery.makeArray(elements) : this;
-        }).filter(function () {
-          var type = this.type;
-          // Use .is(":disabled") so that fieldset[disabled] works
-          return this.name && !jQuery(this).is(':disabled') && rsubmittable.test(this.nodeName) && !rsubmitterTypes.test(type) && (this.checked || !rcheckableType.test(type));
-        }).map(function (i, elem) {
-          var val = jQuery(this).val();
-          return val == null ? null : jQuery.isArray(val) ? jQuery.map(val, function (val) {
-            return {
-              name: elem.name,
-              value: val.replace(rCRLF, '\r\n')
-            };
-          }) : {
-            name: elem.name,
-            value: val.replace(rCRLF, '\r\n')
-          };
-        }).get();
-      }
-    });
-    return jQuery;
-  }(jquery_core, jquery_manipulation_var_rcheckableType);
   jquery_ajax_var_location = window.location;
   jquery_ajax_var_nonce = function (jQuery) {
     return jQuery.now();
@@ -6125,34 +5942,6 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       })) ? Function('return ' + str)() : jQuery.error('Invalid JSON: ' + data);
     };
     return jQuery.parseJSON;
-  }(jquery_core);
-  jquery_ajax_parseXML = function (jQuery) {
-    // Cross-browser xml parsing
-    jQuery.parseXML = function (data) {
-      var xml, tmp;
-      if (!data || typeof data !== 'string') {
-        return null;
-      }
-      try {
-        if (window.DOMParser) {
-          // Standard
-          tmp = new window.DOMParser();
-          xml = tmp.parseFromString(data, 'text/xml');
-        } else {
-          // IE
-          xml = new window.ActiveXObject('Microsoft.XMLDOM');
-          xml.async = 'false';
-          xml.loadXML(data);
-        }
-      } catch (e) {
-        xml = undefined;
-      }
-      if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
-        jQuery.error('Invalid XML: ' + data);
-      }
-      return xml;
-    };
-    return jQuery.parseXML;
   }(jquery_core);
   jquery_ajax = function (jQuery, document, rnotwhite, location, nonce, rquery) {
     var rhash = /#.*$/, rts = /([?&])_=[^&]*/,
@@ -7205,21 +6994,6 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       return this;
     };
   }(jquery_core);
-  jquery_event_ajax = function (jQuery) {
-    // Attach a bunch of functions for handling common AJAX events
-    jQuery.each([
-      'ajaxStart',
-      'ajaxStop',
-      'ajaxComplete',
-      'ajaxError',
-      'ajaxSuccess',
-      'ajaxSend'
-    ], function (i, type) {
-      jQuery.fn[type] = function (fn) {
-        return this.on(type, fn);
-      };
-    });
-  }(jquery_core);
   jquery_offset = function (jQuery, access, document, documentElement, rnumnonpx, curCSS, addGetHookIf, support) {
     // BuildExclude
     curCSS = curCSS.curCSS;
@@ -7422,38 +7196,18 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     });
     return jQuery;
   }(jquery_core, jquery_core_access);
-  jquery_deprecated = function (jQuery) {
-    jQuery.fn.extend({
-      bind: function (types, data, fn) {
-        return this.on(types, null, data, fn);
-      },
-      unbind: function (types, fn) {
-        return this.off(types, null, fn);
-      },
-      delegate: function (selector, types, data, fn) {
-        return this.on(types, selector, data, fn);
-      },
-      undelegate: function (selector, types, fn) {
-        // ( namespace ) or ( selector, types [, fn] )
-        return arguments.length === 1 ? this.off(selector, '**') : this.off(types, selector || '**', fn);
-      }
-    });
-    // The number of elements contained in the matched element set
-    jQuery.fn.size = function () {
-      return this.length;
-    };
-    jQuery.fn.andSelf = jQuery.fn.addBack;
-  }(jquery_core);
   jquery = function (jQuery) {
     // jQuery.ajaxSetup({crossDomain: true});
     // jQuery.support.cors = true;
     return jQuery;
   }(jquery_core);
   ytl = function () {
-    var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
+    var prototype = 'prototype';
+    var ArrayProto = Array[prototype], ObjProto = Object[prototype], FuncProto = Function[prototype];
     var toString = ObjProto.toString;
     var slice = ArrayProto.slice;
     var nativeIsArray = Array.isArray;
+    var nativeKeys = Object.keys;
     var nativeBind = FuncProto.bind;
     var nativeCreate = Object.create;
     var Ctor = function () {
@@ -7515,9 +7269,9 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       if (nativeCreate) {
         return nativeCreate(prototype);
       }
-      Ctor.prototype = prototype;
+      Ctor[prototype] = prototype;
       var result = new Ctor();
-      Ctor.prototype = null;
+      Ctor[prototype] = null;
       return result;
     };
     var property = function (key) {
@@ -7548,6 +7302,49 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     var isArrayLike = function (collection) {
       var length = getLength(collection);
       return typeof length === 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+    };
+    var hasEnumBug = !{ toString: null }.propertyIsEnumerable('toString');
+    var nonEnumerableProps = [
+      'valueOf',
+      'isPrototypeOf',
+      'toString',
+      'propertyIsEnumerable',
+      'hasOwnProperty',
+      'toLocaleString'
+    ];
+    function collectNonEnumProps(obj, keys) {
+      var nonEnumIdx = nonEnumerableProps.length;
+      var constructor = obj.constructor;
+      var proto = _.isFunction(constructor) && constructor[prototype] || ObjProto;
+      // Constructor is a special case.
+      var prop = 'constructor';
+      if (_.has(obj, prop) && !_.contains(keys, prop)) {
+        keys.push(prop);
+      }
+      while (nonEnumIdx--) {
+        prop = nonEnumerableProps[nonEnumIdx];
+        if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
+          keys.push(prop);
+        }
+      }
+    }
+    _.keys = function (obj) {
+      if (!_.isObject(obj)) {
+        return [];
+      }
+      if (nativeKeys) {
+        return nativeKeys(obj);
+      }
+      var keys = [];
+      for (var key in obj) {
+        if (_.has(obj, key)) {
+          keys.push(key);
+        }
+      }
+      if (hasEnumBug) {
+        collectNonEnumProps(obj, keys);
+      }
+      return keys;
     };
     _.each = _.forEach = function (obj, iteratee, context) {
       iteratee = optimizeCb(iteratee, context);
@@ -7615,7 +7412,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       if (!(callingContext instanceof boundFunc)) {
         return sourceFunc.apply(context, args);
       }
-      var self = baseCreate(sourceFunc.prototype);
+      var self = baseCreate(sourceFunc[prototype]);
       var result = sourceFunc.apply(self, args);
       if (_.isObject(result)) {
         return result;
@@ -7637,31 +7434,6 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       };
       return bound;
     };
-    var hasEnumBug = !{ toString: null }.propertyIsEnumerable('toString');
-    var nonEnumerableProps = [
-      'valueOf',
-      'isPrototypeOf',
-      'toString',
-      'propertyIsEnumerable',
-      'hasOwnProperty',
-      'toLocaleString'
-    ];
-    function collectNonEnumProps(obj, keys) {
-      var nonEnumIdx = nonEnumerableProps.length;
-      var constructor = obj.constructor;
-      var proto = _.isFunction(constructor) && constructor.prototype || ObjProto;
-      // Constructor is a special case.
-      var prop = 'constructor';
-      if (_.has(obj, prop) && !_.contains(keys, prop)) {
-        keys.push(prop);
-      }
-      while (nonEnumIdx--) {
-        prop = nonEnumerableProps[nonEnumIdx];
-        if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
-          keys.push(prop);
-        }
-      }
-    }
     _.allKeys = function (obj) {
       if (!_.isObject(obj)) {
         return [];
@@ -7714,7 +7486,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       'unshift'
     ], function (name) {
       var method = ArrayProto[name];
-      _.prototype[name] = function () {
+      _[prototype][name] = function () {
         var obj = this._wrapped;
         method.apply(obj, arguments);
         if ((name === 'shift' || name === 'splice') && obj.length === 0) {
@@ -7729,15 +7501,15 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       'slice'
     ], function (name) {
       var method = ArrayProto[name];
-      _.prototype[name] = function () {
+      _[prototype][name] = function () {
         return result(this, method.apply(this._wrapped, arguments));
       };
     });
-    _.prototype.value = function () {
+    _[prototype].value = function () {
       return this._wrapped;
     };
-    _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
-    _.prototype.toString = function () {
+    _[prototype].valueOf = _[prototype].toJSON = _[prototype].value;
+    _[prototype].toString = function () {
       return '' + this._wrapped;
     };
     _.on_event = function (evnt, elem, callback, context, once) {
@@ -7795,8 +7567,8 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     };
     var YottosLib = function () {
     };
-    YottosLib.prototype.JSON = window.JSON || {};
-    YottosLib.prototype.JSON.stringify = YottosLib.prototype.JSON.stringify || function (obj) {
+    YottosLib[prototype].JSON = window.JSON || {};
+    YottosLib[prototype].JSON.stringify = YottosLib[prototype].JSON.stringify || function (obj) {
       var t = typeof obj;
       if (t !== 'object' || obj === null) {
         if (t === 'string') {
@@ -7818,15 +7590,15 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         return (arr ? '[' : '{') + String(json) + (arr ? ']' : '}');
       }
     };
-    YottosLib.prototype.JSON.parse = YottosLib.prototype.JSON.parse || function (str) {
+    YottosLib[prototype].JSON.parse = YottosLib[prototype].JSON.parse || function (str) {
       if (str === '') {
         str = '""';
       }
       eval('var p=' + str + ';');
       return p;
     };
-    YottosLib.prototype.b = { _keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=' };
-    YottosLib.prototype.b.e = function (input) {
+    YottosLib[prototype].b = { _keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=' };
+    YottosLib[prototype].b.e = function (input) {
       var output = '';
       var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
       var i = 0;
@@ -7848,7 +7620,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       }
       return output;
     };
-    YottosLib.prototype.b.d = function (input) {
+    YottosLib[prototype].b.d = function (input) {
       var output = '';
       var chr1, chr2, chr3;
       var enc1, enc2, enc3, enc4;
@@ -7873,7 +7645,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       output = this._u_d(output);
       return output;
     };
-    YottosLib.prototype.b._u_e = function (string) {
+    YottosLib[prototype].b._u_e = function (string) {
       string = string.replace(/\r\n/g, '\n');
       var utftext = '';
       for (var n = 0; n < string.length; n++) {
@@ -7891,7 +7663,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       }
       return utftext;
     };
-    YottosLib.prototype.b._u_d = function (utftext) {
+    YottosLib[prototype].b._u_d = function (utftext) {
       var string = '';
       var i = 0;
       var c = 0;
@@ -7916,8 +7688,8 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       }
       return string;
     };
-    YottosLib.prototype._ = _;
-    YottosLib.prototype.post_exists = function () {
+    YottosLib[prototype]._ = _;
+    YottosLib[prototype].post_exists = function () {
       var post = false;
       var postMessage = 'postMessage';
       if (window[postMessage]) {
@@ -7937,7 +7709,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       }, this));
     };
   }(jquery, ytl);
-  settings = function () {
+  settings = function (YottosLib) {
     var detectIE = function () {
       var ua = window.navigator.userAgent;
       var msie = ua.indexOf('MSIE ');
@@ -7955,7 +7727,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       }
       return false;
     };
-    var settings = {
+    return {
       rg: 'https://rg.yottos.com',
       rgb: '/v1/pub',
       cdn: 'https://cdn.yottos.com',
@@ -8187,8 +7959,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         350
       ]
     };
-    return settings;
-  }();
+  }(ytl);
   block_logging = function (jQuery, YottosLib, settings) {
     return function () {
       if (this.block_setting.logging === false) {
@@ -8213,11 +7984,21 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
   }(jquery, ytl, settings);
   is_element_in_viewport = function (jQuery) {
     return function (el, scrollCounter) {
+      var w = window;
+      var d = w.document;
+      var offset = 'offset';
+      var Top = 'Top';
+      var Left = 'Left';
+      var documentElement = 'documentElement';
+      var Width = 'Width';
+      var Height = 'Height';
+      var client = 'client';
+      var inner = 'inner';
       if (typeof jQuery === 'function' && el instanceof jQuery) {
         el = el[0];
       }
-      var top = el.offsetTop;
-      var left = el.offsetLeft;
+      var top = el[offset + Top];
+      var left = el[offset + Left];
       var width = el.offsetWidth;
       var height = el.offsetHeight;
       var pageYOffset;
@@ -8226,27 +8007,27 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       var XOffset = 0;
       var innerWidth;
       var innerHeight;
-      if (typeof window.innerWidth !== 'undefined') {
-        innerWidth = window.innerWidth;
-        innerHeight = window.innerHeight;
-      } else if (typeof document.documentElement !== 'undefined' && typeof document.documentElement.clientWidth !== 'undefined' && document.documentElement.clientWidth !== 0) {
-        innerWidth = document.documentElement.clientWidth;
-        innerHeight = document.documentElement.clientHeight;
+      if (typeof w[inner + Width] !== 'undefined') {
+        innerWidth = w[inner + Width];
+        innerHeight = w[inner + Height];
+      } else if (typeof d[documentElement] !== 'undefined' && typeof d[documentElement][client + Width] !== 'undefined' && d[documentElement][client + Width] !== 0) {
+        innerWidth = d[documentElement][client + Width];
+        innerHeight = d[documentElement][client + Height];
       } else {
-        innerWidth = document.getElementsByTagName('body')[0].clientWidth;
-        innerHeight = document.getElementsByTagName('body')[0].clientHeight;
+        innerWidth = d.getElementsByTagName('body')[0][client + Width];
+        innerHeight = d.getElementsByTagName('body')[0][client + Height];
       }
-      if (typeof window.pageYOffset !== 'undefined') {
-        pageYOffset = window.pageYOffset;
-        pageXOffset = window.pageXOffset;
+      if (typeof w.pageYOffset !== 'undefined') {
+        pageYOffset = w.pageYOffset;
+        pageXOffset = w.pageXOffset;
       } else {
-        pageYOffset = document.documentElement.scrollTop;
-        pageXOffset = document.documentElement.scrollLeft;
+        pageYOffset = d[documentElement]['scroll' + Top];
+        pageXOffset = d[documentElement]['scroll' + Left];
       }
       while (el.offsetParent) {
         el = el.offsetParent;
-        top += el.offsetTop;
-        left += el.offsetLeft;
+        top += el[offset + Top];
+        left += el[offset + Left];
       }
       if (scrollCounter > 1) {
         YOffset = pageYOffset / scrollCounter;
@@ -8398,6 +8179,8 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       var w_position = $el.offset();
       var $document = jQuery(document);
       var $parent = $el.parent();
+      var isNull = YottosLib._.isNull;
+      var isNumber = YottosLib._.isNumber;
       size.s_h = $document.height();
       size.s_w = $document.width();
       size.w_h = $el.height();
@@ -8408,34 +8191,34 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       size.w_p_l_c = w_position.left + size.w_w / 2;
       size.p_w_h = $parent.height();
       size.p_w_w = $parent.width();
-      if (YottosLib._.isNumber(block_setting.h)) {
+      if (isNumber(block_setting.h)) {
         size.h = block_setting.h;
       }
-      if (YottosLib._.isNumber(block_setting.w)) {
+      if (isNumber(block_setting.w)) {
         size.w = block_setting.w;
       }
-      if (!YottosLib._.isNull(size.w) && !YottosLib._.isNull(size.h)) {
+      if (!isNull(size.w) && !isNull(size.h)) {
         return size;
       }
-      if (YottosLib._.isNull(size.h)) {
+      if (isNull(size.h)) {
         if (size.w_h !== 0) {
           size.h = size.w_h;
         }
       }
-      if (YottosLib._.isNull(size.w)) {
+      if (isNull(size.w)) {
         if (size.w_w !== 0) {
           size.w = size.w_w;
         }
       }
-      if (YottosLib._.isNull(size.w) || YottosLib._.isNull(size.h)) {
+      if (isNull(size.w) || isNull(size.h)) {
         size = block_template(size);
       }
-      if (YottosLib._.isNull(size.h)) {
+      if (isNull(size.h)) {
         if (size.p_w_h !== 0) {
           size.h = size.p_w_h;
         }
       }
-      if (YottosLib._.isNull(size.w)) {
+      if (isNull(size.w)) {
         if (size.p_w_w !== 0) {
           size.w = size.p_w_w;
         }
@@ -8473,12 +8256,14 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     return post_array;
   }(ytl);
   iframe_form = function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator, PostArray) {
-    return function (url, $el, block_setting, client) {
+    return function (url, $el, block_setting, index) {
       var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
       var object = this;
+      var iframe = 'iframe';
+      var form = 'form';
       object.loaded = false;
+      object.index = index;
       object.loading_count = 0;
-      object.client = client;
       object.size = block_size_calculator($el, block_setting);
       object.block_setting = block_setting;
       YottosLib._.extend(object.block_setting, {
@@ -8501,29 +8286,30 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       object.form = jQuery('<form/>', {
         action: url,
         method: 'post',
-        name: 'y_form' + object.time,
-        id: 'y_form' + object.time,
-        target: 'y_iframe' + object.time,
+        name: 'y_' + form + object.time,
+        id: 'y_' + form + object.time,
+        target: 'y_' + iframe + object.time,
         style: 'display:none; width:0px; height:0px; border:0px; margin:0 0 0 0;'
       });
-      object.iframe = jQuery('<iframe name="y_iframe' + object.time + '">');
-      object.iframe.attr('id', 'y_iframe' + object.time);
-      object.iframe.attr('name', 'y_iframe' + object.time);
-      object.iframe.attr('frameborder', 0);
-      object.iframe.attr('marginHeight', '0px');
-      object.iframe.attr('marginWidth', '0px');
-      object.iframe.css({
+      object[iframe] = jQuery('<iframe name="y_' + iframe + object.time + '">');
+      object[iframe].attr('id', 'y_' + iframe + object.time);
+      object[iframe].attr('name', 'y_' + iframe + object.time);
+      object[iframe].attr('frameborder', 0);
+      object[iframe].attr('marginHeight', '0px');
+      object[iframe].attr('marginWidth', '0px');
+      object[iframe].css({
         border: 0,
         width: object.size.w,
         height: object.size.h,
-        visibility: 'hidden'
+        margin: '0 auto',
+        display: 'block'
       });
-      object.iframe.attr('scrolling', 'no');
-      object.iframe.attr('allowtransparency', true);
-      object.iframe.attr('width', object.size.w);
-      object.iframe.attr('height', object.size.h);
-      object.iframe.data('time', object.time);
-      object.iframe.attr('sandbox', sandbox);
+      object[iframe].attr('scrolling', 'no');
+      object[iframe].attr('allowtransparency', true);
+      object[iframe].attr('width', object.size.w);
+      object[iframe].attr('height', object.size.h);
+      object[iframe].data('time', object.time);
+      object[iframe].attr('sandbox', sandbox);
       object.addParameter = function (parameter, value) {
         jQuery('<input type=\'hidden\' />').attr('name', parameter).attr('value', value).appendTo(object.form);
       };
@@ -8540,31 +8326,26 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
           'visibility': 'visible',
           'background-color': 'transparent'
         });
-        this.iframe.css({
-          'margin': '0 auto',
-          'display': 'block'
-        });
-        this.root.append(this.iframe, this.form);
-        this.iframe.load(YottosLib._.bind(function () {
+        this.root.append(this[iframe], this[form]);
+        this[iframe].load(YottosLib._.bind(function () {
           if (this.loaded) {
             this.loaded = false;
             if (this.loading_count < 5) {
               this.re_render();
             }
           } else {
-            this.form.remove();
-            this.iframe.css({ visibility: 'visible' });
+            this[form].remove();
             if (this.loading_count++ < 1) {
               this.logging();
             }
             this.loaded = true;
           }
         }, this));
-        this.form.submit();
+        this[form].submit();
       };
       object.re_render = function () {
-        this.root.append(this.form);
-        this.form.submit();
+        this.root.append(this[form]);
+        this[form].submit();
       };
       object.logging = function () {
         this.block_active_view();
@@ -8589,21 +8370,17 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       if (auto) {
         url = url + '&auto=true';
       }
-      var dummy = new Iframe_form(url, $el, block_setting, client);
+      var dummy = new Iframe_form(url, $el, block_setting, index);
       dummy.addParameter('scr', client);
       dummy.addParameter('mod', block_setting.m);
       dummy.addParameter('index', index);
+      dummy.addParameter('rand', dummy.time);
       dummy.addParameter('post', YottosLib.post_exists());
       if (auto) {
         dummy.addParameter('auto', 'true');
       }
-      YottosLib._.each(location.search.substr(1).split('&'), function (element) {
-        var param = element.split('=');
-        if (param.length === 2) {
-          if (param[0].indexOf('adsbyyottos_') !== -1) {
-            this.dummy.addParameter(param[0].split('_')[1], param[1]);
-          }
-        }
+      YottosLib._.each(this.pp, function (element, index) {
+        this.dummy.addParameter(index, element);
       }, { dummy: dummy });
       dummy.render();
       this.blocks.push(dummy);
@@ -8748,7 +8525,29 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     }
   };
   loader = function (jQuery, YottosLib, start, block_render, block_settings, move_shake, settings) {
+    var prototype = 'prototype';
+    var parser = function (url, params) {
+      YottosLib._.each(url.search.substr(1).split('&'), function (element) {
+        var param = element.split('=');
+        if (param.length === 2) {
+          if (param[0].indexOf('adsbyyottos_') !== -1) {
+            params[param[0].split('_')[1]] = param[1];
+          }
+        }
+      }, { params: params });
+    };
+    var proxy_params = function () {
+      var params = {};
+      var url = document.createElement('a');
+      url.href = document.referrer;
+      parser(url, params);
+      url.href = location;
+      parser(url, params);
+      console.log(params);
+      return params;
+    };
     var Loader = function () {
+      this.pp = proxy_params();
       this.timeStamp = 0;
       this.sequence = settings.move_shake_sequence.slice();
       this.page_load = false;
@@ -8759,9 +8558,9 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         }, { msg: msg });
       };
       this.blocks.receive = function (data) {
-        data = JSON.parse(data);
         YottosLib._.each(this, function (element) {
-          if (element.time === data.key) {
+          console.log(data);
+          if (element.time === data) {
             element.receive(data);
           }
         }, { data: data });
@@ -8775,35 +8574,37 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         this.page_load = true;
         YottosLib._.on_load(window, this.ready_handler, this);
         YottosLib._.on_event('load', window, this.load_handler, this, true);
+        YottosLib._.on_event('message', window, this.message_handler, this);
       }
     };
-    Loader.prototype.block_settings = block_settings;
-    Loader.prototype.block_render = block_render;
-    Loader.prototype.start = start;
-    Loader.prototype.move_shake = move_shake;
-    Loader.prototype.mouse_move_handler = function (e) {
+    Loader[prototype].block_settings = block_settings;
+    Loader[prototype].block_render = block_render;
+    Loader[prototype].start = start;
+    Loader[prototype].move_shake = move_shake;
+    Loader[prototype].mouse_move_handler = function (e) {
       this.move_shake(e);
       this.blocks.logging();
     };
-    Loader.prototype.scroll_handler = function (e) {
+    Loader[prototype].scroll_handler = function (e) {
       this.blocks.logging();
     };
-    Loader.prototype.resize_handler = function (e) {
+    Loader[prototype].resize_handler = function (e) {
       this.blocks.logging();
     };
-    Loader.prototype.load_handler = function (e) {
+    Loader[prototype].message_handler = function (e) {
+      console.log(e.data);
+      if (e && e.data && e.origin === 'https://rg.yottos.com') {
+        this.blocks.receive(e.data);
+      }
+    };
+    Loader[prototype].load_handler = function (e) {
       this.start();
       this.blocks.logging();
       YottosLib._.on_event('scroll', window, this.scroll_handler, this);
       YottosLib._.on_event('resize', window, this.resize_handler, this);
       YottosLib._.on_event('mousemove', window, this.mouse_move_handler, this);
-      YottosLib._.on_event('message', window, function (e) {
-        if (e && e.data) {
-          this.blocks.receive(e.data);
-        }
-      }, this);
     };
-    Loader.prototype.ready_handler = function (e) {
+    Loader[prototype].ready_handler = function (e) {
       this.start();
       this.blocks.logging();
     };

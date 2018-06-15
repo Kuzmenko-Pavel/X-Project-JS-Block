@@ -5,8 +5,8 @@ define([
     "./jquery/callbacks",
     "./jquery/deferred",
     // "./jquery/core/ready",
-    "./jquery/support",
-    "./jquery/data",
+    // "./jquery/support",
+    // "./jquery/data",
     // "./jquery/queue",
     // "./jquery/queue/delay",
     "./jquery/attributes",
@@ -14,19 +14,19 @@ define([
     // "./jquery/event/alias",
     // "./jquery/manipulation",
     // "./jquery/manipulation/_evalUrl",
-    "./jquery/wrap",
+    // "./jquery/wrap",
     "./jquery/css",
     // "./jquery/css/hiddenVisibleSelectors",
-    "./jquery/serialize",
+    // "./jquery/serialize",
     "./jquery/ajax",
     "./jquery/ajax/xhr",
     "./jquery/ajax/script",
     "./jquery/ajax/jsonp",
     "./jquery/ajax/load",
-    "./jquery/event/ajax",
+    // "./jquery/event/ajax",
     "./jquery/offset",
     "./jquery/dimensions",
-    "./jquery/deprecated"
+    // "./jquery/deprecated"
     // "./jquery/exports/amd"
 ], function (jQuery) {
     // jQuery.ajaxSetup({crossDomain: true});

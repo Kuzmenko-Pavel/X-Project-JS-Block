@@ -3,11 +3,21 @@
  */
 define('is_element_in_viewport', ['jquery'], function (jQuery) {
     return function (el, scrollCounter) {
+        var w = window;
+        var d = w.document;
+        var offset = 'offset';
+        var Top = 'Top';
+        var Left = 'Left';
+        var documentElement = 'documentElement';
+        var Width = 'Width';
+        var Height = 'Height';
+        var client = 'client';
+        var inner = 'inner';
         if (typeof jQuery === "function" && el instanceof jQuery) {
             el = el[0];
         }
-        var top = el.offsetTop;
-        var left = el.offsetLeft;
+        var top = el[offset+Top];
+        var left = el[offset+Left];
         var width = el.offsetWidth;
         var height = el.offsetHeight;
         var pageYOffset;
@@ -16,30 +26,30 @@ define('is_element_in_viewport', ['jquery'], function (jQuery) {
         var XOffset = 0;
         var innerWidth;
         var innerHeight;
-        if (typeof window.innerWidth !== 'undefined') {
-            innerWidth = window.innerWidth;
-            innerHeight = window.innerHeight;
+        if (typeof w[inner+Width] !== 'undefined') {
+            innerWidth = w[inner+Width];
+            innerHeight = w[inner+Height];
         }
-        else if (typeof document.documentElement !== 'undefined' && typeof document.documentElement.clientWidth !== 'undefined' && document.documentElement.clientWidth !== 0) {
-            innerWidth = document.documentElement.clientWidth;
-            innerHeight = document.documentElement.clientHeight;
-        }
-        else {
-            innerWidth = document.getElementsByTagName('body')[0].clientWidth;
-            innerHeight = document.getElementsByTagName('body')[0].clientHeight;
-        }
-        if (typeof window.pageYOffset !== 'undefined') {
-            pageYOffset = window.pageYOffset;
-            pageXOffset = window.pageXOffset;
+        else if (typeof d[documentElement] !== 'undefined' && typeof d[documentElement][client+Width] !== 'undefined' && d[documentElement][client+Width] !== 0) {
+            innerWidth = d[documentElement][client+Width];
+            innerHeight = d[documentElement][client+Height];
         }
         else {
-            pageYOffset = document.documentElement.scrollTop;
-            pageXOffset = document.documentElement.scrollLeft;
+            innerWidth = d.getElementsByTagName('body')[0][client+Width];
+            innerHeight = d.getElementsByTagName('body')[0][client+Height];
+        }
+        if (typeof w.pageYOffset !== 'undefined') {
+            pageYOffset = w.pageYOffset;
+            pageXOffset = w.pageXOffset;
+        }
+        else {
+            pageYOffset = d[documentElement]['scroll'+Top];
+            pageXOffset = d[documentElement]['scroll'+Left];
         }
         while (el.offsetParent) {
             el = el.offsetParent;
-            top += el.offsetTop;
-            left += el.offsetLeft;
+            top += el[offset+Top];
+            left += el[offset+Left];
         }
         if (scrollCounter > 1) {
             YOffset = (pageYOffset / scrollCounter);

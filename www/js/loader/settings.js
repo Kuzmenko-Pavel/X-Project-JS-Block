@@ -1,7 +1,7 @@
 /**
  * Created by kuzmenko-pavel on 05.04.17.
  */
-define(function () {
+define('settings', ['./ytl'], function (YottosLib) {
     var detectIE = function () {
         var ua = window.navigator.userAgent;
 
@@ -23,7 +23,7 @@ define(function () {
 
         return false;
     };
-    var settings = {
+    return {
         rg: 'https://rg.yottos.com',
         rgb: '/v1/pub',
         cdn: 'https://cdn.yottos.com',
@@ -88,5 +88,4 @@ define(function () {
         },
         block_width_range: [100, 350]
     };
-    return settings;
 });

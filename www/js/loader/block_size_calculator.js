@@ -9,6 +9,8 @@ define('block_size_calculator', ['jquery', './ytl', './block_template'], functio
         var w_position = $el.offset();
         var $document = jQuery(document);
         var $parent = $el.parent();
+        var isNull = YottosLib._.isNull;
+        var isNumber = YottosLib._.isNumber;
         size.s_h = $document.height();
         size.s_w = $document.width();
         size.w_h = $el.height();
@@ -19,38 +21,38 @@ define('block_size_calculator', ['jquery', './ytl', './block_template'], functio
         size.w_p_l_c = w_position.left + (size.w_w / 2);
         size.p_w_h = $parent.height();
         size.p_w_w = $parent.width();
-        if (YottosLib._.isNumber(block_setting.h)) {
+        if (isNumber(block_setting.h)) {
             size.h = block_setting.h;
         }
-        if (YottosLib._.isNumber(block_setting.w)) {
+        if (isNumber(block_setting.w)) {
             size.w = block_setting.w;
         }
-        if (!YottosLib._.isNull(size.w) && !YottosLib._.isNull(size.h)) {
+        if (!isNull(size.w) && !isNull(size.h)) {
             return size;
         }
-        if (YottosLib._.isNull(size.h)) {
+        if (isNull(size.h)) {
             if (size.w_h !== 0) {
                 size.h = size.w_h;
             }
         }
-        if (YottosLib._.isNull(size.w)) {
+        if (isNull(size.w)) {
             if (size.w_w !== 0) {
                 size.w = size.w_w;
             }
         }
 
-        if (YottosLib._.isNull(size.w) || YottosLib._.isNull(size.h)) {
+        if (isNull(size.w) || isNull(size.h)) {
             size = block_template(size);
         }
 
-        if (YottosLib._.isNull(size.h)) {
+        if (isNull(size.h)) {
 
             if (size.p_w_h !== 0) {
                 size.h = size.p_w_h;
             }
 
         }
-        if (YottosLib._.isNull(size.w)) {
+        if (isNull(size.w)) {
             if (size.p_w_w !== 0) {
                 size.w = size.p_w_w;
             }

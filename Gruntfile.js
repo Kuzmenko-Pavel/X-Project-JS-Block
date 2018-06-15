@@ -88,6 +88,7 @@ module.exports = function (grunt) {
                     uglify2: {
                         output: {
                             beautify: false,
+                            space_colon : false,
                             quote_keys: true,
                             screw_ie8: false,
                             ascii_only: true
@@ -109,7 +110,9 @@ module.exports = function (grunt) {
                             unused: true,
                             if_return: true,
                             join_vars: true,
-                            drop_console: true,
+                            drop_console: false,
+                            side_effects: true,
+                            hoist_vars: true,
                             passes: 3
                         },
                         warnings: true,
@@ -139,6 +142,19 @@ module.exports = function (grunt) {
                     }
                 }
             }
+        },
+        uglify: {
+            options: {
+                drop_console: false,
+                report: 'gzip',
+                warnings: true,
+                verbose: true,
+                ie8: true
+            },
+            componet: {
+                src:  'www/js/loader.js',
+                dest: 'www/js/loader.js',
+            },
         }
 
     });
@@ -147,6 +163,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('server', ['requirejs', 'connect', 'default']);

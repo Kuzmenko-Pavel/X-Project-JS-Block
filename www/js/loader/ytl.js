@@ -1,8 +1,10 @@
 define([], function () {
-    var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
+    var prototype = 'prototype';
+    var ArrayProto = Array[prototype], ObjProto = Object[prototype], FuncProto = Function[prototype];
     var toString         = ObjProto.toString;
     var slice            = ArrayProto.slice;
     var nativeIsArray      = Array.isArray;
+    var nativeKeys         = Object.keys;
     var nativeBind         = FuncProto.bind;
     var nativeCreate       = Object.create;
     var Ctor = function(){};
@@ -59,9 +61,9 @@ define([], function () {
         if (nativeCreate) {
             return nativeCreate(prototype);
         }
-        Ctor.prototype = prototype;
+        Ctor[prototype] = prototype;
         var result = new Ctor();
-        Ctor.prototype = null;
+        Ctor[prototype] = null;
         return result;
     };
     var property = function(key) {
@@ -94,6 +96,44 @@ define([], function () {
     var isArrayLike = function(collection) {
         var length = getLength(collection);
         return typeof length === 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+    };
+    var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
+    var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
+        'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
+    function collectNonEnumProps(obj, keys) {
+        var nonEnumIdx = nonEnumerableProps.length;
+        var constructor = obj.constructor;
+        var proto = (_.isFunction(constructor) && constructor[prototype]) || ObjProto;
+
+        // Constructor is a special case.
+        var prop = 'constructor';
+        if (_.has(obj, prop) && !_.contains(keys, prop)) {
+            keys.push(prop);
+        }
+
+        while (nonEnumIdx--) {
+            prop = nonEnumerableProps[nonEnumIdx];
+            if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
+                keys.push(prop);
+            }
+        }
+    }
+    _.keys = function(obj) {
+        if (!_.isObject(obj)) {
+            return [];
+        }
+        if (nativeKeys) {
+            return nativeKeys(obj);
+        }
+        var keys = [];
+        for (var key in obj) {
+            if (_.has(obj, key)) {
+                keys.push(key);}
+        }
+        if (hasEnumBug) {
+            collectNonEnumProps(obj, keys);
+        }
+        return keys;
     };
     _.each = _.forEach = function(obj, iteratee, context) {
         iteratee = optimizeCb(iteratee, context);
@@ -165,7 +205,7 @@ define([], function () {
       if (!(callingContext instanceof boundFunc)) {
           return sourceFunc.apply(context, args);
       }
-      var self = baseCreate(sourceFunc.prototype);
+      var self = baseCreate(sourceFunc[prototype]);
       var result = sourceFunc.apply(self, args);
       if (_.isObject(result)) {
           return result;
@@ -187,28 +227,6 @@ define([], function () {
       };
       return bound;
     };
-    var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
-    var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
-        'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
-
-    function collectNonEnumProps(obj, keys) {
-        var nonEnumIdx = nonEnumerableProps.length;
-        var constructor = obj.constructor;
-        var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto;
-
-        // Constructor is a special case.
-        var prop = 'constructor';
-        if (_.has(obj, prop) && !_.contains(keys, prop)) {
-            keys.push(prop);
-        }
-
-        while (nonEnumIdx--) {
-            prop = nonEnumerableProps[nonEnumIdx];
-            if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
-                keys.push(prop);
-            }
-        }
-    }
     _.allKeys = function(obj) {
         if (!_.isObject(obj)) {
             return [];
@@ -245,7 +263,7 @@ define([], function () {
     };
     _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
         var method = ArrayProto[name];
-        _.prototype[name] = function() {
+        _[prototype][name] = function() {
             var obj = this._wrapped;
             method.apply(obj, arguments);
             if ((name === 'shift' || name === 'splice') && obj.length === 0) {
@@ -256,15 +274,15 @@ define([], function () {
     });
     _.each(['concat', 'join', 'slice'], function(name) {
         var method = ArrayProto[name];
-        _.prototype[name] = function() {
+        _[prototype][name] = function() {
             return result(this, method.apply(this._wrapped, arguments));
         };
     });
-    _.prototype.value = function() {
+    _[prototype].value = function() {
         return this._wrapped;
     };
-    _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
-    _.prototype.toString = function() {
+    _[prototype].valueOf = _[prototype].toJSON = _[prototype].value;
+    _[prototype].toString = function() {
         return '' + this._wrapped;
     };
     _.on_event = function(evnt, elem, callback, context, once) {
@@ -328,8 +346,8 @@ define([], function () {
     };
 
     var YottosLib = function () {};
-    YottosLib.prototype.JSON = window.JSON || {};
-    YottosLib.prototype.JSON.stringify = YottosLib.prototype.JSON.stringify || function (obj) {
+    YottosLib[prototype].JSON = window.JSON || {};
+    YottosLib[prototype].JSON.stringify = YottosLib[prototype].JSON.stringify || function (obj) {
         var t = typeof (obj);
         if (t !== "object" || obj === null) {
             if (t === "string") {
@@ -355,15 +373,15 @@ define([], function () {
             return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
         }
     };
-    YottosLib.prototype.JSON.parse = YottosLib.prototype.JSON.parse || function (str) {
+    YottosLib[prototype].JSON.parse = YottosLib[prototype].JSON.parse || function (str) {
         if (str === ""){
             str = '""';
         }
         eval("var p=" + str + ";");
         return p;
     };
-    YottosLib.prototype.b = {_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="};
-    YottosLib.prototype.b.e = function (input) {
+    YottosLib[prototype].b = {_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="};
+    YottosLib[prototype].b.e = function (input) {
         var output = "";
         var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
         var i = 0;
@@ -388,7 +406,7 @@ define([], function () {
 
         return output;
     };
-    YottosLib.prototype.b.d = function (input) {
+    YottosLib[prototype].b.d = function (input) {
         var output = "";
         var chr1, chr2, chr3;
         var enc1, enc2, enc3, enc4;
@@ -414,7 +432,7 @@ define([], function () {
         return output;
 
     };
-    YottosLib.prototype.b._u_e = function (string) {
+    YottosLib[prototype].b._u_e = function (string) {
         string = string.replace(/\r\n/g, "\n");
         var utftext = "";
 
@@ -439,7 +457,7 @@ define([], function () {
 
         return utftext;
     };
-    YottosLib.prototype.b._u_d = function (utftext) {
+    YottosLib[prototype].b._u_d = function (utftext) {
             var string = "";
             var i = 0;
             var c = 0;
@@ -471,8 +489,8 @@ define([], function () {
 
             return string;
         };
-    YottosLib.prototype._ = _;
-    YottosLib.prototype.post_exists = function () {
+    YottosLib[prototype]._ = _;
+    YottosLib[prototype].post_exists = function () {
         var post = false;
         var postMessage = 'postMessage';
         if (window[postMessage]){

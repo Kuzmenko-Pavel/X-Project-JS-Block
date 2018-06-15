@@ -8,9 +8,11 @@ define( [
 	"./var/class2type",
 	"./var/toString",
 	"./var/hasOwn",
-	"./var/support"
+	// "./var/support"
 ], function( deletedIds, document, slice, concat, push, indexOf,
-	class2type, toString, hasOwn, support ) {
+	class2type, toString, hasOwn
+			 // ,support
+) {
 
 var
 	version = "@VERSION",
@@ -263,11 +265,11 @@ jQuery.extend( {
 
 		// Support: IE<9
 		// Handle iteration over inherited properties before own properties.
-		if ( !support.ownFirst ) {
+		// if ( !support.ownFirst ) {
 			for ( key in obj ) {
 				return hasOwn.call( obj, key );
 			}
-		}
+		// }
 
 		// Own properties are enumerated firstly, so to speed up,
 		// if last one is own, then all properties are own.
@@ -489,7 +491,7 @@ jQuery.extend( {
 
 	// jQuery.support is not used in Core but other projects attach their
 	// properties to it so it needs to exist.
-	support: support
+	// support: support
 } );
 
 // JSHint would error on this code due to the Symbol not being defined in ES5.

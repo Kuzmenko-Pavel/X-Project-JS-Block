@@ -11,22 +11,19 @@ define('block_render', ['./jquery', './ytl', './settings', './iframe_form'], fun
         if (auto){
             url = url + '&auto=true';
         }
-        var dummy = new Iframe_form(url, $el, block_setting, client);
+        var dummy = new Iframe_form(url, $el, block_setting, index);
         dummy.addParameter('scr', client);
         dummy.addParameter('mod', block_setting.m);
         dummy.addParameter('index', index);
+        dummy.addParameter('rand', dummy.time);
         dummy.addParameter('post', YottosLib.post_exists());
         if (auto){
             dummy.addParameter('auto', 'true');
         }
-        YottosLib._.each(location.search.substr(1).split("&"), function (element) {
-            var param = element.split("=");
-            if (param.length === 2){
-                if (param[0].indexOf('adsbyyottos_') !== -1){
-                    this.dummy.addParameter(param[0].split("_")[1], param[1]);
-                }
-            }
+        YottosLib._.each(this.pp, function (element, index) {
+            this.dummy.addParameter(index, element);
         },{dummy:dummy});
+
         dummy.render();
         this.blocks.push(dummy);
     };
