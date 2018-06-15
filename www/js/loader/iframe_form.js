@@ -34,7 +34,8 @@ define('iframe_form',
                 }
             }
             object.time = new Date().getTime();
-
+            object.name = 'y_iframe_'+object.time+'_' + object.index;
+            object.post_exists = YottosLib.post_exists();
             object.form = jQuery("<form/>", {
                 action: url,
                 method: 'post',
@@ -43,7 +44,6 @@ define('iframe_form',
                 target: 'y_'+ iframe + object.time,
                 style: 'display:none; width:0px; height:0px; border:0px; margin:0 0 0 0;'
             });
-
             object[iframe] = jQuery('<iframe name="y_'+ iframe + object.time +'">');
             object[iframe].attr("id", 'y_' + iframe + object.time);
             object[iframe].attr("name", 'y_' + iframe + object.time);
@@ -77,6 +77,9 @@ define('iframe_form',
                         "visibility": "visible",
                         "background-color": "transparent"
                     });
+                this.addParameter('index',this.index);
+                this.addParameter('rand', this.time);
+                this.addParameter('post', this.post_exists);
                 this.root.append(this[iframe], this[form]);
                 this[iframe].load(YottosLib._.bind(function () {
                     if(this.loaded){
@@ -95,21 +98,23 @@ define('iframe_form',
 
                 }, this));
                 this[form].submit();
+                this.post.init();
             };
 
             object.re_render = function () {
                 this.root.append(this[form]);
                 this[form].submit();
+                this.post.init();
             };
             object.logging = function () {
                 this.block_active_view();
                 if (this.block_setting.logging === false) {
-                    // this.post.push('initial ' + this.time);
+                    this.post.push('block_initial');
                     this.block_logging();
                 }
                 else if (this.block_setting.logging === 'initial' && this.block_setting.visible === true) {
                     this.block_setting.logging = 'complite';
-                    // this.post.push('complite ' + this.time);
+                    this.post.push('block_complite');
                     this.block_logging();
                 }
 

@@ -14,14 +14,11 @@ define('block_render', ['./jquery', './ytl', './settings', './iframe_form'], fun
         var dummy = new Iframe_form(url, $el, block_setting, index);
         dummy.addParameter('scr', client);
         dummy.addParameter('mod', block_setting.m);
-        dummy.addParameter('index', index);
-        dummy.addParameter('rand', dummy.time);
-        dummy.addParameter('post', YottosLib.post_exists());
         if (auto){
             dummy.addParameter('auto', 'true');
         }
         YottosLib._.each(this.pp, function (element, index) {
-            this.dummy.addParameter(index, element);
+            dummy.addParameter(index, element);
         },{dummy:dummy});
 
         dummy.render();

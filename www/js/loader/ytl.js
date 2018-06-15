@@ -7,6 +7,20 @@ define([], function () {
     var nativeKeys         = Object.keys;
     var nativeBind         = FuncProto.bind;
     var nativeCreate       = Object.create;
+    var passiveSupported = false;
+    var modern = window.addEventListener;
+    var add = modern ? 'addEventListener' : 'attachEvent';
+    var rem = modern ? 'removeEventListener' : 'detachEvent';
+    var pre = modern ? '' : 'on';
+    try {
+        var options = Object.defineProperty({}, "passive", {
+            get: function() {
+                passiveSupported = true;
+            }
+        });
+        window[add](pre + 'test', null, options);
+        window[rem](pre + 'test', null, options);
+    } catch(err) {}
     var Ctor = function(){};
     var _ = function(obj) {
         if (obj instanceof _){
@@ -287,11 +301,11 @@ define([], function () {
     };
     _.on_event = function(evnt, elem, callback, context, once) {
         var func = _.bind(callback, context || elem);
-        var modern = elem.addEventListener;
-        var add = modern ? 'addEventListener' : 'attachEvent';
-        // var rem = modern ? 'removeEventListener' : 'detachEvent';
-        var pre = modern ? '' : 'on';
-        elem[add](pre + evnt, func, {once: once || false}, false);
+        var opt = {once: once || false};
+        if (passiveSupported){
+            opt.passive = true;
+        }
+        elem[add](pre + evnt, func, opt);
     };
     _.on_load = function(win, callback, context) {
         var fn = _.bind(callback, context || win);
@@ -299,30 +313,26 @@ define([], function () {
         var  top = true;
         var doc = win.document;
         var root = doc.documentElement;
-        var modern = doc.addEventListener;
-        var add = modern ? 'addEventListener' : 'attachEvent';
-        var rem = modern ? 'removeEventListener' : 'detachEvent';
-        var pre = modern ? '' : 'on';
 
         var init = function(e) {
-                if (e.type === 'readystatechange' && doc.readyState !== 'complete'){
-                    return;
-                }
-                (e.type === 'load' ? win : doc)[rem](pre + e.type, init, false);
-                if (!done && (done = true)){
-                    fn.call(win, e.type || e);
-                }
-            };
+            if (e.type === 'readystatechange' && doc.readyState !== 'complete'){
+                return;
+            }
+            (e.type === 'load' ? win : doc)[rem](pre + e.type, init, false);
+            if (!done && (done = true)){
+                fn.call(win, e.type || e);
+            }
+        };
 
         var poll = function() {
-                try {
-                    root.doScroll('left');
-                } catch(e) {
-                    setTimeout(poll, 50);
-                    return;
-                }
-                init('poll');
-            };
+            try {
+                root.doScroll('left');
+            } catch(e) {
+                setTimeout(poll, 50);
+                return;
+            }
+            init('poll');
+        };
 
         if (doc.readyState === 'complete'){
             fn.call(win, 'lazy');

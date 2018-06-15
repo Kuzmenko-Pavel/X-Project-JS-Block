@@ -34,7 +34,7 @@ define([
         parser(url, params);
         url.href = location;
         parser(url, params);
-        console.log(params);
+        params['origin'] = url.protocol.concat("//").concat(url.hostname);
         return params;
     };
     var Loader = function () {
@@ -48,15 +48,18 @@ define([
                 element.post.push(this.msg);
             }, {msg: msg});
         };
-        this.blocks.receive = function (data) {
+        this.blocks.receive = function (data, origin) {
+            var name = data.split(":")[0];
+            var action = data.split(":")[1];
             YottosLib._.each(this, function (element) {
-                console.log(data);
-                if (element.time === data){
-                    element.receive(data);
+                if (element.name === name){
+                    if (element.post[action]){
+                        element.post[action](origin);
+                    }
                 }
-            }, {data: data});
+            }, {name: name, action:action, origin:origin});
         };
-        this.blocks.logging = function (block) {
+        this.blocks.logging = function () {
             YottosLib._.each(this, function (element) {
                 element.logging();
             });
@@ -84,9 +87,10 @@ define([
         this.blocks.logging();
     };
     Loader[prototype].message_handler = function (e) {
-        console.log(e.data);
         if (e && e.data && e.origin === 'https://rg.yottos.com'){
-            this.blocks.receive(e.data);
+            if (typeof e.data === 'string'){
+                this.blocks.receive(e.data, e.origin);
+            }
         }
     };
     Loader[prototype].load_handler = function (e) {

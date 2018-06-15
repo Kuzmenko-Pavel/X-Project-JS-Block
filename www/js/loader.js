@@ -7210,6 +7210,21 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     var nativeKeys = Object.keys;
     var nativeBind = FuncProto.bind;
     var nativeCreate = Object.create;
+    var passiveSupported = false;
+    var modern = window.addEventListener;
+    var add = modern ? 'addEventListener' : 'attachEvent';
+    var rem = modern ? 'removeEventListener' : 'detachEvent';
+    var pre = modern ? '' : 'on';
+    try {
+      var options = Object.defineProperty({}, 'passive', {
+        get: function () {
+          passiveSupported = true;
+        }
+      });
+      window[add](pre + 'test', null, options);
+      window[rem](pre + 'test', null, options);
+    } catch (err) {
+    }
     var Ctor = function () {
     };
     var _ = function (obj) {
@@ -7514,11 +7529,11 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     };
     _.on_event = function (evnt, elem, callback, context, once) {
       var func = _.bind(callback, context || elem);
-      var modern = elem.addEventListener;
-      var add = modern ? 'addEventListener' : 'attachEvent';
-      // var rem = modern ? 'removeEventListener' : 'detachEvent';
-      var pre = modern ? '' : 'on';
-      elem[add](pre + evnt, func, { once: once || false }, false);
+      var opt = { once: once || false };
+      if (passiveSupported) {
+        opt.passive = true;
+      }
+      elem[add](pre + evnt, func, opt);
     };
     _.on_load = function (win, callback, context) {
       var fn = _.bind(callback, context || win);
@@ -7526,10 +7541,6 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       var top = true;
       var doc = win.document;
       var root = doc.documentElement;
-      var modern = doc.addEventListener;
-      var add = modern ? 'addEventListener' : 'attachEvent';
-      var rem = modern ? 'removeEventListener' : 'detachEvent';
-      var pre = modern ? '' : 'on';
       var init = function (e) {
         if (e.type === 'readystatechange' && doc.readyState !== 'complete') {
           return;
@@ -8233,24 +8244,45 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     var post_array = function (obj) {
       this.stack = [];
       this.obj = obj;
+      this.test = undefined;
       this.callHandler = function () {
+        if (this.test) {
+          while (this.stack.length) {
+            this.post_message(this.stack.shift());
+          }
+        }
       };
-      this.post_message = function (msg) {
-        var target = this.obj.iframe[0];
-        if (target.contentWindow && target.contentWindow.postMessage) {
-          target.contentWindow.postMessage(msg, '*');
+      this.post_message = function (msg, origin) {
+        if (msg) {
+          origin = origin || '*';
+          var target = this.obj.iframe[0];
+          if (target.contentWindow && target.contentWindow.postMessage) {
+            window.t = target;
+            target.contentWindow.postMessage(this.obj.name + ':' + msg, origin);
+          }
         }
       };
       this.push = function (obj) {
-        this.stack.push(obj);
-        this.callHandler();
+        if (this.obj.post_exists) {
+          this.stack.push(obj);
+          this.callHandler();
+        }
       };
-      this.pop = function () {
-        this.callHandler();
-        return this.stack.pop();
+      this.ping = function (origin) {
+        if (this.test === undefined) {
+          this.pong(origin);
+        } else if (this.test === false) {
+          this.test = true;
+          this.callHandler();
+        }
       };
-      this.remove = function (index) {
-        this.stack.splice(index, 1);
+      this.pong = function (origin) {
+        this.test = false;
+        this.post_message('ping', origin);
+      };
+      this.init = function () {
+        this.post_message('ping');
+        this.test = undefined;
       };
     };
     return post_array;
@@ -8283,6 +8315,8 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         }
       }
       object.time = new Date().getTime();
+      object.name = 'y_iframe_' + object.time + '_' + object.index;
+      object.post_exists = YottosLib.post_exists();
       object.form = jQuery('<form/>', {
         action: url,
         method: 'post',
@@ -8326,6 +8360,9 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
           'visibility': 'visible',
           'background-color': 'transparent'
         });
+        this.addParameter('index', this.index);
+        this.addParameter('rand', this.time);
+        this.addParameter('post', this.post_exists);
         this.root.append(this[iframe], this[form]);
         this[iframe].load(YottosLib._.bind(function () {
           if (this.loaded) {
@@ -8342,19 +8379,21 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
           }
         }, this));
         this[form].submit();
+        this.post.init();
       };
       object.re_render = function () {
         this.root.append(this[form]);
         this[form].submit();
+        this.post.init();
       };
       object.logging = function () {
         this.block_active_view();
         if (this.block_setting.logging === false) {
-          // this.post.push('initial ' + this.time);
+          this.post.push('block_initial');
           this.block_logging();
         } else if (this.block_setting.logging === 'initial' && this.block_setting.visible === true) {
           this.block_setting.logging = 'complite';
-          // this.post.push('complite ' + this.time);
+          this.post.push('block_complite');
           this.block_logging();
         }
       };
@@ -8373,14 +8412,11 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       var dummy = new Iframe_form(url, $el, block_setting, index);
       dummy.addParameter('scr', client);
       dummy.addParameter('mod', block_setting.m);
-      dummy.addParameter('index', index);
-      dummy.addParameter('rand', dummy.time);
-      dummy.addParameter('post', YottosLib.post_exists());
       if (auto) {
         dummy.addParameter('auto', 'true');
       }
       YottosLib._.each(this.pp, function (element, index) {
-        this.dummy.addParameter(index, element);
+        dummy.addParameter(index, element);
       }, { dummy: dummy });
       dummy.render();
       this.blocks.push(dummy);
@@ -8543,7 +8579,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       parser(url, params);
       url.href = location;
       parser(url, params);
-      console.log(params);
+      params['origin'] = url.protocol.concat('//').concat(url.hostname);
       return params;
     };
     var Loader = function () {
@@ -8557,15 +8593,22 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
           element.post.push(this.msg);
         }, { msg: msg });
       };
-      this.blocks.receive = function (data) {
+      this.blocks.receive = function (data, origin) {
+        var name = data.split(':')[0];
+        var action = data.split(':')[1];
         YottosLib._.each(this, function (element) {
-          console.log(data);
-          if (element.time === data) {
-            element.receive(data);
+          if (element.name === name) {
+            if (element.post[action]) {
+              element.post[action](origin);
+            }
           }
-        }, { data: data });
+        }, {
+          name: name,
+          action: action,
+          origin: origin
+        });
       };
-      this.blocks.logging = function (block) {
+      this.blocks.logging = function () {
         YottosLib._.each(this, function (element) {
           element.logging();
         });
@@ -8592,9 +8635,10 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       this.blocks.logging();
     };
     Loader[prototype].message_handler = function (e) {
-      console.log(e.data);
       if (e && e.data && e.origin === 'https://rg.yottos.com') {
-        this.blocks.receive(e.data);
+        if (typeof e.data === 'string') {
+          this.blocks.receive(e.data, e.origin);
+        }
       }
     };
     Loader[prototype].load_handler = function (e) {
