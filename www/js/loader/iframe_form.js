@@ -4,12 +4,13 @@
 define('iframe_form',
     ['./jquery', './ytl', './block_logging', './block_active_view', './block_size_calculator', './post_array'],
     function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator, PostArray) {
-        return function (url, $el, block_setting, index) {
+        return function (url, $el, block_setting, index, client) {
             var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
             var object = this;
             var iframe = 'iframe';
             var form = 'form';
             object.loaded = false;
+            object.client = client;
             object.index = index;
             object.loading_count = 0;
             object.size = block_size_calculator($el, block_setting);
@@ -80,6 +81,8 @@ define('iframe_form',
                 this.addParameter('index',this.index);
                 this.addParameter('rand', this.time);
                 this.addParameter('post', this.post_exists);
+                this.addParameter('scr', this.client);
+                this.addParameter('mod', this.block_setting.m);
                 this.root.append(this[iframe], this[form]);
                 this[iframe].load(YottosLib._.bind(function () {
                     if(this.loaded){

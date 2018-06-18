@@ -29,7 +29,7 @@ define([
     // "./jquery/deprecated"
     // "./jquery/exports/amd"
 ], function (jQuery) {
-    // jQuery.ajaxSetup({crossDomain: true});
+    //jQuery.ajaxSetup({crossDomain: true});
     // jQuery.support.cors = true;
     return jQuery;
 });

@@ -11,9 +11,7 @@ define('block_render', ['./jquery', './ytl', './settings', './iframe_form'], fun
         if (auto){
             url = url + '&auto=true';
         }
-        var dummy = new Iframe_form(url, $el, block_setting, index);
-        dummy.addParameter('scr', client);
-        dummy.addParameter('mod', block_setting.m);
+        var dummy = new Iframe_form(url, $el, block_setting, index, client);
         if (auto){
             dummy.addParameter('auto', 'true');
         }

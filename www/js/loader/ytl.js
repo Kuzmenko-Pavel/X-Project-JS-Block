@@ -3,6 +3,7 @@ define([], function () {
     var ArrayProto = Array[prototype], ObjProto = Object[prototype], FuncProto = Function[prototype];
     var toString         = ObjProto.toString;
     var slice            = ArrayProto.slice;
+    var hasOwnProperty   = ObjProto.hasOwnProperty;
     var nativeIsArray      = Array.isArray;
     var nativeKeys         = Object.keys;
     var nativeBind         = FuncProto.bind;
@@ -132,6 +133,9 @@ define([], function () {
             }
         }
     }
+    _.has = function(obj, key) {
+        return obj != null && hasOwnProperty.call(obj, key);
+    };
     _.keys = function(obj) {
         if (!_.isObject(obj)) {
             return [];

@@ -83,8 +83,8 @@ module.exports = function (grunt) {
                     findNestedDependencies: true,
                     preserveLicenseComments: false,
                     wrap: true,
-                    // optimize: 'uglify2',
-                    optimize: 'none',
+                    optimize: 'uglify2',
+                    // optimize: 'none',
                     uglify2: {
                         output: {
                             beautify: false,
@@ -145,6 +145,12 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
+                compress : {
+                    ie8: true
+                },
+                mangle : {
+                    ie8: true
+                },
                 drop_console: false,
                 report: 'gzip',
                 warnings: true,
@@ -153,7 +159,7 @@ module.exports = function (grunt) {
             },
             componet: {
                 src:  'www/js/loader.js',
-                dest: 'www/js/loader.js',
+                dest: 'www/js/loader.js'
             },
         }
 
