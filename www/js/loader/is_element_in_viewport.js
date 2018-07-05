@@ -56,8 +56,8 @@ define('is_element_in_viewport', ['jquery'], function (jQuery) {
             XOffset = (pageXOffset / scrollCounter);
         }
         return (
-            top < ( pageYOffset + innerHeight + YOffset ) &&
-            left < ( pageXOffset + innerWidth + XOffset ) &&
+            top < ( pageYOffset + innerHeight + YOffset  - (height/2) ) &&
+            left < ( pageXOffset + innerWidth + XOffset  - (width/2)) &&
             ( top + height ) > pageYOffset &&
             ( left + width ) > pageXOffset
         );
