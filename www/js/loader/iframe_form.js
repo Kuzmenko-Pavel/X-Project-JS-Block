@@ -25,29 +25,30 @@ define('iframe_form',
             object.block_logging = block_logging;
             object.block_active_view = block_active_view;
             object.parent_el = $el;
-            object.root = jQuery("<div/>");
-            object.root.css({border: 0, margin:0, padding:0, display:"block"});
-            if (object.root[0].attachShadow){
-                try {
-                    object.parent_el.append(object.root);
-                    object.root = jQuery(object.root[0].attachShadow({mode: "closed"}));
-                }
-                catch (err) {
-                    object.root = object.parent_el;
-                }
-            }
-            else if (object.root[0].createShadowRoot){
-                object.parent_el.append(object.root);
-                try {
-                    object.root = jQuery(object.root[0].createShadowRoot());
-                }
-                catch (err){
-                    object.root = object.parent_el;
-                }
-            }
-            else {
-                object.root = object.parent_el;
-            }
+            // object.root = jQuery("<div/>");
+            // object.root.css({border: 0, margin:0, padding:0, display:"block"});
+            // if (object.root[0].attachShadow){
+            //     try {
+            //         object.parent_el.append(object.root);
+            //         object.root = jQuery(object.root[0].attachShadow({mode: "closed"}));
+            //     }
+            //     catch (err) {
+            //         object.root = object.parent_el;
+            //     }
+            // }
+            // else if (object.root[0].createShadowRoot){
+            //     object.parent_el.append(object.root);
+            //     try {
+            //         object.root = jQuery(object.root[0].createShadowRoot());
+            //     }
+            //     catch (err){
+            //         object.root = object.parent_el;
+            //     }
+            // }
+            // else {
+            //     object.root = object.parent_el;
+            // }
+            object.root =  object.parent_el;
             object.time = new Date().getTime();
             object.name = 'y_iframe_'+object.time+'_' + object.index;
             object.post_exists = YottosLib.post_exists();

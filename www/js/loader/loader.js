@@ -71,6 +71,26 @@ define([
             YottosLib._.on_event('message', window, this.message_handler, this);
 
         }
+        var rg_pre = document.createElement("link");
+        rg_pre.rel = "preconnect";
+        rg_pre.crossorigin = 'anonymous';
+        rg_pre.href = "https://rg.yottos.com/";
+        document.head.appendChild(rg_pre);
+        var rg_dns = document.createElement("link");
+        rg_dns.rel = "dns-prefetch";
+        rg_dns.crossorigin = 'anonymous';
+        rg_dns.href = "https://rg.yottos.com/";
+        document.head.appendChild(rg_dns);
+        var cdn_pre = document.createElement("link");
+        cdn_pre.rel = "preconnect";
+        cdn_pre.crossorigin = 'anonymous';
+        cdn_pre.href = "https://cdn.yottos.com/";
+        document.head.appendChild(cdn_pre);
+        var cdn_dns = document.createElement("link");
+        cdn_dns.rel = "dns-prefetch";
+        cdn_dns.crossorigin = 'anonymous';
+        cdn_dns.href = "https://cdn.yottos.com/";
+        document.head.appendChild(cdn_dns);
     };
     Loader[prototype].block_settings = block_settings;
     Loader[prototype].block_render = block_render;
