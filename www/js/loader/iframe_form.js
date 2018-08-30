@@ -5,7 +5,7 @@ define('iframe_form',
     ['./jquery', './ytl', './block_logging', './block_active_view', './block_size_calculator', './post_array'],
     function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator, PostArray) {
         return function (url, $el, block_setting, index, client) {
-            var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
+            // var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
             var object = this;
             var iframe = 'iframe';
             var form = 'form';
@@ -72,7 +72,7 @@ define('iframe_form',
             object[iframe].attr("width", object.size.w);
             object[iframe].attr("height", object.size.h);
             object[iframe].data('time', object.time);
-            object[iframe].attr("sandbox", sandbox);
+            // object[iframe].attr("sandbox", sandbox);
 
             object.addParameter = function (parameter, value) {
                 jQuery("<input type='hidden' />")
