@@ -8,7 +8,9 @@ define('iframe_form',
             // var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
             var object = this;
             var iframe = 'iframe';
+            var attr = 'attr';
             var form = 'form';
+            var addParameter = 'addParameter';
             object.loaded = false;
             object.client = client;
             object.index = index;
@@ -61,20 +63,20 @@ define('iframe_form',
                 style: 'display:none; width:0px; height:0px; border:0px; margin:0 0 0 0;'
             });
             object[iframe] = jQuery('<iframe name="y_'+ iframe + object.time +'">');
-            object[iframe].attr("id", 'y_' + iframe + object.time);
-            object[iframe].attr("name", 'y_' + iframe + object.time);
-            object[iframe].attr("frameborder", 0);
-            object[iframe].attr("marginHeight", '0px');
-            object[iframe].attr("marginWidth", '0px');
+            object[iframe][attr]("id", 'y_' + iframe + object.time);
+            object[iframe][attr]("name", 'y_' + iframe + object.time);
+            object[iframe][attr]("frameborder", 0);
+            object[iframe][attr]("marginHeight", '0px');
+            object[iframe][attr]("marginWidth", '0px');
             object[iframe].css({border: 0, width: object.size.w, height:object.size.h, margin:"0 auto", display:"block"});
-            object[iframe].attr("scrolling", 'no');
-            object[iframe].attr("allowtransparency", true);
-            object[iframe].attr("width", object.size.w);
-            object[iframe].attr("height", object.size.h);
+            object[iframe][attr]("scrolling", 'no');
+            object[iframe][attr]("allowtransparency", true);
+            object[iframe][attr]("width", object.size.w);
+            object[iframe][attr]("height", object.size.h);
             object[iframe].data('time', object.time);
             // object[iframe].attr("sandbox", sandbox);
 
-            object.addParameter = function (parameter, value) {
+            object[addParameter] = function (parameter, value) {
                 jQuery("<input type='hidden' />")
                     .attr("name", parameter)
                     .attr("value", value)
@@ -93,18 +95,15 @@ define('iframe_form',
                         "visibility": "visible",
                         "background-color": "transparent"
                     });
-                this.addParameter('index',this.index);
-                this.addParameter('rand', this.time);
-                this.addParameter('post', this.post_exists);
-                this.addParameter('scr', this.client);
-                this.addParameter('mod', this.block_setting.m);
+                this[addParameter]('index',this.index);
+                this[addParameter]('rand', this.time);
+                this[addParameter]('post', this.post_exists);
+                this[addParameter]('scr', this.client);
+                this[addParameter]('mod', this.block_setting.m);
                 this.root.append(this[iframe], this[form]);
-                this[iframe].load(YottosLib._.bind(function () {
-                    if(this.loaded){
-                        this.loaded = false;
-                        if (this.loading_count < 5){
-                            this.re_render();
-                        }
+                this[iframe].load(YottosLib._.bind(function (e) {
+                    if(this.loaded || this.canAccessIFrame()){
+                        this.re_render();
                     }
                     else {
                         this[form].remove();
@@ -113,16 +112,27 @@ define('iframe_form',
                         }
                         this.loaded = true;
                     }
-
                 }, this));
                 this[form].submit();
                 this.post.init();
             };
 
+            object.canAccessIFrame = function(){
+                var html = null;
+                try {
+                    var doc = this[iframe][0].contentDocument || this[iframe][0].contentWindow.document;
+                    html = doc.body.innerHTML;
+                } catch(err){
+                }
+                return(html !== null);
+            };
             object.re_render = function () {
-                this.root.append(this[form]);
-                this[form].submit();
-                this.post.init();
+                this.loaded = false;
+                if (this.loading_count < 5){
+                    this.root.append(this[form]);
+                    this[form].submit();
+                    this.post.init();
+                }
             };
             object.logging = function () {
                 this.block_active_view();
