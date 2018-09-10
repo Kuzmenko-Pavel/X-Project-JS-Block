@@ -107,9 +107,7 @@ define('iframe_form',
                     }
                     else {
                         this[form].remove();
-                        if (this.loading_count++ < 1){
-                            this.logging();
-                        }
+                        this.logging();
                         this.loaded = true;
                     }
                 }, this));
@@ -135,15 +133,17 @@ define('iframe_form',
                 }
             };
             object.logging = function () {
-                this.block_active_view();
-                if (this.block_setting.logging === false) {
-                    this.post.push('block_initial');
-                    this.block_logging();
-                }
-                else if (this.block_setting.logging === 'initial' && this.block_setting.visible === true) {
-                    this.block_setting.logging = 'complite';
-                    this.post.push('block_complite');
-                    this.block_logging();
+                if (this.block_setting.logging !== 'complite' && !this.canAccessIFrame()){
+                    this.block_active_view();
+                    if (this.block_setting.logging === false) {
+                        this.post.push('block_initial');
+                        this.block_logging();
+                    }
+                    else if (this.block_setting.logging === 'initial' && this.block_setting.visible === true) {
+                        this.block_setting.logging = 'complite';
+                        this.post.push('block_complite');
+                        this.block_logging();
+                    }
                 }
 
             };

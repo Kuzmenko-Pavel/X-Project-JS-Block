@@ -69,6 +69,8 @@ define([
             YottosLib._.on_load(window, this.ready_handler, this);
             YottosLib._.on_event('load', window, this.load_handler, this, true);
             YottosLib._.on_event('message', window, this.message_handler, this);
+            YottosLib._.on_event('scroll', window, this.scroll_handler, this);
+            YottosLib._.on_event('resize', window, this.resize_handler, this);
 
         }
         var preconnect = "preconnect", anonymous = 'anonymous', head = document.head, prefetch = "dns-prefetch", d = document, rg_pre = d.createElement("link"), rel='rel', crossorigin='crossorigin', href='href';
@@ -116,8 +118,6 @@ define([
     Loader[prototype].load_handler = function (e) {
         this.start();
         this.blocks.logging();
-        YottosLib._.on_event('scroll', window, this.scroll_handler, this);
-        YottosLib._.on_event('resize', window, this.resize_handler, this);
         YottosLib._.on_event('mousemove', window, this.mouse_move_handler, this);
     };
     Loader[prototype].ready_handler = function (e) {
