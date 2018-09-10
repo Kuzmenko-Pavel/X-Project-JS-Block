@@ -133,7 +133,7 @@ define('iframe_form',
                 }
             };
             object.logging = function () {
-                if (this.block_setting.logging !== 'complite' && !this.canAccessIFrame()){
+                if (this.block_setting.logging !== 'complite' && this.canAccessIFrame() === false){
                     this.block_active_view();
                     if (this.block_setting.logging === false) {
                         this.post.push('block_initial');
