@@ -73,7 +73,7 @@ define([
             YottosLib._.on_event('resize', window, this.resize_handler, this);
 
         }
-        var preconnect = "preconnect", anonymous = 'anonymous', head = document.head, prefetch = "dns-prefetch", d = document, rg_pre = d.createElement("link"), rel='rel', crossorigin='crossorigin', href='href';
+        var preconnect = "preconnect", anonymous = 'anonymous', head = document.getElementsByTagName('head')[0], prefetch = "dns-prefetch", d = document, rg_pre = d.createElement("link"), rel='rel', crossorigin='crossorigin', href='href';
         rg_pre[rel] = preconnect;
         rg_pre[crossorigin] = anonymous;
         rg_pre[href] = "https://rg.yottos.com/";
