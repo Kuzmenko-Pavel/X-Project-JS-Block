@@ -17,6 +17,10 @@ define([
              move_shake,
              settings) {
     var prototype = 'prototype';
+    var blocks = 'blocks';
+    var logging = 'logging';
+    var cdn = settings.cdn;
+    var rg = settings.rg;
     var parser = function(url, params){
         YottosLib._.each(url.search.substr(1).split("&"), function (element) {
             var param = element.split("=");
@@ -42,8 +46,8 @@ define([
         this.timeStamp = 0;
         this.sequence = settings.move_shake_sequence.slice();
         this.page_load = false;
-        this.blocks = [];
-        this.blocks.send = function (msg) {
+        this[blocks] = [];
+        this[blocks].send = function (msg) {
             YottosLib._.each(this, function (element) {
                 element.post.push(this.msg);
             }, {msg: msg});
@@ -74,24 +78,25 @@ define([
 
         }
         var preconnect = "preconnect", anonymous = 'anonymous', head = document.getElementsByTagName('head')[0], prefetch = "dns-prefetch", d = document, rg_pre = d.createElement("link"), rel='rel', crossorigin='crossorigin', href='href';
+        var link = 'link';
         rg_pre[rel] = preconnect;
         rg_pre[crossorigin] = anonymous;
-        rg_pre[href] = "https://rg.yottos.com/";
+        rg_pre[href] = rg;
         head.appendChild(rg_pre);
-        var rg_dns = d.createElement("link");
+        var rg_dns = d.createElement(link);
         rg_dns[rel] = prefetch;
         rg_dns[crossorigin] = anonymous;
-        rg_dns[href] = "https://rg.yottos.com/";
+        rg_dns[href] = rg;
         head.appendChild(rg_dns);
-        var cdn_pre = d.createElement("link");
+        var cdn_pre = d.createElement(link);
         cdn_pre[rel] =  preconnect;
         cdn_pre[crossorigin] = anonymous;
-        cdn_pre[href] = "https://cdn.yottos.com/";
+        cdn_pre[href] = cdn;
         head.appendChild(cdn_pre);
-        var cdn_dns = d.createElement("link");
+        var cdn_dns = d.createElement(link);
         cdn_dns[rel] = prefetch;
         cdn_dns[crossorigin] = anonymous;
-        cdn_dns[href] = "https://cdn.yottos.com/";
+        cdn_dns[href] = cdn;
         head.appendChild(cdn_dns);
     };
     Loader[prototype].block_settings = block_settings;
@@ -100,29 +105,29 @@ define([
     Loader[prototype].move_shake = move_shake;
     Loader[prototype].mouse_move_handler = function (e) {
         this.move_shake(e);
-        this.blocks.logging();
+        this[blocks][logging]();
     };
     Loader[prototype].scroll_handler = function (e) {
-        this.blocks.logging();
+        this[blocks][logging]();
     };
     Loader[prototype].resize_handler = function (e) {
-        this.blocks.logging();
+        this[blocks][logging]();
     };
     Loader[prototype].message_handler = function (e) {
-        if (e && e.data && e.origin === 'https://rg.yottos.com'){
+        if (e && e.data && e.origin === rg){
             if (typeof e.data === 'string'){
-                this.blocks.receive(e.data, e.origin);
+                this[blocks].receive(e.data, e.origin);
             }
         }
     };
     Loader[prototype].load_handler = function (e) {
         this.start();
-        this.blocks.logging();
+        this[blocks][logging]();
         YottosLib._.on_event('mousemove', window, this.mouse_move_handler, this);
     };
     Loader[prototype].ready_handler = function (e) {
         this.start();
-        this.blocks.logging();
+        this[blocks][logging]();
 
     };
     return Loader;

@@ -5,19 +5,26 @@ define('iframe_form',
     ['./jquery', './ytl', './block_logging', './block_active_view', './block_size_calculator', './post_array'],
     function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator, PostArray) {
         return function (url, $el, block_setting, index, client) {
-            // var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
+            var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
             var object = this;
             var iframe = 'iframe';
             var attr = 'attr';
             var form = 'form';
             var addParameter = 'addParameter';
+            var root = 'root';
+            var block_settin = 'block_setting';
+            var ind = 'index';
+            var logging = 'logging';
+            var complite = 'complite';
+            var initial = 'initial';
+            var canAccessIFrame = 'canAccessIFrame';
             object.loaded = false;
             object.client = client;
-            object.index = index;
+            object[ind] = index;
             object.loading_count = 0;
             object.size = block_size_calculator($el, block_setting);
-            object.block_setting = block_setting;
-            YottosLib._.extend(object.block_setting,
+            object[block_settin] = block_setting;
+            YottosLib._.extend(object[block_settin],
                 {
                     visible: false,
                     logging: false,
@@ -27,32 +34,32 @@ define('iframe_form',
             object.block_logging = block_logging;
             object.block_active_view = block_active_view;
             object.parent_el = $el;
-            // object.root = jQuery("<div/>");
-            // object.root.css({border: 0, margin:0, padding:0, display:"block"});
-            // if (object.root[0].attachShadow){
-            //     try {
-            //         object.parent_el.append(object.root);
-            //         object.root = jQuery(object.root[0].attachShadow({mode: "closed"}));
-            //     }
-            //     catch (err) {
-            //         object.root = object.parent_el;
-            //     }
-            // }
-            // else if (object.root[0].createShadowRoot){
-            //     object.parent_el.append(object.root);
-            //     try {
-            //         object.root = jQuery(object.root[0].createShadowRoot());
-            //     }
-            //     catch (err){
-            //         object.root = object.parent_el;
-            //     }
-            // }
-            // else {
-            //     object.root = object.parent_el;
-            // }
-            object.root =  object.parent_el;
+            object[root] = jQuery("<div/>");
+            object[root].css({border: 0, margin:0, padding:0, display:"block"});
+            if (object[root][0].attachShadow){
+                try {
+                    object.parent_el.append(object[root]);
+                    object[root] = jQuery(object[root][0].attachShadow({mode: "closed"}));
+                }
+                catch (err) {
+                    object[root] = object.parent_el;
+                }
+            }
+            else if (object[root][0].createShadowRoot){
+                object.parent_el.append(object[root]);
+                try {
+                    object[root] = jQuery(object[root][0].createShadowRoot());
+                }
+                catch (err){
+                    object[root] = object.parent_el;
+                }
+            }
+            else {
+                object[root] = object.parent_el;
+            }
+            // object[root] =  object.parent_el;
             object.time = new Date().getTime();
-            object.name = 'y_iframe_'+object.time+'_' + object.index;
+            object.name = 'y_iframe_'+object.time+'_' + object[ind];
             object.post_exists = YottosLib.post_exists();
             object.form = jQuery("<form/>", {
                 action: url,
@@ -74,7 +81,7 @@ define('iframe_form',
             object[iframe][attr]("width", object.size.w);
             object[iframe][attr]("height", object.size.h);
             object[iframe].data('time', object.time);
-            // object[iframe].attr("sandbox", sandbox);
+            object[iframe].attr("sandbox", sandbox);
 
             object[addParameter] = function (parameter, value) {
                 jQuery("<input type='hidden' />")
@@ -95,14 +102,16 @@ define('iframe_form',
                         "visibility": "visible",
                         "background-color": "transparent"
                     });
-                this[addParameter]('index',this.index);
+                this[addParameter](ind,this[ind]);
                 this[addParameter]('rand', this.time);
                 this[addParameter]('post', this.post_exists);
                 this[addParameter]('scr', this.client);
-                this[addParameter]('mod', this.block_setting.m);
-                this.root.append(this[iframe], this[form]);
+                this[addParameter]('mod', this[block_settin].m);
+                this[addParameter]('h', this.size.h);
+                this[addParameter]('w', this.size.w);
+                this[root].append(this[iframe], this[form]);
                 this[iframe].load(YottosLib._.bind(function (e) {
-                    if(this.loaded || this.canAccessIFrame()){
+                    if(this.loaded || this[canAccessIFrame]()){
                         this.re_render();
                     }
                     else {
@@ -115,7 +124,7 @@ define('iframe_form',
                 this.post.init();
             };
 
-            object.canAccessIFrame = function(){
+            object[canAccessIFrame] = function(){
                 var html = null;
                 try {
                     var doc = this[iframe][0].contentDocument || this[iframe][0].contentWindow.document;
@@ -127,20 +136,20 @@ define('iframe_form',
             object.re_render = function () {
                 this.loaded = false;
                 if (this.loading_count < 5){
-                    this.root.append(this[form]);
+                    this[root].append(this[form]);
                     this[form].submit();
                     this.post.init();
                 }
             };
-            object.logging = function () {
-                if (this.block_setting.logging !== 'complite' && this.canAccessIFrame() === false){
+            object[logging] = function () {
+                if (this[block_settin][logging] !== complite && this[canAccessIFrame]() === false){
                     this.block_active_view();
-                    if (this.block_setting.logging === false) {
+                    if (this[block_settin][logging] === false) {
                         this.post.push('block_initial');
                         this.block_logging();
                     }
-                    else if (this.block_setting.logging === 'initial' && this.block_setting.visible === true) {
-                        this.block_setting.logging = 'complite';
+                    else if (this[block_settin][logging] === initial && this[block_settin].visible === true) {
+                        this[block_settin][logging] = complite;
                         this.post.push('block_complite');
                         this.block_logging();
                     }

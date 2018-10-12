@@ -3,23 +3,24 @@
  */
 define('post_array', ['./ytl'], function (YottosLib) {
     var post_array = function(obj) {
+        var post_message = 'postMessage';
         this.stack = [];
         this.obj = obj;
         this.test = undefined;
         this.callHandler = function() {
             if (this.test){
                 while(this.stack.length){
-                    this.post_message(this.stack.shift());
+                    this.postMessage(this.stack.shift());
                 }
             }
         };
-        this.post_message = function (msg, origin) {
+        this[post_message] = function (msg, origin) {
             if (msg){
                 origin = origin || '*';
                 var target = this.obj.iframe[0];
-                if (target.contentWindow && target.contentWindow.postMessage) {
+                if (target.contentWindow && target.contentWindow[post_message]) {
                     window.t = target;
-                    target.contentWindow.postMessage(this.obj.name + ':' + msg, origin);
+                    target.contentWindow[post_message](this.obj.name + ':' + msg, origin);
                 }
             }
         };
@@ -40,10 +41,10 @@ define('post_array', ['./ytl'], function (YottosLib) {
         };
         this.pong = function (origin) {
             this.test = false;
-            this.post_message('ping', origin);
+            this[post_message]('ping', origin);
         };
         this.init = function () {
-            this.post_message('ping');
+            this[post_message]('ping');
             this.test = undefined;
         };
 
