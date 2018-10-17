@@ -142,16 +142,20 @@ define('iframe_form',
                 }
             };
             object[logging] = function () {
-                if (this[block_settin][logging] !== complite && this[canAccessIFrame]() === false){
+                if (this[block_settin][logging] !== complite){
                     this.block_active_view();
                     if (this[block_settin][logging] === false) {
-                        this.post.push('block_initial');
-                        this.block_logging();
+                        if (this[canAccessIFrame]() === false){
+                            this.post.push('block_initial');
+                            this.block_logging();
+                        }
                     }
                     else if (this[block_settin][logging] === initial && this[block_settin].visible === true) {
-                        this[block_settin][logging] = complite;
-                        this.post.push('block_complite');
-                        this.block_logging();
+                        if (this[canAccessIFrame]() === false) {
+                            this[block_settin][logging] = complite;
+                            this.post.push('block_complite');
+                            this.block_logging();
+                        }
                     }
                 }
 
