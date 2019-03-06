@@ -25,8 +25,9 @@ define('settings', ['./ytl'], function (YottosLib) {
     };
     return {
         rg: 'https://rg.yottos.com',
-        rgb: '/v1/pub',
+        rgb: '/pub',
         cdn: 'https://cdn.yottos.com',
+        // cdn: 'http://localhost:8080',
         ptbs: '/block/',
         etbs: '.json',
         IE: detectIE(),

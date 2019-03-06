@@ -9,8 +9,9 @@ define(['./test', './ytl'], function (test, YottosLib) {
         var h = value['h'];
         var w =  value['w'];
         var m =  value['m'];
+        var v =  value['v'];
         if (h && w && m){
-            this.uh[key] = {h: h, w: w, m: m};
+            this.uh[key] = {h: h, w: w, m: m, v:v};
             this.save();
         }
     };
