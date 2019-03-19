@@ -25,6 +25,7 @@ define('settings', ['./ytl'], function (YottosLib) {
     };
     return {
         rg: 'https://rg.yottos.com',
+        // rg: 'http://0.0.0.0:8000',
         rgb: '/pub',
         cdn: 'https://cdn.yottos.com',
         // cdn: 'http://localhost:8080',
