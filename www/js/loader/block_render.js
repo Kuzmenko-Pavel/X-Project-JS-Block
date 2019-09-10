@@ -15,6 +15,9 @@ define('block_render', [
     return function ($el, block_setting, client, index) {
         var auto = false;
         var v = block_setting['v'] || 'v1';
+        if (this.pp.v2 === 'true'){
+            v = 'v2';
+        }
         var url = settings.rg + '/' + v + settings.rgb + '?mod=' + block_setting.m;
         if (block_setting['w'] === 'auto' || block_setting['h'] === 'auto') {
             auto = true;

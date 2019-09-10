@@ -39,6 +39,7 @@ define([
         url.href = location;
         parser(url, params);
         params['origin'] = url.protocol.concat("//").concat(url.hostname);
+        params['location'] = location.href;
         return params;
     };
     var Loader = function () {
