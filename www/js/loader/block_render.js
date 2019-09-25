@@ -25,7 +25,7 @@ define('block_render', [
         if (auto) {
             url = url + '&auto=true';
         }
-        var dummy = new Iframe_form(url, $el, block_setting, index, client);
+        var dummy = new Iframe_form(url, $el, block_setting, index, client, this.pp);
         if (auto) {
             dummy.addParameter('auto', 'true');
         }
