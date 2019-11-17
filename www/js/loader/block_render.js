@@ -14,7 +14,7 @@ define('block_render', [
 ) {
     return function ($el, block_setting, client, index) {
         var auto = false;
-        var v = block_setting['v'] || 'v1';
+        var v = block_setting['v'] || 'v2';
         if (this.pp.v2 === 'true'){
             v = 'v2';
         }

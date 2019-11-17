@@ -30,7 +30,7 @@ define('block_settings', ['./jquery', './ytl', './settings', './storage'], funct
                 this.cache[client] = data;
             }, this));
             jqxhr.fail(YottosLib._.bind(function () {
-                this.cache[client] = {h: 'auto', w: 'auto', m: '1', v:'v1'};
+                this.cache[client] = {h: 'auto', w: 'auto', m: '1', v:'v2'};
                 if (settings.IE) {
                     var Fjqxhr = jQuery.getScript(Fsrc);
                     Fjqxhr.always(YottosLib._.bind(function () {

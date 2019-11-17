@@ -9,7 +9,7 @@ define('block_logging', ['./jquery', './ytl', './settings'], function (jQuery, Y
         if (this[block_setting][logging] === false) {
             this[block_setting][logging] = 'initial';
         }
-        var v = block_setting['v'] || 'v1';
+        var v = block_setting['v'] || 'v2';
         if (this.pp.v2 === 'true'){
             v = 'v2';
         }
