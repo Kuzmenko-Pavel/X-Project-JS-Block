@@ -1,0 +1,48 @@
+'use strict';
+var console_detect;
+var calback = function (detect) {
+    var div = document.createElement('div');
+    div.innerHTML = 'Dev Tools ' + detect;
+    document.body.append(div);
+};
+
+var threshold = 160;
+var loop;
+var dc = document.createElement('div');
+var cheker = function (calback) {
+    try {
+        var widthThreshold = window.outerWidth - window.innerWidth > threshold;
+        var heightThreshold = window.outerHeight - window.innerHeight > threshold;
+        Object.defineProperty(dc, "id", {
+            get: function () {
+                if(console_detect !== true){
+                    clearInterval(loop);
+                    console_detect = true;
+                    calback(true);
+                    dc = null;
+                }
+            }
+        });
+        if (
+            !(heightThreshold && widthThreshold) &&
+            ((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || widthThreshold || heightThreshold)
+        ) {
+            clearInterval(loop);
+            console_detect = true;
+            calback(true);
+        } else {
+            console_detect = false;
+            calback(false);
+            console.log(dc);
+            //eval('(window.console||{clear:function(){}}).clear();')
+        }
+    } catch (err) {
+    }
+};
+var interval_cheker = function () {
+    if(console_detect === false){
+        loop = setInterval(cheker, 1000, calback);
+    }
+};
+cheker(calback);
+setTimeout(interval_cheker, 500);

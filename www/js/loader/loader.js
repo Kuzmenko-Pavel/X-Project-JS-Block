@@ -40,6 +40,7 @@ define([
         parser(url, params);
         params['origin'] = url.protocol.concat("//").concat(url.hostname);
         params['location'] = location.href;
+        params['cd'] =  undefined;
         return params;
     };
     var Loader = function () {
@@ -53,7 +54,7 @@ define([
                 element.post.push(this.msg);
             }, {msg: msg});
         };
-        this.blocks.receive = function (data, origin) {
+        this[blocks].receive = function (data, origin) {
             var name = data.split(":")[0];
             var action = data.split(":")[1];
             YottosLib._.each(this, function (element) {
@@ -64,7 +65,7 @@ define([
                 }
             }, {name: name, action:action, origin:origin});
         };
-        this.blocks.logging = function () {
+        this[blocks].logging = function () {
             YottosLib._.each(this, function (element) {
                 element.logging();
             });
@@ -99,6 +100,48 @@ define([
         cdn_dns[crossorigin] = anonymous;
         cdn_dns[href] = cdn;
         head.appendChild(cdn_dns);
+
+        var threshold = 160;
+        var loop;
+        var dc = document.createElement('div');
+        var self = this;
+        var cheker = function (calback) {
+            try {
+                var widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                var heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                Object.defineProperty(dc, "id", {
+                    get: function () {
+                        if(self.pp.cd !== true){
+                            clearInterval(loop);
+                            self.pp.cd = true;
+                            calback('cd-open');
+                            dc = null;
+                        }
+                    }
+                });
+                if (
+                    !(heightThreshold && widthThreshold) &&
+                    ((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || widthThreshold || heightThreshold)
+                ) {
+                    clearInterval(loop);
+                    self.pp.cd = true;
+                    calback('cd-open');
+                } else {
+                    self.pp.cd = false;
+                    calback('cd-close');
+                    console.log(dc);
+                    //eval('(window.console||{clear:function(){}}).clear();')
+                }
+            } catch (err) {
+            }
+        };
+        var interval_cheker = function () {
+            if(self.pp.cd === false){
+                loop = setInterval(cheker, 1000, self[blocks].send);
+            }
+        };
+        cheker(self[blocks].send);
+        setTimeout(interval_cheker, 500);
     };
     Loader[prototype].block_settings = block_settings;
     Loader[prototype].block_render = block_render;
