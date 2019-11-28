@@ -103,33 +103,41 @@ define([
 
         var threshold = 160;
         var loop;
-        var dc = document.createElement('div');
         var self = this;
-        var cheker = function (calback) {
+        var log_addet = false;
+        var dc = document.createElement('div');
+        try {
+            Object.defineProperty(dc, "id", {
+                get: function () {
+                    if(self.pp.cd !== true){
+                        clearInterval(loop);
+                        self.pp.cd = true;
+                        self[blocks].send('cd_open');
+                        dc = null;
+                    }
+                }
+            });
+        } catch (err) {
+        }
+        var cheker = function () {
+
             try {
                 var widthThreshold = window.outerWidth - window.innerWidth > threshold;
                 var heightThreshold = window.outerHeight - window.innerHeight > threshold;
-                Object.defineProperty(dc, "id", {
-                    get: function () {
-                        if(self.pp.cd !== true){
-                            clearInterval(loop);
-                            self.pp.cd = true;
-                            calback('cd-open');
-                            dc = null;
-                        }
-                    }
-                });
                 if (
                     !(heightThreshold && widthThreshold) &&
                     ((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || widthThreshold || heightThreshold)
                 ) {
                     clearInterval(loop);
                     self.pp.cd = true;
-                    calback('cd-open');
+                    self[blocks].send('cd_open');
                 } else {
                     self.pp.cd = false;
-                    calback('cd-close');
-                    console.log(dc);
+                    self[blocks].send('cd_close');
+                    if(!log_addet){
+                        log_addet = true;
+                        console.log(dc);
+                    }
                     //eval('(window.console||{clear:function(){}}).clear();')
                 }
             } catch (err) {
@@ -137,10 +145,10 @@ define([
         };
         var interval_cheker = function () {
             if(self.pp.cd === false){
-                loop = setInterval(cheker, 1000, self[blocks].send);
+                loop = setInterval(cheker, 1000);
             }
         };
-        cheker(self[blocks].send);
+        cheker();
         setTimeout(interval_cheker, 500);
     };
     Loader[prototype].block_settings = block_settings;
