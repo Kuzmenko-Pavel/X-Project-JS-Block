@@ -23,6 +23,11 @@ define('settings', ['./ytl'], function (YottosLib) {
 
         return false;
     };
+    var detectHeadless = function () {
+        var agent = window.navigator.userAgent;
+        var appVersion = window.navigator.appVersion;
+        return /headless/i.test(agent) || /headless/i.test(appVersion);
+    };
     return {
         rg: 'https://rg.yottos.com',
         // rg: 'http://0.0.0.0:8000',
@@ -32,6 +37,7 @@ define('settings', ['./ytl'], function (YottosLib) {
         ptbs: '/block/',
         etbs: '.json',
         IE: detectIE(),
+        headless: detectHeadless(),
         move_shake_sequence: [7, 4, 6, 10, 4, 3, 2, 7, 10, 5, 3, 5, 4, 10, 3, 4, 3, 2],
         b_s: {
             b_h_w: [
@@ -40,14 +46,14 @@ define('settings', ['./ytl'], function (YottosLib) {
                 [400, 150],
                 [150, 180],
                 [600, 160],
-                [60, 230],
-                [120, 240],
-                [100, 250],
-                [150, 290],
-                [250, 300],
-                [250, 320], //!
-                [280, 335],
-                [250, 400],
+                [260, 230],
+                [220, 240],
+                [200, 250],
+                [250, 290],
+                [850, 300],
+                [850, 320], //!
+                [880, 335],
+                [850, 400],
                 [60, 440],
                 [90, 460],
                 [150, 500],
