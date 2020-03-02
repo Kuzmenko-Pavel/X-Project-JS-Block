@@ -166,14 +166,17 @@ define([
     Loader[prototype].move_shake = move_shake;
     Loader[prototype].move_move = move_move;
     Loader[prototype].touch = touch;
-    Loader[prototype].mouse_move_handler = function (e) {
+    Loader[prototype].mouse_shake_handler = function (e) {
         this.move_shake(e);
-        this.move_move(e);
         this[blocks][logging]();
     };
-    Loader[prototype].touch_handler = function (e) {
-        this.touch(e);
+    Loader[prototype].mouse_move_handler = function (e) {
         this[blocks][logging]();
+        this.move_move(e);
+    };
+    Loader[prototype].touch_handler = function (e) {
+        this[blocks][logging]();
+        this.touch(e);
     };
     Loader[prototype].scroll_handler = function (e) {
         this[blocks][logging]();
@@ -191,6 +194,7 @@ define([
     Loader[prototype].load_handler = function (e) {
         this.start();
         this[blocks][logging]();
+        YottosLib._.on_event('mousemove', window, this.mouse_shake_handler, this);
         YottosLib._.on_event('mousemove', window, this.mouse_move_handler, this);
         YottosLib._.on_event('touchstart', window, this.touch_handler, this);
         YottosLib._.on_event('touchmove', window, this.touch_handler, this);
