@@ -26,7 +26,8 @@ define('settings', ['./ytl'], function (YottosLib) {
     var detectHeadless = function () {
         var agent = window.navigator.userAgent;
         var appVersion = window.navigator.appVersion;
-        return /headless/i.test(agent) || /headless/i.test(appVersion);
+        var webdriver = window.navigator.webdriver ? true : false;
+        return /headless/i.test(agent) || /headless/i.test(appVersion) || webdriver;
     };
     return {
         rg: 'https://rg.yottos.com',

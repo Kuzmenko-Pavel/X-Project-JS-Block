@@ -8,6 +8,8 @@ define([
     './block_render',
     './block_settings',
     './move_shake',
+    './move_move',
+    './touch',
     './settings'
 ], function (jQuery,
              YottosLib,
@@ -15,6 +17,8 @@ define([
              block_render,
              block_settings,
              move_shake,
+             move_move,
+             touch,
              settings) {
     var prototype = 'prototype';
     var blocks = 'blocks';
@@ -34,18 +38,23 @@ define([
     var proxy_params = function (){
         var params = {};
         var url = document.createElement('a');
-        url.href = document.referrer;
+        url.href = window.document.referrer;
         parser(url, params);
-        url.href = location;
+        url.href = window.location;
         parser(url, params);
         params['origin'] = url.protocol.concat("//").concat(url.hostname);
-        params['location'] = location.href;
+        params['location'] = window.location.href;
+        params['referrer'] = window.document.referrer;
         params['cd'] =  undefined;
         return params;
     };
     var Loader = function () {
         this.pp = proxy_params();
+        this.pp.hdl = settings.headless;
         this.timeStamp = 0;
+        this.mouseEventCounter = 0;
+        this.touchEventCounter = 0;
+        this.zeroMovement = true;
         this.sequence = settings.move_shake_sequence.slice();
         this.page_load = false;
         this[blocks] = [];
@@ -155,8 +164,15 @@ define([
     Loader[prototype].block_render = block_render;
     Loader[prototype].start = start;
     Loader[prototype].move_shake = move_shake;
+    Loader[prototype].move_move = move_move;
+    Loader[prototype].touch = touch;
     Loader[prototype].mouse_move_handler = function (e) {
         this.move_shake(e);
+        this.move_move(e);
+        this[blocks][logging]();
+    };
+    Loader[prototype].touch_handler = function (e) {
+        this.touch(e);
         this[blocks][logging]();
     };
     Loader[prototype].scroll_handler = function (e) {
@@ -176,6 +192,8 @@ define([
         this.start();
         this[blocks][logging]();
         YottosLib._.on_event('mousemove', window, this.mouse_move_handler, this);
+        YottosLib._.on_event('touchstart', window, this.touch_handler, this);
+        YottosLib._.on_event('touchmove', window, this.touch_handler, this);
     };
     Loader[prototype].ready_handler = function (e) {
         this.start();
