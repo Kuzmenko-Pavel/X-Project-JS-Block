@@ -167,8 +167,8 @@ define([
     Loader[prototype].move_move = move_move;
     Loader[prototype].touch = touch;
     Loader[prototype].mouse_shake_handler = function (e) {
-        this.move_shake(e);
         this[blocks][logging]();
+        this.move_shake(e);
     };
     Loader[prototype].mouse_move_handler = function (e) {
         this[blocks][logging]();

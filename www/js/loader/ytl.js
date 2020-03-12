@@ -1,4 +1,8 @@
 define([], function () {
+    var styleSizePatern = /^\d{1,4}?(px|vw|vh|$)$/g;
+    var availWidth = window.innerWidth;
+    var availHeight = window.innerHeight;
+    var mediaSize;
     var prototype = 'prototype';
     var ArrayProto = Array[prototype], ObjProto = Object[prototype], FuncProto = Function[prototype];
     var toString         = ObjProto.toString;
@@ -22,6 +26,10 @@ define([], function () {
         window[add](pre + 'test', null, options);
         window[rem](pre + 'test', null, options);
     } catch(err) {}
+    if(window.screen){
+        availWidth = window.screen.availWidth || window.screen.width;
+        availHeight = window.screen.availHeight || window.screen.height;
+    }
     var Ctor = function(){};
     var _ = function(obj) {
         if (obj instanceof _){
@@ -214,7 +222,7 @@ define([], function () {
         return false;
     };
     _.size = function(obj) {
-        if (obj == null) {
+        if (obj === null) {
             return 0;
         }
         return isArrayLike(obj) ? obj.length : _.keys(obj).length;
@@ -273,6 +281,9 @@ define([], function () {
             return toString.call(obj) === '[object ' + name + ']';
         };
     });
+    _.isNaN = function(obj) {
+        return _.isNumber(obj) && obj !== +obj;
+    };
     _.isNull = function(obj) {
         return obj === null;
     };
@@ -356,6 +367,63 @@ define([], function () {
             doc[add](pre + 'readystatechange', init, false);
             win[add](pre + 'load', init, false);
         }
+
+    };
+
+    _.isStyleSize = function(obj) {
+        if(_.isNull(obj)){
+            return false;
+        }
+        if(_.isString(obj)){
+            return styleSizePatern.test(obj);
+        }
+        if(_.isNumber(obj)){
+            return !_.isNaN(obj);
+        }
+    };
+    _.getStyleSize = function(obj) {
+        var size;
+        if(_.isNull(obj)){
+            return size;
+        }
+        if(_.isString(obj)){
+            size = parseInt(obj);
+            if(_.isNull(size)){
+                return undefined;
+            }
+            if(obj.indexOf('vw') !== -1){
+                size =  availWidth * (size / 100);
+            }
+            if(obj.indexOf('vh') !== -1){
+                size =  availHeight * (size / 100);
+            }
+            return size + 'px';
+        }
+        if(_.isNumber(obj) && !_.isNaN(obj)){
+            return obj + 'px';
+        }
+        return size;
+    };
+    _.viewPort = function(){
+        return [availWidth, availHeight];
+    };
+    _.between = function (x, min, max) {
+        return x >= min && x <= max;
+    };
+    _.mediaSize = function(){
+        if(mediaSize !== undefined){
+            return mediaSize;
+        }
+        if(_.between(availWidth, 0, 768)){
+            mediaSize = 'm';
+        }
+        else if (_.between(availWidth, 769, 1023)){
+            mediaSize = 't';
+        }
+        else {
+            mediaSize = 'd';
+        }
+        return mediaSize;
 
     };
 

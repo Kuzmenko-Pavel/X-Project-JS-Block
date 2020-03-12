@@ -2,8 +2,8 @@
  * Created by kuzmenko-pavel on 05.04.17.
  */
 define('iframe_form',
-    ['./jquery', './ytl', './block_logging', './block_active_view', './block_size_calculator', './post_array'],
-    function (jQuery, YottosLib, block_logging, block_active_view, block_size_calculator, PostArray) {
+    ['./jquery', './ytl', './block_active_view', './block_size_calculator', './post_array'],
+    function (jQuery, YottosLib, block_active_view, block_size_calculator, PostArray) {
         return function (url, $el, block_setting, index, client, pp) {
             var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
             var object = this;
@@ -32,7 +32,6 @@ define('iframe_form',
                     scrollCounter: 0
                 }
             );
-            object.block_logging = block_logging;
             object.block_active_view = block_active_view;
             object.parent_el = $el;
             object[root] = jQuery("<div/>");
@@ -146,16 +145,15 @@ define('iframe_form',
                 if (this[block_settin][logging] !== complite){
                     this.block_active_view();
                     if (this[block_settin][logging] === false) {
+                        this[block_settin][logging] = initial;
                         if (this[canAccessIFrame]() === false){
                             this.post.push('block_initial');
-                            this.block_logging();
                         }
                     }
                     else if (this[block_settin][logging] === initial && this[block_settin].visible === true) {
                         if (this[canAccessIFrame]() === false) {
                             this[block_settin][logging] = complite;
                             this.post.push('block_complite');
-                            this.block_logging();
                         }
                     }
                 }
