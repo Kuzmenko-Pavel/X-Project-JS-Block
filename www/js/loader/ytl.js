@@ -404,6 +404,22 @@ define([], function () {
         }
         return size;
     };
+    _.getLotsCount = function(obj) {
+        var size;
+        if(_.isNull(obj)){
+            return size;
+        }
+        if(_.isString(obj)){
+            size = parseInt(obj);
+            if(_.isNull(size)){
+                size =  undefined;
+            }
+        }
+        if(_.isNumber(obj) && !_.isNaN(obj)){
+            size = obj;
+        }
+        return size;
+    };
     _.viewPort = function(){
         return [availWidth, availHeight];
     };
@@ -414,10 +430,14 @@ define([], function () {
         if(mediaSize !== undefined){
             return mediaSize;
         }
-        if(_.between(availWidth, 0, 768)){
+        if(window.innerWidth > availWidth || document.body.clientWidth !== document.body.scrollWidth){
+            mediaSize = 'd';
+            return mediaSize;
+        }
+        if(_.between(availWidth, 0, 668)){
             mediaSize = 'm';
         }
-        else if (_.between(availWidth, 769, 1023)){
+        else if (_.between(availWidth, 669, 1023)){
             mediaSize = 't';
         }
         else {

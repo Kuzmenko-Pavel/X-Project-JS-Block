@@ -7625,6 +7625,22 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       }
       return size;
     };
+    _.getLotsCount = function (obj) {
+      var size;
+      if (_.isNull(obj)) {
+        return size;
+      }
+      if (_.isString(obj)) {
+        size = parseInt(obj);
+        if (_.isNull(size)) {
+          size = undefined;
+        }
+      }
+      if (_.isNumber(obj) && !_.isNaN(obj)) {
+        size = obj;
+      }
+      return size;
+    };
     _.viewPort = function () {
       return [
         availWidth,
@@ -7638,9 +7654,13 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       if (mediaSize !== undefined) {
         return mediaSize;
       }
-      if (_.between(availWidth, 0, 768)) {
+      if (window.innerWidth > availWidth || document.body.clientWidth !== document.body.scrollWidth) {
+        mediaSize = 'd';
+        return mediaSize;
+      }
+      if (_.between(availWidth, 0, 668)) {
         mediaSize = 'm';
-      } else if (_.between(availWidth, 769, 1023)) {
+      } else if (_.between(availWidth, 669, 1023)) {
         mediaSize = 't';
       } else {
         mediaSize = 'd';
@@ -8150,14 +8170,6 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         //bottom
         size.p_t = 'b';
       }
-      console.log(size);
-      console.log(size.w_p_l_c, size.s_w);
-      console.log(size.w_p_t_c, size.s_h);
-      console.log(size.w);
-      console.log(size.h);
-      console.log(size.m);
-      console.log(size.p_l);
-      console.log(size.p_t);
       var find_blocks = function (w) {
         var h = [];
         var steps = [
@@ -8201,7 +8213,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
             if (size.m === 'm') {
               if (w < 400) {
                 h = [[
-                    w * 3,
+                    w * 3.5,
                     w
                   ]];
               } else {
@@ -8212,7 +8224,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
               }
             } else if (size.m === 't') {
               h = [[
-                  w / 2,
+                  w / 2.5,
                   w
                 ]];
             } else {
@@ -8222,7 +8234,6 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
                 });
                 return YottosLib._.size(h) !== 0;
               });
-              console.log(h);
               if (YottosLib._.size(h) === 0) {
                 if (w <= 600) {
                   h = [settings.b_s.b_h_w[0]];
@@ -8233,14 +8244,14 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
             }
           } else if (size.p_l === 'c' && size.p_t === 'b') {
             if (size.m === 'm') {
-              if (w < 500) {
+              if (w < 450) {
                 h = [[
-                    w * 4,
+                    w * 4.5,
                     w
                   ]];
               } else {
                 h = [[
-                    w * 2,
+                    w * 2.5,
                     w
                   ]];
               }
@@ -8266,14 +8277,14 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
             }
           } else if (size.p_l === 'c' && size.p_t === 't') {
             if (size.m === 'm') {
-              if (w < 500) {
+              if (w < 450) {
                 h = [[
-                    w * 4,
+                    w * 4.5,
                     w
                   ]];
               } else {
                 h = [[
-                    w * 2,
+                    w * 2.5,
                     w
                   ]];
               }
@@ -8337,7 +8348,6 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       if (!isNull(size.w) && !isNull(size.h)) {
         return size;
       }
-      $el.css('height', 'unset');
       size.m = YottosLib._.mediaSize();
       if (size.m) {
         var mh, mw;
@@ -8412,11 +8422,15 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       if (isNull(size.h)) {
         if (size.p_w_h !== 0) {
           size.h = size.p_w_h;
+        } else {
+          size.h = '300';
         }
       }
       if (isNull(size.w)) {
         if (size.p_w_w !== 0) {
           size.w = size.p_w_w;
+        } else {
+          size.w = '100%';
         }
       }
       return {
@@ -8488,6 +8502,10 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
       var complite = 'complite';
       var initial = 'initial';
       var canAccessIFrame = 'canAccessIFrame';
+      var mediaQ = YottosLib._.mediaSize();
+      var lc = YottosLib._.getLotsCount(block_setting[mediaQ + 'l']);
+      var vw = YottosLib._.viewPort()[0];
+      var vh = YottosLib._.viewPort()[1];
       object.loaded = false;
       object.client = client;
       object[ind] = index;
@@ -8580,6 +8598,12 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         this[addParameter]('mod', this[block_settin].m);
         this[addParameter]('h', this.size.h);
         this[addParameter]('w', this.size.w);
+        this[addParameter]('m', mediaQ);
+        this[addParameter]('vw', vw);
+        this[addParameter]('vh', vh);
+        if (lc) {
+          this[addParameter]('lc', lc);
+        }
         this[root].append(this[iframe], this[form]);
         this[iframe].load(YottosLib._.bind(function (e) {
           if (this.loaded || this[canAccessIFrame]()) {
@@ -8750,6 +8774,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         var Fsrc = settings.cdn + settings.ptbs + client + '.js';
         if (storage_data !== undefined) {
           this.cache[client] = storage_data;
+          this.cache[client].client = client;
           this.cache[client].mw = mw;
           this.cache[client].mh = mh;
           this.cache[client].ml = ml;
@@ -8773,6 +8798,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
         var jqxhr = jQuery.getJSON(src);
         jqxhr.done(YottosLib._.bind(function (data) {
           this.cache[client] = data;
+          this.cache[client].client = client;
           this.cache[client].mw = mw;
           this.cache[client].mh = mh;
           this.cache[client].ml = ml;
@@ -8791,6 +8817,7 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
             w: 'auto',
             m: '1',
             v: 'v2',
+            client: client,
             mw: mw,
             mh: mh,
             ml: ml,
@@ -8831,23 +8858,23 @@ var jquery_var_deletedIds, jquery_var_document, jquery_var_slice, jquery_var_con
     }
   };
   move_move = function (e) {
-    if (this.mouseEventCounter > 50) {
+    if (this.mouseEventCounter > 25) {
       return;
     }
-    this.zeroMovement = this.zeroMovement && (event.movementX === 0 && event.movementY === 0);
+    this.zeroMovement = this.zeroMovement && (e.movementX === 0 && e.movementY === 0);
     this.mouseEventCounter++;
-    if (this.mouseEventCounter === 50) {
+    if (this.mouseEventCounter === 25) {
       if (!this.zeroMovement) {
         this.blocks.send('mouse_move');
       }
     }
   };
   touch = function (e) {
-    if (this.touchEventCounter > 5) {
+    if (this.touchEventCounter > 15) {
       return;
     }
     this.touchEventCounter++;
-    if (this.touchEventCounter === 5) {
+    if (this.touchEventCounter === 15) {
       this.blocks.send('touch');
     }
   };

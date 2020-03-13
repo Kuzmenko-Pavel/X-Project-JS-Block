@@ -19,8 +19,6 @@ define('block_size_calculator', ['jquery', './ytl', './block_template'], functio
             return size;
         }
 
-        $el.css('height', 'unset');
-
         size.m = YottosLib._.mediaSize();
         if(size.m){
             var mh, mw;
@@ -92,11 +90,17 @@ define('block_size_calculator', ['jquery', './ytl', './block_template'], functio
             if (size.p_w_h !== 0) {
                 size.h = size.p_w_h;
             }
+            else{
+                size.h = '300';
+            }
 
         }
         if (isNull(size.w)) {
             if (size.p_w_w !== 0) {
                 size.w = size.p_w_w;
+            }
+            else{
+                size.w = '100%';
             }
         }
         return {w: size.w, h: size.h};

@@ -18,6 +18,10 @@ define('iframe_form',
             var complite = 'complite';
             var initial = 'initial';
             var canAccessIFrame = 'canAccessIFrame';
+            var mediaQ = YottosLib._.mediaSize();
+            var lc = YottosLib._.getLotsCount(block_setting[mediaQ+'l']);
+            var vw = YottosLib._.viewPort()[0];
+            var vh = YottosLib._.viewPort()[1];
             object.loaded = false;
             object.client = client;
             object[ind] = index;
@@ -109,6 +113,12 @@ define('iframe_form',
                 this[addParameter]('mod', this[block_settin].m);
                 this[addParameter]('h', this.size.h);
                 this[addParameter]('w', this.size.w);
+                this[addParameter]('m', mediaQ);
+                this[addParameter]('vw', vw);
+                this[addParameter]('vh', vh);
+                if(lc){
+                    this[addParameter]('lc', lc);
+                }
                 this[root].append(this[iframe], this[form]);
                 this[iframe].load(YottosLib._.bind(function (e) {
                     if(this.loaded || this[canAccessIFrame]()){

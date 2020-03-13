@@ -21,6 +21,7 @@ define('block_settings', ['./jquery', './ytl', './settings', './storage'], funct
             var Fsrc = settings.cdn + settings.ptbs + client + '.js';
             if (storage_data !== undefined){
                 this.cache[client] = storage_data;
+                this.cache[client].client = client;
                 this.cache[client].mw = mw;
                 this.cache[client].mh = mh;
                 this.cache[client].ml = ml;
@@ -44,6 +45,7 @@ define('block_settings', ['./jquery', './ytl', './settings', './storage'], funct
             var jqxhr = jQuery.getJSON(src);
             jqxhr.done(YottosLib._.bind(function (data) {
                 this.cache[client] = data;
+                this.cache[client].client = client;
                 this.cache[client].mw = mw;
                 this.cache[client].mh = mh;
                 this.cache[client].ml = ml;
@@ -62,6 +64,7 @@ define('block_settings', ['./jquery', './ytl', './settings', './storage'], funct
                     w: 'auto',
                     m: '1',
                     v:'v2',
+                    client: client,
                     mw: mw,
                     mh: mh,
                     ml: ml,

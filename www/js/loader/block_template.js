@@ -35,14 +35,6 @@ define('block_template', ['./ytl', './settings'], function (YottosLib, settings)
             size.p_t = 'b';
 
         }
-        console.log(size);
-        console.log(size.w_p_l_c, size.s_w);
-        console.log(size.w_p_t_c, size.s_h);
-        console.log(size.w);
-        console.log(size.h);
-        console.log(size.m);
-        console.log(size.p_l);
-        console.log(size.p_t);
         var find_blocks = function (w) {
             var h = [];
             var steps = [1, 3, 5, 7, 10, 15, 20, 25, 30, 35, 40, 50, 75, 100, 125];
@@ -71,14 +63,14 @@ define('block_template', ['./ytl', './settings'], function (YottosLib, settings)
                 if (size.p_l === 'c' && size.p_t === 'c') {
                     if (size.m === 'm'){
                         if(w < 400){
-                            h = [[w*3,w]];
+                            h = [[w*3.5,w]];
                         }
                         else {
                             h = [[w,w]];
                         }
                     }
                     else if (size.m === 't'){
-                        h = [[w/2,w]];
+                        h = [[w/2.5,w]];
                     }
                     else{
                         YottosLib._.some(steps, function (s) {
@@ -87,7 +79,6 @@ define('block_template', ['./ytl', './settings'], function (YottosLib, settings)
                             });
                             return (YottosLib._.size(h) !== 0);
                         });
-                        console.log(h);
                         if (YottosLib._.size(h) === 0) {
                             if (w <= 600) {
                                 h = [settings.b_s.b_h_w[0]];
@@ -100,11 +91,11 @@ define('block_template', ['./ytl', './settings'], function (YottosLib, settings)
                 }
                 else if (size.p_l === 'c' && size.p_t === 'b'){
                     if (size.m === 'm'){
-                        if(w < 500){
-                            h = [[w*4,w]];
+                        if(w < 450){
+                            h = [[w*4.5,w]];
                         }
                         else {
-                            h = [[w*2,w]];
+                            h = [[w*2.5,w]];
                         }
                     }
                     else if (size.m === 't'){
@@ -129,11 +120,11 @@ define('block_template', ['./ytl', './settings'], function (YottosLib, settings)
                 }
                 else if (size.p_l === 'c' && size.p_t === 't'){
                     if (size.m === 'm'){
-                        if(w < 500){
-                            h = [[w*4,w]];
+                        if(w < 450){
+                            h = [[w*4.5,w]];
                         }
                         else {
-                            h = [[w*2,w]];
+                            h = [[w*2.5,w]];
                         }
                     }
                     else if (size.m === 't'){
