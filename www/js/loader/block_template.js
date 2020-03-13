@@ -49,7 +49,6 @@ define('block_template', ['./ytl', './settings'], function (YottosLib, settings)
                     });
                     return (YottosLib._.size(h) !== 0);
                 });
-                console.log(h);
                 if (YottosLib._.size(h) === 0) {
                     if (w <= 200) {
                         h = [settings.b_s.b_v_w[0]];

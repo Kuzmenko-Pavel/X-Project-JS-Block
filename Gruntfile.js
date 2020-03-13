@@ -84,50 +84,50 @@ module.exports = function (grunt) {
                     preserveLicenseComments: false,
                     wrap: true,
                     optimize: 'uglify2',
-                    optimize: 'none',
-                    // uglify2: {
-                    //     output: {
-                    //         beautify: false,
-                    //         space_colon : false,
-                    //         quote_keys: true,
-                    //         screw_ie8: false,
-                    //         ascii_only: true
-                    //     },
-                    //     compress: {
-                    //         unsafe: true,
-                    //         comparisons: true,
-                    //         cascade: true,
-                    //         collapse_vars: true,
-                    //         reduce_vars: true,
-                    //         warnings: true,
-                    //         loops: true,
-                    //         properties: true,
-                    //         screw_ie8: false,
-                    //         sequences: true,
-                    //         dead_code: true,
-                    //         conditionals: true,
-                    //         booleans: true,
-                    //         unused: true,
-                    //         if_return: true,
-                    //         join_vars: true,
-                    //         drop_console: false,
-                    //         side_effects: true,
-                    //         hoist_vars: true,
-                    //         passes: 3
-                    //     },
-                    //     warnings: true,
-                    //     verbose: true,
-                    //     mangle: {
-                    //         screw_ie8: false,
-                    //         toplevel: true,
-                    //         sort: true,
-                    //         eval: true,
-                    //         props: true
-                    //
-                    //
-                    //     },
-                    //     ie8: true
-                    // },
+                    // optimize: 'none',
+                    uglify2: {
+                        output: {
+                            beautify: false,
+                            space_colon : false,
+                            quote_keys: true,
+                            screw_ie8: false,
+                            ascii_only: true
+                        },
+                        compress: {
+                            unsafe: true,
+                            comparisons: true,
+                            cascade: true,
+                            collapse_vars: true,
+                            reduce_vars: true,
+                            warnings: true,
+                            loops: true,
+                            properties: true,
+                            screw_ie8: false,
+                            sequences: true,
+                            dead_code: true,
+                            conditionals: true,
+                            booleans: true,
+                            unused: true,
+                            if_return: true,
+                            join_vars: true,
+                            drop_console: false,
+                            side_effects: true,
+                            hoist_vars: true,
+                            passes: 3
+                        },
+                        warnings: true,
+                        verbose: true,
+                        mangle: {
+                            screw_ie8: false,
+                            toplevel: true,
+                            sort: true,
+                            eval: true,
+                            props: true
+
+
+                        },
+                        ie8: true
+                    },
                     generateSourceMaps: false,
                     useStrict: true,
                     onModuleBundleComplete: function (data) {
