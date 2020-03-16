@@ -155,8 +155,8 @@ define('iframe_form',
                 if (this[block_settin][logging] !== complite){
                     this.block_active_view();
                     if (this[block_settin][logging] === false) {
-                        this[block_settin][logging] = initial;
                         if (this[canAccessIFrame]() === false){
+                            this[block_settin][logging] = initial;
                             this.post.push('block_initial');
                         }
                     }
