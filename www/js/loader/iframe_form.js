@@ -5,7 +5,7 @@ define('iframe_form',
     ['./jquery', './ytl', './block_active_view', './block_size_calculator', './post_array'],
     function (jQuery, YottosLib, block_active_view, block_size_calculator, PostArray) {
         return function (url, $el, block_setting, index, client, pp) {
-            var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox';
+            var sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation allow-top-navigation-by-user-activation allow-storage-access-by-user-activation';
             var object = this;
             var iframe = 'iframe';
             var attr = 'attr';

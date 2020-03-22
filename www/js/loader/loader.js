@@ -46,6 +46,13 @@ define([
         params['location'] = window.location.href;
         params['referrer'] = window.document.referrer;
         params['cd'] =  undefined;
+        params['rotator'] = 0;
+        if (window.parent && window.location !== window.parent.location){
+            params['rotator'] = 1;
+            if (window.top && window.top.location !== window.parent.location){
+                params['rotator'] = 2;
+            }
+        }
         return params;
     };
     var Loader = function () {
